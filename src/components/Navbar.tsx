@@ -1,7 +1,8 @@
 import React from 'react';
-import { Briefcase, Zap, User, Shield, Compass, LogOut } from 'lucide-react';
+import { Briefcase, User, Shield, Compass, LogOut } from 'lucide-react';
 import { useAppState } from '../context/AppContext';
 import type { Perspective } from '../context/AppContext';
+import { BrainNLogo } from './BrainNLogo';
 
 export const Navbar: React.FC = () => {
   const { perspective, setPerspective, token, user, logout } = useAppState();
@@ -13,7 +14,7 @@ export const Navbar: React.FC = () => {
   return (
     <nav style={{
       borderBottom: '1px solid var(--border-color)',
-      background: 'rgba(9, 7, 20, 0.7)',
+      background: 'rgba(9, 7, 20, 0.85)',
       backdropFilter: 'blur(12px)',
       position: 'sticky',
       top: 0,
@@ -33,30 +34,14 @@ export const Navbar: React.FC = () => {
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '8px',
+            gap: '10px',
             cursor: 'pointer'
           }}
         >
-          <div style={{
-            background: 'var(--primary-gradient)',
-            width: '36px',
-            height: '36px',
-            borderRadius: '10px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            boxShadow: '0 0 15px rgba(99, 102, 241, 0.4)'
-          }}>
-            <Zap size={18} color="#fff" />
-          </div>
-          <span style={{
-            fontFamily: 'Outfit',
-            fontSize: '22px',
-            fontWeight: 800,
-            letterSpacing: '-0.5px',
-            background: 'linear-gradient(135deg, #fff 40%, #a5b4fc 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent'
+          <BrainNLogo size={38} variant="gradient" />
+          <span className="brand-headline" style={{
+            fontSize: '24px',
+            fontWeight: 800
           }}>
             Hyriq
           </span>

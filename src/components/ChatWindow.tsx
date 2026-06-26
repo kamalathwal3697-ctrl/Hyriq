@@ -7,13 +7,17 @@ interface ChatWindowProps {
   currentRole: 'candidate' | 'recruiter';
   onSendMessage: (text: string) => void;
   title: string;
+  showReciprocalBanner?: boolean;
+  onConfirmProfile?: () => void;
 }
 
 export const ChatWindow: React.FC<ChatWindowProps> = ({
   chatHistory,
   currentRole,
   onSendMessage,
-  title
+  title,
+  showReciprocalBanner = false,
+  onConfirmProfile
 }) => {
   const [inputText, setInputText] = useState('');
   const chatEndRef = useRef<HTMLDivElement>(null);
@@ -30,7 +34,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
   }, [chatHistory]);
 
   return (
-    <div className="chat-container glass-panel" style={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: '350px' }}>
+    <div className="chat-container glass-panel" style={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: '350px', background: '#0B0E14', color: '#fff', border: '1px solid rgba(255,255,255,0.08)' }}>
       {/* Header */}
       <div style={{
         padding: '16px',
@@ -48,6 +52,47 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
         </div>
         <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Direct Chat</span>
       </div>
+
+      {/* Reciprocal Interest Banner */}
+      {showReciprocalBanner && (
+        <div style={{
+          background: 'rgba(242, 153, 74, 0.15)',
+          borderBottom: '1.5px solid var(--tech-orange)',
+          padding: '16px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: '12px',
+          color: '#fff'
+        }}>
+          <div>
+            <h5 style={{ fontSize: '13px', fontWeight: 800, color: 'var(--tech-orange)', marginBottom: '4px' }}>
+              🤝 Reciprocal Interest
+            </h5>
+            <p style={{ fontSize: '12px', color: 'rgba(255, 255, 255, 0.9)' }}>
+              Candidate wants position. Recruiter wants candidate.
+            </p>
+          </div>
+          <button 
+            type="button"
+            onClick={onConfirmProfile}
+            className="btn"
+            style={{
+              background: 'var(--tech-orange)',
+              color: '#fff',
+              fontSize: '12px',
+              padding: '8px 16px',
+              borderRadius: '8px',
+              border: 'none',
+              fontWeight: 750,
+              cursor: 'pointer',
+              boxShadow: '0 4px 10px rgba(242, 153, 74, 0.3)'
+            }}
+          >
+            Confirm Profile
+          </button>
+        </div>
+      )}
 
       {/* Messages */}
       <div style={{

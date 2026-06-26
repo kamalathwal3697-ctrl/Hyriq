@@ -1,22 +1,26 @@
 :root {
-  --bg-dark: #090714;
-  --bg-darker: #05030a;
-  --bg-card: rgba(16, 12, 34, 0.6);
-  --bg-card-hover: rgba(26, 20, 52, 0.85);
+  --corporate-blue: #1A3E62;
+  --tech-orange: #F2994A;
+  --light-grey: #F5F7FA;
+
+  --bg-dark: #090B10;
+  --bg-darker: #050608;
+  --bg-card: rgba(16, 20, 34, 0.6);
+  --bg-card-hover: rgba(26, 32, 54, 0.85);
   --border-color: rgba(255, 255, 255, 0.07);
-  --border-color-hover: rgba(99, 102, 241, 0.35);
-  --border-color-active: rgba(99, 102, 241, 0.6);
+  --border-color-hover: rgba(242, 153, 74, 0.35);
+  --border-color-active: rgba(242, 153, 74, 0.6);
   
-  --primary: #6366f1;
-  --primary-hover: #4f46e5;
-  --secondary: #06b6d4;
-  --secondary-hover: #0891b2;
-  --accent: #d946ef;
+  --primary: #1A3E62;
+  --primary-hover: #122c47;
+  --secondary: #F2994A;
+  --secondary-hover: #e08332;
+  --accent: #F2994A;
   
-  --primary-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
-  --secondary-gradient: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
-  --accent-gradient: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
-  --dark-gradient: linear-gradient(180deg, #090714 0%, #05030a 100%);
+  --primary-gradient: linear-gradient(135deg, #1A3E62 0%, #2D68C4 100%);
+  --secondary-gradient: linear-gradient(135deg, #F2994A 0%, #f3a661 100%);
+  --accent-gradient: linear-gradient(135deg, #F2994A 0%, #1A3E62 100%);
+  --dark-gradient: linear-gradient(180deg, #090B10 0%, #050608 100%);
   
   --text-primary: #f8fafc;
   --text-secondary: #94a3b8;
@@ -29,9 +33,9 @@
   --danger: #f43f5e;
   --danger-bg: rgba(244, 63, 94, 0.1);
   
-  --shadow-sm: 0 2px 8px -1px rgba(0, 0, 0, 0.5);
-  --shadow-md: 0 8px 30px -4px rgba(0, 0, 0, 0.6);
-  --shadow-lg: 0 16px 40px -10px rgba(0, 0, 0, 0.8);
+  --shadow-sm: 0 2px 8px -1px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 8px 30px -4px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 16px 40px -10px rgba(0, 0, 0, 0.6);
   
   --sans-font: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
 }
@@ -377,3 +381,88 @@ body {
     display: none !important;
   }
 }
+
+/* --- LIGHT MODE SEEKER FLOW UTILITIES --- */
+.seeker-light-container {
+  background-color: #F5F7FA !important;
+  color: #1A3E62 !important;
+}
+
+.seeker-light-card {
+  background: #ffffff !important;
+  border: 1px solid #E2E8F0 !important;
+  box-shadow: 0 4px 20px -2px rgba(26, 62, 98, 0.05) !important;
+  color: #1A3E62 !important;
+}
+
+.seeker-light-card:hover {
+  border-color: rgba(242, 153, 74, 0.4) !important;
+  box-shadow: 0 10px 25px -4px rgba(26, 62, 98, 0.08) !important;
+  transform: translateY(-2px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.seeker-light-input {
+  background: #ffffff !important;
+  border: 1.5px solid #D2D9E2 !important;
+  color: #1A3E62 !important;
+  border-radius: 12px;
+  padding: 12px 16px;
+  outline: none;
+  font-family: var(--sans-font);
+  transition: all 0.2s ease;
+}
+
+.seeker-light-input:focus {
+  border-color: #F2994A !important;
+  box-shadow: 0 0 0 3px rgba(242, 153, 74, 0.15) !important;
+}
+
+.btn-seeker-active {
+  background: #F2994A !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(242, 153, 74, 0.3) !important;
+}
+
+.btn-seeker-active:hover {
+  background: #e08332 !important;
+  box-shadow: 0 6px 18px rgba(242, 153, 74, 0.4) !important;
+}
+
+.seeker-tag {
+  background: rgba(26, 62, 98, 0.05) !important;
+  border: 1px solid rgba(26, 62, 98, 0.1) !important;
+  color: #1A3E62 !important;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.seeker-tag.active {
+  background: rgba(242, 153, 74, 0.1) !important;
+  border: 1.5px solid #F2994A !important;
+  color: #F2994A !important;
+  font-weight: 600;
+}
+
+.seeker-tag-blue {
+  background: rgba(26, 62, 98, 0.08) !important;
+  color: #1A3E62 !important;
+  border: 1px solid rgba(26, 62, 98, 0.15) !important;
+}
+
+.seeker-tag-orange {
+  background: rgba(242, 153, 74, 0.08) !important;
+  color: #F2994A !important;
+  border: 1px solid rgba(242, 153, 74, 0.2) !important;
+}
+
+/* Brand logo customized headline */
+.brand-headline {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  background: linear-gradient(135deg, #1A3E62 0%, #2D68C4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+

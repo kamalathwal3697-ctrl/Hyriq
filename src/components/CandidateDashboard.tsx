@@ -4,6 +4,7 @@ import { useAppState } from '../context/AppContext';
 import type { Job, Application } from '../context/AppContext';
 import { ChatWindow } from './ChatWindow';
 import { OnboardingModal } from './OnboardingModal';
+import { BrainNLogo } from './BrainNLogo';
 
 export const CandidateDashboard: React.FC = () => {
   const {
@@ -208,141 +209,160 @@ export const CandidateDashboard: React.FC = () => {
     }
   };
 
+  const isExplore = activeTab === 'explore';
+
   return (
-    <div className="container animate-fade-in" style={{ paddingTop: '32px', paddingBottom: '60px' }}>
+    <div 
+      className="container animate-fade-in" 
+      style={{ 
+        paddingTop: '32px', 
+        paddingBottom: '60px', 
+        background: isExplore ? '#F5F7FA' : 'transparent',
+        minHeight: '100vh',
+        color: isExplore ? 'var(--corporate-blue)' : '#fff',
+        transition: 'all 0.3s ease'
+      }}
+    >
       {/* Onboarding Preference Overlay */}
-      {candidateProfile.onboardingCompleted === false && (
-        <OnboardingModal profile={candidateProfile} onSaveProfile={setCandidateProfile} />
-      )}
-      {/* Dashboard Subheader Tabs */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', flexWrap: 'wrap', gap: '16px' }}>
-        <div>
-          <h2 style={{ fontSize: '24px', fontWeight: 700, color: '#fff' }}>Welcome back, {candidateProfile.name}</h2>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '14px' }}>Let's land your dream workspace.</p>
-        </div>
+        {candidateProfile.onboardingCompleted === false && (
+          <OnboardingModal profile={candidateProfile} onSaveProfile={setCandidateProfile} />
+        )}
+        {/* Dashboard Subheader Tabs */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', flexWrap: 'wrap', gap: '16px' }}>
+          <div>
+            <h2 style={{ fontSize: '24px', fontWeight: 700, color: isExplore ? 'var(--corporate-blue)' : '#fff' }}>
+              Welcome back, {candidateProfile.name}
+            </h2>
+            <p style={{ color: isExplore ? '#475569' : 'var(--text-secondary)', fontSize: '14px' }}>
+              Let's land your dream workspace.
+            </p>
+          </div>
 
-        <div className="tabs-header">
-          <button 
-            className={`tab-btn ${activeTab === 'explore' ? 'active' : ''}`}
-            onClick={() => setActiveTab('explore')}
-          >
-            <Briefcase size={16} />
-            Explore Jobs
-          </button>
-          <button 
-            className={`tab-btn ${activeTab === 'applications' ? 'active' : ''}`}
-            onClick={() => setActiveTab('applications')}
-          >
-            <MessageCircle size={16} />
-            Applications ({applications.length})
-          </button>
-          <button 
-            className={`tab-btn ${activeTab === 'profile' ? 'active' : ''}`}
-            onClick={() => setActiveTab('profile')}
-          >
-            <FileText size={16} />
-            My Profile
-          </button>
-        </div>
-      </div>
-
-      {/* EXPLORE JOBS VIEW */}
-      {activeTab === 'explore' && (
-        <div style={{ display: 'grid', gridTemplateColumns: '260px 1fr', gap: '24px', alignItems: 'start' }} className="explore-grid">
-          {/* Filters Sidebar */}
-          <aside className="glass-panel" style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', borderBottom: '1px solid var(--border-color)', paddingBottom: '12px' }}>
-              <Filter size={16} color="var(--primary)" />
-              <h3 style={{ fontSize: '16px', fontWeight: 600, color: '#fff' }}>Filters</h3>
-            </div>
-
-            {/* Category Filter */}
-            <div>
-              <label style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-secondary)', display: 'block', marginBottom: '8px' }}>Category</label>
-              <select 
-                value={categoryFilter}
-                onChange={(e) => setCategoryFilter(e.target.value)}
-                className="glass-input" 
-                style={{ width: '100%', padding: '8px 12px', fontSize: '13px', borderRadius: '8px' }}
-              >
-                <option value="">All Categories</option>
-                <option value="Tech & Engineering">Tech & Engineering</option>
-                <option value="Design & Product">Design & Product</option>
-                <option value="Marketing & Content">Marketing & Content</option>
-                <option value="Sales & Operations">Sales & Operations</option>
-              </select>
-            </div>
-
-            {/* Mode Filter */}
-            <div>
-              <label style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-secondary)', display: 'block', marginBottom: '8px' }}>Work Mode</label>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                {['Remote', 'Hybrid', 'On-site'].map(mode => (
-                  <label key={mode} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: 'var(--text-secondary)', cursor: 'pointer' }}>
-                    <input 
-                      type="checkbox" 
-                      checked={modeFilter.includes(mode)} 
-                      onChange={() => toggleFilter(modeFilter, setModeFilter, mode)}
-                      style={{ accentColor: 'var(--primary)' }}
-                    />
-                    {mode}
-                  </label>
-                ))}
-              </div>
-            </div>
-
-            {/* Type Filter */}
-            <div>
-              <label style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-secondary)', display: 'block', marginBottom: '8px' }}>Job Type</label>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                {['Full-time', 'Part-time', 'Internship', 'Contract'].map(type => (
-                  <label key={type} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: 'var(--text-secondary)', cursor: 'pointer' }}>
-                    <input 
-                      type="checkbox" 
-                      checked={typeFilter.includes(type)} 
-                      onChange={() => toggleFilter(typeFilter, setTypeFilter, type)}
-                      style={{ accentColor: 'var(--primary)' }}
-                    />
-                    {type}
-                  </label>
-                ))}
-              </div>
-            </div>
-
-            {/* Experience Level */}
-            <div>
-              <label style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-secondary)', display: 'block', marginBottom: '8px' }}>Experience</label>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                {['Entry-level', 'Mid-level', 'Senior-level'].map(exp => (
-                  <label key={exp} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: 'var(--text-secondary)', cursor: 'pointer' }}>
-                    <input 
-                      type="checkbox" 
-                      checked={experienceFilter.includes(exp)} 
-                      onChange={() => toggleFilter(experienceFilter, setExperienceFilter, exp)}
-                      style={{ accentColor: 'var(--primary)' }}
-                    />
-                    {exp}
-                  </label>
-                ))}
-              </div>
-            </div>
-
-            {/* Reset Filters */}
+          <div className="tabs-header" style={{ background: isExplore ? 'rgba(26, 62, 98, 0.08)' : 'rgba(0, 0, 0, 0.2)', border: isExplore ? '1px solid rgba(26, 62, 98, 0.1)' : '1px solid var(--border-color)' }}>
             <button 
-              className="btn btn-outline" 
-              style={{ fontSize: '12px', padding: '8px 16px' }}
-              onClick={() => {
-                setCategoryFilter('');
-                setTypeFilter([]);
-                setModeFilter([]);
-                setExperienceFilter([]);
-                setSearchQuery('');
-                setLocationQuery('');
-              }}
+              className={`tab-btn ${activeTab === 'explore' ? 'active' : ''}`}
+              onClick={() => setActiveTab('explore')}
+              style={{ color: activeTab === 'explore' ? (isExplore ? '#fff' : 'var(--text-primary)') : (isExplore ? 'var(--corporate-blue)' : 'var(--text-secondary)'), background: activeTab === 'explore' ? 'var(--corporate-blue)' : 'transparent' }}
             >
-              Reset All Filters
+              <Briefcase size={16} />
+              Explore Jobs
             </button>
-          </aside>
+            <button 
+              className={`tab-btn ${activeTab === 'applications' ? 'active' : ''}`}
+              onClick={() => setActiveTab('applications')}
+              style={{ color: activeTab === 'applications' ? '#fff' : (isExplore ? 'var(--corporate-blue)' : 'var(--text-secondary)'), background: activeTab === 'applications' ? 'var(--corporate-blue)' : 'transparent' }}
+            >
+              <MessageCircle size={16} />
+              Applications ({applications.length})
+            </button>
+            <button 
+              className={`tab-btn ${activeTab === 'profile' ? 'active' : ''}`}
+              onClick={() => setActiveTab('profile')}
+              style={{ color: activeTab === 'profile' ? '#fff' : (isExplore ? 'var(--corporate-blue)' : 'var(--text-secondary)'), background: activeTab === 'profile' ? 'var(--corporate-blue)' : 'transparent' }}
+            >
+              <FileText size={16} />
+              My Profile
+            </button>
+          </div>
+        </div>
+
+        {/* EXPLORE JOBS VIEW */}
+        {activeTab === 'explore' && (
+          <div style={{ display: 'grid', gridTemplateColumns: '260px 1fr', gap: '24px', alignItems: 'start' }} className="explore-grid">
+            {/* Filters Sidebar */}
+            <aside className="seeker-light-card" style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '20px', borderRadius: '16px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', borderBottom: '1px solid rgba(26, 62, 98, 0.1)', paddingBottom: '12px' }}>
+                <Filter size={16} color="var(--tech-orange)" />
+                <h3 style={{ fontSize: '16px', fontWeight: 700, color: 'var(--corporate-blue)' }}>Filters</h3>
+              </div>
+
+              {/* Category Filter */}
+              <div>
+                <label style={{ fontSize: '12px', fontWeight: 700, color: 'var(--corporate-blue)', display: 'block', marginBottom: '8px' }}>Category</label>
+                <select 
+                  value={categoryFilter}
+                  onChange={(e) => setCategoryFilter(e.target.value)}
+                  className="seeker-light-input" 
+                  style={{ width: '100%', padding: '8px 12px', fontSize: '13px' }}
+                >
+                  <option value="">All Categories</option>
+                  <option value="Tech & Engineering">Tech & Engineering</option>
+                  <option value="Design & Product">Design & Product</option>
+                  <option value="Marketing & Content">Marketing & Content</option>
+                  <option value="Sales & Operations">Sales & Operations</option>
+                </select>
+              </div>
+
+              {/* Mode Filter */}
+              <div>
+                <label style={{ fontSize: '12px', fontWeight: 700, color: 'var(--corporate-blue)', display: 'block', marginBottom: '8px' }}>Work Mode</label>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  {['Remote', 'Hybrid', 'On-site'].map(mode => (
+                    <label key={mode} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: '#475569', cursor: 'pointer', fontWeight: 500 }}>
+                      <input 
+                        type="checkbox" 
+                        checked={modeFilter.includes(mode)} 
+                        onChange={() => toggleFilter(modeFilter, setModeFilter, mode)}
+                        style={{ accentColor: 'var(--tech-orange)' }}
+                      />
+                      {mode}
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Type Filter */}
+              <div>
+                <label style={{ fontSize: '12px', fontWeight: 700, color: 'var(--corporate-blue)', display: 'block', marginBottom: '8px' }}>Job Type</label>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  {['Full-time', 'Part-time', 'Internship', 'Contract'].map(type => (
+                    <label key={type} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: '#475569', cursor: 'pointer', fontWeight: 500 }}>
+                      <input 
+                        type="checkbox" 
+                        checked={typeFilter.includes(type)} 
+                        onChange={() => toggleFilter(typeFilter, setTypeFilter, type)}
+                        style={{ accentColor: 'var(--tech-orange)' }}
+                      />
+                      {type}
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Experience Level */}
+              <div>
+                <label style={{ fontSize: '12px', fontWeight: 700, color: 'var(--corporate-blue)', display: 'block', marginBottom: '8px' }}>Experience</label>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  {['Entry-level', 'Mid-level', 'Senior-level'].map(exp => (
+                    <label key={exp} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: '#475569', cursor: 'pointer', fontWeight: 500 }}>
+                      <input 
+                        type="checkbox" 
+                        checked={experienceFilter.includes(exp)} 
+                        onChange={() => toggleFilter(experienceFilter, setExperienceFilter, exp)}
+                        style={{ accentColor: 'var(--tech-orange)' }}
+                      />
+                      {exp}
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Reset Filters */}
+              <button 
+                className="btn btn-outline" 
+                style={{ fontSize: '12px', padding: '8px 16px', borderColor: 'rgba(26, 62, 98, 0.2)', color: 'var(--corporate-blue)', fontWeight: 600 }}
+                onClick={() => {
+                  setCategoryFilter('');
+                  setTypeFilter([]);
+                  setModeFilter([]);
+                  setExperienceFilter([]);
+                  setSearchQuery('');
+                  setLocationQuery('');
+                }}
+              >
+                Reset All Filters
+              </button>
+            </aside>
 
           {/* Main Job Listing + Detail Split */}
           <main style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', alignItems: 'start' }} className="explore-main">
@@ -350,26 +370,26 @@ export const CandidateDashboard: React.FC = () => {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               {/* Inline Search Bar */}
               <div style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
-                <div style={{ display: 'flex', alignItems: 'center', flex: 1, gap: '8px' }} className="glass-panel">
+                <div style={{ display: 'flex', alignItems: 'center', flex: 1, gap: '8px', padding: '2px 8px' }} className="seeker-light-card">
                   <div style={{ display: 'flex', alignItems: 'center', flex: 1, padding: '10px 14px', gap: '8px' }}>
-                    <Search size={16} color="var(--text-muted)" />
+                    <Search size={16} color="var(--corporate-blue)" />
                     <input
                       type="text"
                       placeholder="Title or skill..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      style={{ background: 'transparent', border: 'none', outline: 'none', color: '#fff', fontSize: '13px', width: '100%' }}
+                      style={{ background: 'transparent', border: 'none', outline: 'none', color: 'var(--corporate-blue)', fontSize: '13px', width: '100%', fontWeight: 500 }}
                     />
                   </div>
-                  <div style={{ width: '1px', height: '24px', backgroundColor: 'var(--border-color)' }}></div>
+                  <div style={{ width: '1px', height: '24px', backgroundColor: 'rgba(26, 62, 98, 0.15)' }}></div>
                   <div style={{ display: 'flex', alignItems: 'center', flex: 1, padding: '10px 14px', gap: '8px' }}>
-                    <MapPin size={16} color="var(--text-muted)" />
+                    <MapPin size={16} color="var(--corporate-blue)" />
                     <input
                       type="text"
                       placeholder="Remote/Location..."
                       value={locationQuery}
                       onChange={(e) => setLocationQuery(e.target.value)}
-                      style={{ background: 'transparent', border: 'none', outline: 'none', color: '#fff', fontSize: '13px', width: '100%' }}
+                      style={{ background: 'transparent', border: 'none', outline: 'none', color: 'var(--corporate-blue)', fontSize: '13px', width: '100%', fontWeight: 500 }}
                     />
                   </div>
                 </div>
@@ -378,19 +398,17 @@ export const CandidateDashboard: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => setMatchesOnly(!matchesOnly)}
-                    className="btn animate-glow"
+                    className="btn btn-seeker-active"
                     style={{
-                      padding: '10px 16px',
+                      padding: '12px 18px',
                       fontSize: '13px',
-                      background: matchesOnly ? 'var(--secondary-gradient)' : 'rgba(255, 255, 255, 0.03)',
-                      border: '1px solid var(--border-color)',
-                      color: '#fff',
                       borderRadius: '12px',
                       whiteSpace: 'nowrap',
                       display: 'flex',
                       alignItems: 'center',
                       gap: '6px',
-                      boxShadow: matchesOnly ? '0 0 10px rgba(6, 182, 212, 0.3)' : 'none'
+                      opacity: matchesOnly ? 1 : 0.75,
+                      background: matchesOnly ? 'var(--tech-orange)' : 'var(--corporate-blue)'
                     }}
                   >
                     ⚡ Matches Only: {matchesOnly ? 'ON' : 'OFF'}
@@ -399,7 +417,7 @@ export const CandidateDashboard: React.FC = () => {
               </div>
 
               {sortedJobs.length === 0 ? (
-                <div className="glass-panel" style={{ padding: '40px', textAlign: 'center', color: 'var(--text-secondary)' }}>
+                <div className="seeker-light-card" style={{ padding: '40px', textAlign: 'center', color: '#64748b', fontWeight: 600 }}>
                   No matching jobs found. Try adjusting your filters.
                 </div>
               ) : (
@@ -410,51 +428,52 @@ export const CandidateDashboard: React.FC = () => {
                     <div 
                       key={job.id}
                       onClick={() => setSelectedJob(job)}
-                      className={`glass-panel ${isSelected ? 'active-job-card' : 'glass-panel-hover'}`}
+                      className="seeker-light-card"
                       style={{
                         padding: '20px',
                         cursor: 'pointer',
-                        border: isSelected ? '1px solid var(--border-color-active)' : '1px solid var(--border-color)',
-                        background: isSelected ? 'rgba(99, 102, 241, 0.08)' : 'var(--bg-card)',
-                        boxShadow: isSelected ? '0 0 15px rgba(99, 102, 241, 0.15)' : 'none'
+                        border: isSelected ? '2px solid var(--tech-orange)' : '1px solid #E2E8F0',
+                        background: isSelected ? 'rgba(242, 153, 74, 0.05)' : '#ffffff',
+                        transform: isSelected ? 'translateY(-2px)' : 'none'
                       }}
                     >
                       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
                         <div>
-                          <h4 style={{ color: '#fff', fontSize: '16px', fontWeight: 700, marginBottom: '2px' }}>{job.title}</h4>
-                          <p style={{ color: 'var(--text-secondary)', fontSize: '13px', fontWeight: 500 }}>{job.companyName}</p>
+                          <h4 style={{ color: 'var(--corporate-blue)', fontSize: '16px', fontWeight: 800, marginBottom: '2px' }}>{job.title}</h4>
+                          <p style={{ color: '#475569', fontSize: '13px', fontWeight: 600 }}>{job.companyName}</p>
                         </div>
                         {/* Custom Gradient Avatar */}
                         <div className="avatar" style={{
-                          background: `linear-gradient(135deg, #${job.logoSeed.charCodeAt(0).toString(16)}6df2 0%, #a855f7 100%)`
+                          background: `linear-gradient(135deg, #${job.logoSeed.charCodeAt(0).toString(16)}6df2 0%, #F2994A 100%)`
                         }}>
                           {job.logoSeed}
                         </div>
                       </div>
 
                       <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '14px' }}>
-                        <span className="badge badge-primary">{job.mode}</span>
-                        <span className="badge badge-secondary">{job.type}</span>
-                        <span className="badge badge-success" style={{ background: 'rgba(16, 185, 129, 0.06)' }}>{job.salary}</span>
+                        <span className="badge seeker-tag-blue">{job.mode}</span>
+                        <span className="badge seeker-tag-blue">{job.type}</span>
+                        <span className="badge seeker-tag-orange">{job.salary}</span>
                         
                         {job.fairWorkPact && (
-                          <span className="badge badge-success" style={{
-                            background: 'rgba(16, 185, 129, 0.15)',
+                          <span className="badge" style={{
+                            background: 'rgba(16, 185, 129, 0.08)',
                             border: '1px solid var(--success)',
                             color: '#10b981',
                             display: 'inline-flex',
                             alignItems: 'center',
-                            gap: '4px'
+                            gap: '4px',
+                            fontWeight: 700
                           }}>
                             🛡️ Fair Work Pact
                           </span>
                         )}
 
                         {candidateProfile.onboardingCompleted && (
-                          <span className="badge" style={{
-                            background: calculateMatchScore(job) >= 75 ? 'var(--secondary-gradient)' : 'rgba(255, 255, 255, 0.03)',
-                            border: calculateMatchScore(job) >= 75 ? 'none' : '1px solid var(--border-color)',
-                            color: '#fff',
+                          <span className="badge seeker-tag" style={{
+                            background: calculateMatchScore(job) >= 75 ? 'rgba(242, 153, 74, 0.15)' : 'rgba(26, 62, 98, 0.05)',
+                            border: calculateMatchScore(job) >= 75 ? '1px solid var(--tech-orange)' : '1px solid rgba(26, 62, 98, 0.1)',
+                            color: calculateMatchScore(job) >= 75 ? 'var(--tech-orange)' : 'var(--corporate-blue)',
                             fontWeight: 700
                           }}>
                             ⚡ {calculateMatchScore(job)}% Match
@@ -462,15 +481,15 @@ export const CandidateDashboard: React.FC = () => {
                         )}
                       </div>
 
-                      <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', borderTop: '1px solid rgba(255,255,255,0.03)', paddingTop: '12px' }}>
+                      <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', borderTop: '1px solid rgba(26,62,98,0.06)', paddingTop: '12px' }}>
                         {job.skills.slice(0, 3).map(skill => (
-                          <span key={skill} style={{ fontSize: '11px', color: 'var(--text-secondary)', background: 'rgba(255,255,255,0.03)', padding: '3px 8px', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.05)' }}>{skill}</span>
+                          <span key={skill} style={{ fontSize: '11px', color: 'var(--corporate-blue)', background: 'rgba(26,62,98,0.05)', padding: '3px 8px', borderRadius: '4px', border: '1px solid rgba(26,62,98,0.08)', fontWeight: 500 }}>{skill}</span>
                         ))}
-                        {job.skills.length > 3 && <span style={{ fontSize: '10px', color: 'var(--text-muted)', alignSelf: 'center' }}>+{job.skills.length - 3} more</span>}
+                        {job.skills.length > 3 && <span style={{ fontSize: '10px', color: '#64748b', alignSelf: 'center', fontWeight: 600 }}>+{job.skills.length - 3} more</span>}
                       </div>
 
                       {hasApplied && (
-                        <div style={{ marginTop: '12px', display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--success)', fontSize: '12px', fontWeight: 600 }}>
+                        <div style={{ marginTop: '12px', display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--success)', fontSize: '12px', fontWeight: 700 }}>
                           <UserCheck size={12} /> Applied
                         </div>
                       )}
@@ -483,26 +502,26 @@ export const CandidateDashboard: React.FC = () => {
             {/* Job Details Panel */}
             <div style={{ position: 'sticky', top: '100px' }}>
               {selectedJob ? (
-                <div className="glass-panel" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                <div className="glass-panel" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px', background: '#0B0E14', color: '#fff', border: '1px solid rgba(255,255,255,0.08)' }}>
                   {/* Header */}
                   <div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '16px' }}>
                       <div>
-                        <span className="badge badge-primary" style={{ marginBottom: '8px' }}>{selectedJob.experience}</span>
-                        <h3 style={{ color: '#fff', fontSize: '20px', fontWeight: 700, marginBottom: '4px' }}>{selectedJob.title}</h3>
-                        <p style={{ color: 'var(--primary)', fontWeight: 600, fontSize: '15px' }}>{selectedJob.companyName}</p>
+                        <span className="badge badge-primary" style={{ marginBottom: '8px', background: 'rgba(242,153,74,0.15)', color: 'var(--tech-orange)', border: '1px solid rgba(242,153,74,0.3)' }}>{selectedJob.experience}</span>
+                        <h3 style={{ color: '#fff', fontSize: '20px', fontWeight: 800, marginBottom: '4px' }}>{selectedJob.title}</h3>
+                        <p style={{ color: 'var(--tech-orange)', fontWeight: 700, fontSize: '15px' }}>{selectedJob.companyName}</p>
                       </div>
                       <div className="avatar" style={{
                         width: '50px',
                         height: '50px',
                         fontSize: '18px',
-                        background: `linear-gradient(135deg, #${selectedJob.logoSeed.charCodeAt(0).toString(16)}6df2 0%, #a855f7 100%)`
+                        background: `linear-gradient(135deg, #1A3E62 0%, #F2994A 100%)`
                       }}>
                         {selectedJob.logoSeed}
                       </div>
                     </div>
 
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', background: 'rgba(255,255,255,0.02)', padding: '12px', borderRadius: '8px', border: '1px solid var(--border-color)' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', background: 'rgba(255,255,255,0.02)', padding: '12px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: 'var(--text-secondary)' }}>
                         <MapPin size={14} color="var(--text-muted)" /> Location: {selectedJob.location} ({selectedJob.mode})
                       </div>
@@ -515,6 +534,49 @@ export const CandidateDashboard: React.FC = () => {
                     </div>
                   </div>
 
+                  {/* Compatibility Score Widget */}
+                  {candidateProfile.onboardingCompleted && (
+                    <div style={{
+                      background: 'linear-gradient(135deg, #132B45 0%, #1A3E62 100%)',
+                      border: '1.5px solid rgba(242, 153, 74, 0.4)',
+                      borderRadius: '16px',
+                      padding: '20px',
+                      color: '#fff',
+                      position: 'relative',
+                      overflow: 'hidden',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '16px',
+                      boxShadow: '0 8px 24px rgba(26, 62, 98, 0.3)'
+                    }}>
+                      <div style={{ flex: 1, zIndex: 2 }}>
+                        <h5 style={{ fontSize: '11px', fontWeight: 800, letterSpacing: '1px', color: 'var(--tech-orange)', textTransform: 'uppercase', marginBottom: '4px' }}>
+                          Compatibility Score
+                        </h5>
+                        <p style={{ fontSize: '12px', color: 'rgba(255, 255, 255, 0.8)', lineHeight: '1.4' }}>
+                          Based on work mode alignment, experience tier, job type, and key skills.
+                        </p>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '10px' }}>
+                          <span style={{ fontSize: '28px', fontWeight: 800, color: '#fff' }}>
+                            {calculateMatchScore(selectedJob)}%
+                          </span>
+                          <span style={{
+                            fontSize: '11px',
+                            fontWeight: 600,
+                            background: 'rgba(242, 153, 74, 0.2)',
+                            color: 'var(--tech-orange)',
+                            padding: '2px 8px',
+                            borderRadius: '20px'
+                          }}>
+                            {calculateMatchScore(selectedJob) >= 80 ? 'High Vibe 🔥' : calculateMatchScore(selectedJob) >= 50 ? 'Good Vibe' : 'Low Alignment'}
+                          </span>
+                        </div>
+                      </div>
+                      
+                      <BrainNLogo size={72} variant="orange" className="animate-glow" style={{ zIndex: 1 }} />
+                    </div>
+                  )}
+
                   {/* Job Details Tabs */}
                   <div style={{ display: 'flex', borderBottom: '1px solid var(--border-color)', gap: '16px', marginBottom: '8px' }}>
                     <button
@@ -523,8 +585,8 @@ export const CandidateDashboard: React.FC = () => {
                         padding: '8px 0 12px 0',
                         background: 'transparent',
                         border: 'none',
-                        color: detailsTab === 'info' ? 'var(--primary)' : 'var(--text-secondary)',
-                        borderBottom: detailsTab === 'info' ? '2px solid var(--primary)' : 'none',
+                        color: detailsTab === 'info' ? 'var(--tech-orange)' : 'var(--text-secondary)',
+                        borderBottom: detailsTab === 'info' ? '2px solid var(--tech-orange)' : 'none',
                         cursor: 'pointer',
                         fontSize: '14px',
                         fontWeight: 600
@@ -538,8 +600,8 @@ export const CandidateDashboard: React.FC = () => {
                         padding: '8px 0 12px 0',
                         background: 'transparent',
                         border: 'none',
-                        color: detailsTab === 'pact' ? 'var(--primary)' : 'var(--text-secondary)',
-                        borderBottom: detailsTab === 'pact' ? '2px solid var(--primary)' : 'none',
+                        color: detailsTab === 'pact' ? 'var(--tech-orange)' : 'var(--text-secondary)',
+                        borderBottom: detailsTab === 'pact' ? '2px solid var(--tech-orange)' : 'none',
                         cursor: 'pointer',
                         fontSize: '14px',
                         fontWeight: 600,
@@ -671,8 +733,14 @@ export const CandidateDashboard: React.FC = () => {
                             handleApply(selectedJob.id);
                           }
                         }} 
-                        className="btn btn-primary animate-glow" 
-                        style={{ flex: 1 }}
+                        className="btn animate-glow" 
+                        style={{ 
+                          flex: 1, 
+                          background: 'var(--tech-orange)', 
+                          color: '#fff',
+                          fontWeight: 700,
+                          boxShadow: '0 4px 15px -3px rgba(242, 153, 74, 0.4)'
+                        }}
                       >
                         Apply Now
                       </button>
@@ -776,6 +844,10 @@ export const CandidateDashboard: React.FC = () => {
                   currentRole="candidate"
                   onSendMessage={(text) => sendChatMessage(currentApp.id, text, 'candidate')}
                   title={`Sarah Jenkins (Recruiter)`}
+                  showReciprocalBanner={currentApp.status === 'Shortlisted' || currentApp.status === 'Interview'}
+                  onConfirmProfile={() => {
+                    sendChatMessage(currentApp.id, "[SYSTEM: Candidate confirmed profile and verified mutual interest.]", 'candidate');
+                  }}
                 />
               </div>
             ) : (

@@ -68,7 +68,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({ profile: _prof
       left: 0,
       right: 0,
       bottom: 0,
-      backgroundColor: 'rgba(5, 3, 10, 0.85)',
+      backgroundColor: 'rgba(26, 62, 98, 0.55)',
       backdropFilter: 'blur(16px)',
       zIndex: 1000,
       display: 'flex',
@@ -76,12 +76,13 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({ profile: _prof
       justifyContent: 'center',
       padding: '24px'
     }}>
-      <div className="glass-panel animate-glow" style={{
+      <div className="seeker-light-card animate-glow" style={{
         width: '100%',
         maxWidth: '560px',
         padding: '40px',
         position: 'relative',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        borderRadius: '24px'
       }}>
         {/* Background glow orb */}
         <div style={{
@@ -91,51 +92,49 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({ profile: _prof
           width: '180px',
           height: '180px',
           borderRadius: '50%',
-          background: 'rgba(99, 102, 241, 0.15)',
+          background: 'rgba(242, 153, 74, 0.12)',
           filter: 'blur(35px)',
           pointerEvents: 'none'
         }}></div>
 
-        {/* Step Indicator */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
-          <div style={{ display: 'flex', gap: '8px' }}>
-            {[1, 2, 3].map(s => (
-              <div 
-                key={s} 
-                style={{
-                  width: '32px',
-                  height: '6px',
-                  borderRadius: '3px',
-                  backgroundColor: s <= step ? 'var(--primary)' : 'rgba(255,255,255,0.06)',
-                  boxShadow: s <= step ? '0 0 8px var(--primary)' : 'none',
-                  transition: 'all 0.3s ease'
-                }}
-              ></div>
-            ))}
+        {/* Step Indicator / Profile Completion Progress Bar */}
+        <div style={{ marginBottom: '32px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+            <span style={{ fontSize: '13px', fontWeight: 700, color: 'var(--corporate-blue)' }}>Profile Completion</span>
+            <span style={{ fontSize: '13px', fontWeight: 800, color: 'var(--tech-orange)' }}>
+              {step === 1 ? '30%' : step === 2 ? '65%' : '100%'}
+            </span>
           </div>
-          <span style={{ fontSize: '12px', color: 'var(--text-muted)', fontWeight: 600 }}>Step {step} of 3</span>
+          <div style={{ width: '100%', height: '8px', backgroundColor: '#E2E8F0', borderRadius: '4px', overflow: 'hidden' }}>
+            <div style={{
+              width: step === 1 ? '30%' : step === 2 ? '65%' : '100%',
+              height: '100%',
+              backgroundColor: 'var(--tech-orange)',
+              transition: 'width 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
+            }}></div>
+          </div>
         </div>
 
         {/* STEP 1: WORK MODES & TYPES */}
         {step === 1 && (
           <div>
             <div style={{ marginBottom: '24px' }}>
-              <span className="badge badge-primary" style={{ marginBottom: '10px' }}>
+              <span className="badge seeker-tag-orange" style={{ marginBottom: '10px' }}>
                 <Sparkles size={12} style={{ marginRight: '6px' }} />
                 Career Matcher
               </span>
-              <h3 style={{ fontSize: '24px', fontWeight: 800, color: '#fff', fontFamily: 'Outfit' }}>
+              <h3 style={{ fontSize: '24px', fontWeight: 800, color: 'var(--corporate-blue)', fontFamily: 'Outfit' }}>
                 Setup Your Workspace Vibe
               </h3>
-              <p style={{ color: 'var(--text-secondary)', fontSize: '13px', marginTop: '6px' }}>
+              <p style={{ color: '#475569', fontSize: '13px', marginTop: '6px' }}>
                 Tell us where and how you work best. We'll prioritize these in your search results.
               </p>
             </div>
 
             {/* Mode selector */}
             <div style={{ marginBottom: '24px' }}>
-              <label style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-secondary)', display: 'block', marginBottom: '12px' }}>
-                Preferred Work Modes (select all that apply)
+              <label style={{ fontSize: '13px', fontWeight: 700, color: 'var(--corporate-blue)', display: 'block', marginBottom: '12px' }}>
+                Preferred Work Modes
               </label>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px' }}>
                 {['Remote', 'Hybrid', 'On-site'].map(mode => {
@@ -145,17 +144,12 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({ profile: _prof
                       key={mode}
                       type="button"
                       onClick={() => toggleMode(mode)}
-                      className="glass-panel"
+                      className={`seeker-tag ${active ? 'active' : ''}`}
                       style={{
                         padding: '16px 8px',
                         cursor: 'pointer',
                         fontSize: '13px',
-                        fontWeight: 600,
-                        border: active ? '1px solid var(--border-color-active)' : '1px solid var(--border-color)',
-                        background: active ? 'rgba(99, 102, 241, 0.12)' : 'rgba(255, 255, 255, 0.02)',
-                        color: active ? '#fff' : 'var(--text-secondary)',
                         textAlign: 'center',
-                        transition: 'all 0.2s',
                         borderRadius: '12px'
                       }}
                     >
@@ -171,8 +165,8 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({ profile: _prof
 
             {/* Type selector */}
             <div>
-              <label style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-secondary)', display: 'block', marginBottom: '12px' }}>
-                Job Type Preference (select all that apply)
+              <label style={{ fontSize: '13px', fontWeight: 700, color: 'var(--corporate-blue)', display: 'block', marginBottom: '12px' }}>
+                Job Type Preference
               </label>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px' }}>
                 {['Full-time', 'Part-time', 'Internship', 'Contract'].map(type => {
@@ -182,17 +176,12 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({ profile: _prof
                       key={type}
                       type="button"
                       onClick={() => toggleType(type)}
-                      className="glass-panel"
+                      className={`seeker-tag ${active ? 'active' : ''}`}
                       style={{
                         padding: '14px 8px',
                         cursor: 'pointer',
                         fontSize: '13px',
-                        fontWeight: 600,
-                        border: active ? '1px solid var(--border-color-active)' : '1px solid var(--border-color)',
-                        background: active ? 'rgba(99, 102, 241, 0.12)' : 'rgba(255, 255, 255, 0.02)',
-                        color: active ? '#fff' : 'var(--text-secondary)',
                         textAlign: 'center',
-                        transition: 'all 0.2s',
                         borderRadius: '12px'
                       }}
                     >
@@ -209,14 +198,14 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({ profile: _prof
         {step === 2 && (
           <div>
             <div style={{ marginBottom: '24px' }}>
-              <span className="badge badge-secondary" style={{ marginBottom: '10px' }}>
+              <span className="badge seeker-tag-blue" style={{ marginBottom: '10px' }}>
                 <Compass size={12} style={{ marginRight: '6px' }} />
                 Skills Portfolio
               </span>
-              <h3 style={{ fontSize: '24px', fontWeight: 800, color: '#fff', fontFamily: 'Outfit' }}>
+              <h3 style={{ fontSize: '24px', fontWeight: 800, color: 'var(--corporate-blue)', fontFamily: 'Outfit' }}>
                 What are your superpowers?
               </h3>
-              <p style={{ color: 'var(--text-secondary)', fontSize: '13px', marginTop: '6px' }}>
+              <p style={{ color: '#475569', fontSize: '13px', marginTop: '6px' }}>
                 Select the core skills you excel at. We'll match jobs that mention these technologies or concepts.
               </p>
             </div>
@@ -227,10 +216,10 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({ profile: _prof
               gap: '10px',
               maxHeight: '220px',
               overflowY: 'auto',
-              padding: '8px 4px',
-              border: '1px solid var(--border-color)',
+              padding: '12px',
+              border: '1.5px solid #D2D9E2',
               borderRadius: '12px',
-              background: 'rgba(0, 0, 0, 0.15)'
+              background: '#F8FAFC'
             }}>
               {popularSkills.map(skill => {
                 const active = selectedSkills.includes(skill);
@@ -239,16 +228,12 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({ profile: _prof
                     key={skill}
                     type="button"
                     onClick={() => toggleSkill(skill)}
-                    className="badge"
+                    className={`badge seeker-tag ${active ? 'active' : ''}`}
                     style={{
                       cursor: 'pointer',
-                      border: active ? '1px solid var(--secondary)' : '1px solid var(--border-color)',
-                      background: active ? 'rgba(6, 182, 212, 0.15)' : 'rgba(255, 255, 255, 0.02)',
-                      color: active ? '#fff' : 'var(--text-secondary)',
                       padding: '8px 14px',
                       fontSize: '12px',
-                      borderRadius: '20px',
-                      transition: 'all 0.2s'
+                      borderRadius: '20px'
                     }}
                   >
                     {active && <Check size={10} style={{ marginRight: '4px' }} />}
@@ -257,7 +242,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({ profile: _prof
                 );
               })}
             </div>
-            <p style={{ color: 'var(--text-muted)', fontSize: '11px', marginTop: '12px', textAlign: 'right' }}>
+            <p style={{ color: '#64748b', fontSize: '11px', marginTop: '12px', textAlign: 'right', fontWeight: 600 }}>
               Selected: {selectedSkills.length} skills
             </p>
           </div>
@@ -267,26 +252,26 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({ profile: _prof
         {step === 3 && (
           <div>
             <div style={{ marginBottom: '24px' }}>
-              <span className="badge badge-success" style={{ marginBottom: '10px' }}>
+              <span className="badge seeker-tag-orange" style={{ marginBottom: '10px' }}>
                 <ShieldCheck size={12} style={{ marginRight: '6px' }} />
                 Final Step
               </span>
-              <h3 style={{ fontSize: '24px', fontWeight: 800, color: '#fff', fontFamily: 'Outfit' }}>
+              <h3 style={{ fontSize: '24px', fontWeight: 800, color: 'var(--corporate-blue)', fontFamily: 'Outfit' }}>
                 Expectations & Level
               </h3>
-              <p style={{ color: 'var(--text-secondary)', fontSize: '13px', marginTop: '6px' }}>
+              <p style={{ color: '#475569', fontSize: '13px', marginTop: '6px' }}>
                 Finalize your experience tier and target minimum compensation to filter out low-matching listings.
               </p>
             </div>
 
             {/* Experience Dropdown */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '20px' }}>
-              <label style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-secondary)' }}>Experience Tier</label>
+              <label style={{ fontSize: '13px', fontWeight: 700, color: 'var(--corporate-blue)' }}>Experience Tier</label>
               <select
                 value={experience}
                 onChange={(e) => setExperience(e.target.value as any)}
-                className="glass-input"
-                style={{ width: '100%', padding: '12px', fontSize: '14px', borderRadius: '10px' }}
+                className="seeker-light-input"
+                style={{ width: '100%', padding: '12px', fontSize: '14px' }}
               >
                 <option value="Entry-level">Entry-level</option>
                 <option value="Mid-level">Mid-level</option>
@@ -297,8 +282,8 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({ profile: _prof
             {/* Salary slider / input */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <label style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-secondary)' }}>Minimum Target Salary</label>
-                <span style={{ fontSize: '14px', fontWeight: 700, color: 'var(--success)' }}>
+                <label style={{ fontSize: '13px', fontWeight: 700, color: 'var(--corporate-blue)' }}>Minimum Target Salary</label>
+                <span style={{ fontSize: '14px', fontWeight: 800, color: 'var(--tech-orange)' }}>
                   ₹{minSalary.toLocaleString()} / mo
                 </span>
               </div>
@@ -310,16 +295,16 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({ profile: _prof
                 value={minSalary}
                 onChange={(e) => setMinSalary(Number(e.target.value))}
                 style={{
-                  accentColor: 'var(--success)',
+                  accentColor: 'var(--tech-orange)',
                   width: '100%',
                   height: '6px',
-                  backgroundColor: 'rgba(255,255,255,0.06)',
+                  backgroundColor: '#E2E8F0',
                   borderRadius: '3px',
                   outline: 'none',
                   cursor: 'pointer'
                 }}
               />
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', color: 'var(--text-muted)' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', color: '#64748b', fontWeight: 600 }}>
                 <span>₹10k</span>
                 <span>₹50k</span>
                 <span>₹100k</span>
@@ -334,14 +319,14 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({ profile: _prof
           justifyContent: 'space-between',
           alignItems: 'center',
           marginTop: '40px',
-          borderTop: '1px solid var(--border-color)',
+          borderTop: '1px solid #E2E8F0',
           paddingTop: '24px'
         }}>
           {step > 1 ? (
             <button 
               onClick={() => setStep(prev => prev - 1)} 
               className="btn btn-outline"
-              style={{ padding: '12px 20px' }}
+              style={{ padding: '12px 20px', borderColor: '#Cbd5e1', color: 'var(--corporate-blue)' }}
             >
               Back
             </button>
@@ -351,11 +336,10 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({ profile: _prof
 
           <button 
             onClick={handleNext} 
-            className="btn btn-primary"
+            className="btn btn-seeker-active"
             style={{
               padding: '12px 28px',
-              background: step === 3 ? 'var(--secondary-gradient)' : 'var(--primary-gradient)',
-              boxShadow: step === 3 ? '0 4px 15px -3px rgba(6, 182, 212, 0.4)' : '0 4px 15px -3px rgba(99, 102, 241, 0.4)'
+              borderRadius: '12px'
             }}
           >
             {step === 3 ? (

@@ -654,6 +654,10 @@ export const RecruiterDashboard: React.FC = () => {
                     currentRole="recruiter"
                     onSendMessage={(text) => sendChatMessage(currentApplication.id, text, 'recruiter')}
                     title={`Direct Chat with ${candidateProfile.name}`}
+                    showReciprocalBanner={currentApplication.status === 'Shortlisted' || currentApplication.status === 'Interview'}
+                    onConfirmProfile={() => {
+                      sendChatMessage(currentApplication.id, "[SYSTEM: Recruiter confirmed profile details and verified interest.]", 'recruiter');
+                    }}
                   />
                 </div>
               ) : (
