@@ -41,8 +41,8 @@ app.get('/api/promo/slots', (req, res) => {
   const total = db.users.length;
   res.json({
     totalUsers: total,
-    slotsLeft: Math.max(0, 100 - total),
-    isFree: total < 100
+    slotsLeft: Math.max(0, 2 - total),
+    isFree: total < 2
   });
 });
 
@@ -59,7 +59,7 @@ app.post('/api/auth/signup', (req, res) => {
 
   // Check pricing policy
   const totalUsersCount = db.users.length;
-  if (totalUsersCount >= 100 && !paymentConfirmed) {
+  if (totalUsersCount >= 2 && !paymentConfirmed) {
     return res.status(402).json({
       error: 'Early Bird free slots are full! Registration now costs ₹99.',
       requiresPayment: true,
