@@ -10,6 +10,7 @@ interface AuthPageProps {
     name: string;
     phone?: string;
     bio?: string;
+    paymentConfirmed?: boolean;
   }) => Promise<void>;
 }
 
@@ -26,6 +27,14 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onSignup }) => {
   
   const [errorMsg, setErrorMsg] = useState('');
   const [loading, setLoading] = useState(false);
+
+  // Paywall states
+  const [showPayment, setShowPayment] = useState(false);
+  const [paymentType, setPaymentType] = useState<'upi' | 'card'>('upi');
+  const [upiId, setUpiId] = useState('');
+  const [cardNumber, setCardNumber] = useState('');
+  const [cardExpiry, setCardExpiry] = useState('');
+  const [cardCvv, setCardCvv] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -46,11 +55,215 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onSignup }) => {
         });
       }
     } catch (err: any) {
-      setErrorMsg(err.message || 'Authentication failed. Please check your credentials.');
+      if (err.requiresPayment) {
+        setShowPayment(true);
+      } else {
+        setErrorMsg(err.message || 'Authentication failed. Please check your credentials.');
+      }
     } finally {
       setLoading(false);
     }
   };
+
+  const handlePaymentSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrorMsg('');
+    setLoading(true);
+
+    try {
+      // Simulate bank gateway delay
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      await onSignup({
+        email,
+        pass: password,
+        role,
+        name,
+        phone,
+        bio,
+        paymentConfirmed: true
+      });
+      setShowPayment(false);
+    } catch (err: any) {
+      setErrorMsg(err.message || 'Payment processing failed. Please try again.');
+      setShowPayment(false);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (showPayment) {
+    return (
+      <div className="container animate-fade-in" style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        minHeight: '80vh',
+        padding: '40px 0'
+      }}>
+        <div className="glass-panel animate-glow" style={{
+          width: '100%',
+          maxWidth: '480px',
+          padding: '40px',
+          position: 'relative',
+          overflow: 'hidden'
+        }}>
+          {/* Background glow orbs */}
+          <div style={{
+            position: 'absolute',
+            top: '-50px',
+            right: '-50px',
+            width: '150px',
+            height: '150px',
+            borderRadius: '50%',
+            background: 'rgba(6, 182, 212, 0.15)',
+            filter: 'blur(30px)',
+            pointerEvents: 'none'
+          }}></div>
+
+          <div style={{ textAlign: 'center', marginBottom: '24px' }}>
+            <span className="badge badge-danger" style={{ marginBottom: '12px', fontSize: '11px' }}>
+              Slots Filled
+            </span>
+            <h3 style={{ fontSize: '24px', fontWeight: 800, color: '#fff', fontFamily: 'Outfit' }}>
+              Activate Your Account
+            </h3>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '13px', marginTop: '6px' }}>
+              Early Bird Free Registrations have closed. Complete the ₹99 membership activation to unlock your dashboard.
+            </p>
+          </div>
+
+          <div className="glass-panel" style={{
+            background: 'rgba(255, 255, 255, 0.02)',
+            padding: '16px',
+            borderRadius: '12px',
+            marginBottom: '24px',
+            textAlign: 'center',
+            border: '1px solid var(--border-color)'
+          }}>
+            <span style={{ fontSize: '12px', color: 'var(--text-secondary)', display: 'block', fontWeight: 600 }}>MEMBERSHIP FEE</span>
+            <span style={{ fontSize: '28px', fontWeight: 800, color: 'var(--success)' }}>₹99.00</span>
+          </div>
+
+          {/* Payment Type Switcher */}
+          <div style={{ display: 'flex', gap: '8px', background: 'rgba(255,255,255,0.03)', padding: '4px', borderRadius: '10px', marginBottom: '20px', border: '1px solid var(--border-color)' }}>
+            <button
+              type="button"
+              onClick={() => setPaymentType('upi')}
+              style={{
+                flex: 1,
+                padding: '8px',
+                borderRadius: '6px',
+                border: 'none',
+                cursor: 'pointer',
+                fontSize: '12px',
+                fontWeight: 600,
+                backgroundColor: paymentType === 'upi' ? 'rgba(255,255,255,0.08)' : 'transparent',
+                color: paymentType === 'upi' ? '#fff' : 'var(--text-secondary)',
+                transition: 'all 0.2s'
+              }}
+            >
+              UPI / QR
+            </button>
+            <button
+              type="button"
+              onClick={() => setPaymentType('card')}
+              style={{
+                flex: 1,
+                padding: '8px',
+                borderRadius: '6px',
+                border: 'none',
+                cursor: 'pointer',
+                fontSize: '12px',
+                fontWeight: 600,
+                backgroundColor: paymentType === 'card' ? 'rgba(255,255,255,0.08)' : 'transparent',
+                color: paymentType === 'card' ? '#fff' : 'var(--text-secondary)',
+                transition: 'all 0.2s'
+              }}
+            >
+              Credit/Debit Card
+            </button>
+          </div>
+
+          <form onSubmit={handlePaymentSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            {paymentType === 'upi' ? (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                <label style={{ fontSize: '12px', color: 'var(--text-secondary)', fontWeight: 600 }}>UPI ID</label>
+                <input
+                  type="text"
+                  placeholder="e.g. mobile@upi"
+                  value={upiId}
+                  onChange={(e) => setUpiId(e.target.value)}
+                  className="glass-input"
+                  required
+                />
+              </div>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                  <label style={{ fontSize: '12px', color: 'var(--text-secondary)', fontWeight: 600 }}>Card Number</label>
+                  <input
+                    type="text"
+                    placeholder="4111 2222 3333 4444"
+                    value={cardNumber}
+                    onChange={(e) => setCardNumber(e.target.value)}
+                    className="glass-input"
+                    required
+                  />
+                </div>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                    <label style={{ fontSize: '12px', color: 'var(--text-secondary)', fontWeight: 600 }}>Expiry</label>
+                    <input
+                      type="text"
+                      placeholder="MM/YY"
+                      value={cardExpiry}
+                      onChange={(e) => setCardExpiry(e.target.value)}
+                      className="glass-input"
+                      required
+                    />
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                    <label style={{ fontSize: '12px', color: 'var(--text-secondary)', fontWeight: 600 }}>CVV</label>
+                    <input
+                      type="password"
+                      placeholder="***"
+                      value={cardCvv}
+                      onChange={(e) => setCardCvv(e.target.value)}
+                      className="glass-input"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+
+            <button
+              type="submit"
+              className="btn btn-secondary animate-glow"
+              style={{ width: '100%', padding: '14px', marginTop: '12px' }}
+              disabled={loading}
+            >
+              {loading ? 'Processing ₹99 Secure Checkout...' : 'Pay ₹99 & Complete Registration'}
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                setShowPayment(false);
+                setErrorMsg('');
+              }}
+              className="btn btn-ghost"
+              style={{ width: '100%' }}
+              disabled={loading}
+            >
+              Cancel
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="container animate-fade-in" style={{

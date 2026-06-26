@@ -35,9 +35,20 @@ const authenticateToken = (req, res, next) => {
 
 // --- AUTHENTICATION ROUTES ---
 
+// Get promo slots status
+app.get('/api/promo/slots', (req, res) => {
+  const db = readData();
+  const total = db.users.length;
+  res.json({
+    totalUsers: total,
+    slotsLeft: Math.max(0, 100 - total),
+    isFree: total < 100
+  });
+});
+
 // Sign Up
 app.post('/api/auth/signup', (req, res) => {
-  const { email, password, role, name, phone, bio } = req.body;
+  const { email, password, role, name, phone, bio, paymentConfirmed } = req.body;
   if (!email || !password || !role || !name) {
     return res.status(400).json({ error: 'Email, password, role, and name are required' });
   }
@@ -45,6 +56,16 @@ app.post('/api/auth/signup', (req, res) => {
   const db = readData();
   const exists = db.users.find(u => u.email.toLowerCase() === email.toLowerCase());
   if (exists) return res.status(400).json({ error: 'Email already registered' });
+
+  // Check pricing policy
+  const totalUsersCount = db.users.length;
+  if (totalUsersCount >= 100 && !paymentConfirmed) {
+    return res.status(402).json({
+      error: 'Early Bird free slots are full! Registration now costs ₹99.',
+      requiresPayment: true,
+      amount: 99
+    });
+  }
 
   const salt = bcrypt.genSaltSync(10);
   const passwordHash = bcrypt.hashSync(password, salt);

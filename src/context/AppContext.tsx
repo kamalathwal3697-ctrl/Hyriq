@@ -86,8 +86,11 @@ interface AppContextType {
     name: string;
     phone?: string;
     bio?: string;
+    paymentConfirmed?: boolean;
   }) => Promise<void>;
   logout: () => void;
+  promoSlots: number;
+  fetchPromoSlots: () => Promise<void>;
   applyForJob: (jobId: string) => Promise<void>;
   createJob: (job: Omit<Job, 'id' | 'postedDate' | 'recruiterId' | 'logoSeed'>) => Promise<void>;
   updateApplicationStatus: (appId: string, status: Application['status']) => Promise<void>;
@@ -113,6 +116,7 @@ export const AppStateProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   const [jobs, setJobs] = useState<Job[]>([]);
   const [applications, setApplications] = useState<Application[]>([]);
+  const [promoSlots, setPromoSlots] = useState<number>(100);
   
   const [candidateProfile, setCandidateProfile] = useState<CandidateProfile>({
     name: '',
@@ -152,6 +156,18 @@ export const AppStateProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       }
     } catch (err) {
       console.error('Error fetching jobs:', err);
+    }
+  };
+
+  const fetchPromoSlots = async () => {
+    try {
+      const res = await fetch('/api/promo/slots');
+      if (res.ok) {
+        const data = await res.json();
+        setPromoSlots(data.slotsLeft);
+      }
+    } catch (err) {
+      console.error('Error fetching promo slots:', err);
     }
   };
 
@@ -212,6 +228,7 @@ export const AppStateProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   // Trigger initial database fetch and periodic polling (for real-time chat sync!)
   useEffect(() => {
     fetchJobs();
+    fetchPromoSlots();
     if (token) {
       fetchApplications();
       fetchMe(token);
@@ -220,10 +237,12 @@ export const AppStateProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   // Setup a background polling schedule to sync applications/chat every 3 seconds
   useEffect(() => {
-    if (!token) return;
     const interval = setInterval(() => {
-      fetchApplications();
+      if (token) {
+        fetchApplications();
+      }
       fetchJobs();
+      fetchPromoSlots();
     }, 3000);
 
     return () => clearInterval(interval);
@@ -314,6 +333,7 @@ export const AppStateProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     name: string;
     phone?: string;
     bio?: string;
+    paymentConfirmed?: boolean;
   }) => {
     const res = await fetch('/api/auth/signup', {
       method: 'POST',
@@ -324,12 +344,18 @@ export const AppStateProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         role: details.role,
         name: details.name,
         phone: details.phone,
-        bio: details.bio
+        bio: details.bio,
+        paymentConfirmed: details.paymentConfirmed
       })
     });
 
     const data = await res.json();
-    if (!res.ok) throw new Error(data.error || 'Registration failed');
+    if (!res.ok) {
+      const err: any = new Error(data.error || 'Registration failed');
+      err.requiresPayment = data.requiresPayment;
+      err.amount = data.amount;
+      throw err;
+    }
 
     setToken(data.token);
     setUser(data.user);
@@ -337,6 +363,7 @@ export const AppStateProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     localStorage.setItem('hyriq_user', JSON.stringify(data.user));
 
     setPerspective(data.user.role);
+    fetchPromoSlots();
   };
 
   const logout = () => {
@@ -460,7 +487,9 @@ export const AppStateProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         createJob,
         updateApplicationStatus,
         sendChatMessage,
-        deleteJob
+        deleteJob,
+        promoSlots,
+        fetchPromoSlots
       }}
     >
       {children}

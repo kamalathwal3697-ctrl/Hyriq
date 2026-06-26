@@ -1,11 +1,20 @@
 import React, { useState } from 'react';
-import { Search, MapPin, Sparkles, TrendingUp, Zap, MessageSquare, ShieldCheck, ArrowRight } from 'lucide-react';
+import { Search, MapPin, Sparkles, TrendingUp, Zap, MessageSquare, ShieldCheck, ArrowRight, X } from 'lucide-react';
 import { useAppState } from '../context/AppContext';
 
 export const LandingPage: React.FC = () => {
-  const { setPerspective } = useAppState();
+  const { setPerspective, promoSlots } = useAppState();
   const [searchTitle, setSearchTitle] = useState('');
   const [searchLoc, setSearchLoc] = useState('');
+  
+  const [showPromo, setShowPromo] = useState(() => {
+    return sessionStorage.getItem('hyriq_promo_dismissed') !== 'true';
+  });
+
+  const dismissPromo = () => {
+    sessionStorage.setItem('hyriq_promo_dismissed', 'true');
+    setShowPromo(false);
+  };
   
   // Interactive mini vibe quiz
   const [quizStep, setQuizStep] = useState(0);
@@ -53,7 +62,114 @@ export const LandingPage: React.FC = () => {
   ];
 
   return (
-    <div className="animate-fade-in" style={{ paddingBottom: '80px' }}>
+    <div className="animate-fade-in" style={{ paddingBottom: '80px', position: 'relative' }}>
+      {/* Launch Offer Promo Popup Overlay */}
+      {showPromo && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(5, 3, 10, 0.75)',
+          backdropFilter: 'blur(8px)',
+          zIndex: 999,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '20px'
+        }}>
+          <div className="glass-panel animate-glow" style={{
+            width: '100%',
+            maxWidth: '450px',
+            padding: '32px',
+            position: 'relative',
+            textAlign: 'center',
+            border: '1px solid rgba(255,255,255,0.1)'
+          }}>
+            {/* Close Button */}
+            <button 
+              onClick={dismissPromo}
+              style={{
+                position: 'absolute',
+                top: '16px',
+                right: '16px',
+                border: 'none',
+                background: 'transparent',
+                color: 'var(--text-secondary)',
+                cursor: 'pointer',
+                padding: '4px'
+              }}
+            >
+              <X size={20} />
+            </button>
+
+            {/* Glowing Icon */}
+            <div style={{
+              width: '60px',
+              height: '60px',
+              borderRadius: '16px',
+              background: 'var(--primary-gradient)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              margin: '0 auto 20px auto',
+              boxShadow: '0 0 20px rgba(99, 102, 241, 0.4)'
+            }}>
+              <Zap size={28} color="#fff" />
+            </div>
+
+            <span className="badge badge-warning" style={{ marginBottom: '12px', fontSize: '11px', padding: '4px 12px' }}>
+              🔥 LIMITED TIME OFFER
+            </span>
+
+            <h3 style={{ fontSize: '24px', fontWeight: 800, color: '#fff', marginBottom: '12px', fontFamily: 'Outfit' }}>
+              First 100 Registrations are 100% FREE!
+            </h3>
+            
+            <p style={{ color: 'var(--text-secondary)', fontSize: '14px', lineHeight: 1.5, marginBottom: '24px' }}>
+              Join Hyriq today as a Candidate or Recruiter. We are wave-funding early bird members. Slots are filling fast!
+            </p>
+
+            {/* Slots Counter Card */}
+            <div className="glass-panel" style={{
+              background: 'rgba(255,255,255,0.02)',
+              border: '1px solid var(--border-color)',
+              padding: '16px',
+              borderRadius: '12px',
+              marginBottom: '24px',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center'
+            }}>
+              <div style={{ textAlign: 'left' }}>
+                <span style={{ fontSize: '11px', color: 'var(--text-muted)', display: 'block', fontWeight: 600 }}>FREE SLOTS REMAINING</span>
+                <span style={{ fontSize: '24px', fontWeight: 800, color: 'var(--success)' }}>
+                  {promoSlots} / 100
+                </span>
+              </div>
+              <div style={{ textAlign: 'right' }}>
+                <span style={{ fontSize: '11px', color: 'var(--text-muted)', display: 'block', fontWeight: 600 }}>REGULAR PRICE</span>
+                <span style={{ fontSize: '18px', fontWeight: 700, color: 'var(--text-secondary)', textDecoration: 'line-through' }}>
+                  ₹99.00
+                </span>
+              </div>
+            </div>
+
+            <button 
+              onClick={() => {
+                dismissPromo();
+                setPerspective('candidate'); // open auth setup
+              }}
+              className="btn btn-primary"
+              style={{ width: '100%', padding: '14px' }}
+            >
+              Claim Your Free Account Now
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Hero Section */}
       <section style={{
         padding: '80px 0 60px 0',
