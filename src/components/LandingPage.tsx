@@ -234,8 +234,8 @@ export const LandingPage: React.FC = () => {
             maxWidth: '850px',
             margin: '0 auto 24px auto'
           }}>
-            Find Your Next <span className="text-gradient-primary">Vibe</span>.<br />
-            Hire Your Next <span className="text-gradient-secondary">Rockstar</span>.
+            Find Your Next <span className="text-gradient-primary">Vibe in Bathinda</span>.<br />
+            Hire Your Next <span className="text-gradient-secondary">Rockstar Locally</span>.
           </h1>
 
           <p style={{
@@ -245,7 +245,7 @@ export const LandingPage: React.FC = () => {
             margin: '0 auto 40px auto',
             lineHeight: 1.6
           }}>
-            Hyriq matches outstanding candidates with progressive companies. Direct chat, direct applications, zero hiring noise.
+            Connecting local talent with verified workplaces in Bathinda... zero broker fees. Direct chat, direct applications, zero hiring noise.
           </p>
 
           {/* Search Form */}
@@ -283,7 +283,7 @@ export const LandingPage: React.FC = () => {
               <MapPin size={18} color="var(--text-muted)" />
               <input
                 type="text"
-                placeholder="Location (e.g. Remote, SF)..."
+                placeholder="Location (e.g. Bathinda, Remote)..."
                 value={searchLoc}
                 onChange={(e) => setSearchLoc(e.target.value)}
                 style={{
@@ -370,6 +370,193 @@ export const LandingPage: React.FC = () => {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* The Fair Work Pact Section */}
+      <section style={{ padding: '60px 0', position: 'relative' }}>
+        {/* Background ambient glow */}
+        <div style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: '500px',
+          height: '500px',
+          borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(168, 85, 247, 0.08) 0%, rgba(0,0,0,0) 70%)',
+          zIndex: -1,
+          pointerEvents: 'none'
+        }}></div>
+
+        <div className="container">
+          <div style={{ textAlign: 'center', marginBottom: '48px' }}>
+            <span className="badge badge-success" style={{ marginBottom: '16px', padding: '6px 14px', fontSize: '13px' }}>
+              <ShieldCheck size={14} style={{ marginRight: '6px', verticalAlign: 'middle' }} />
+              Hyriq Mutual Standards
+            </span>
+            <h2 style={{ fontFamily: 'Outfit', fontSize: '36px', fontWeight: 800, color: '#fff', marginBottom: '16px' }}>
+              The <span className="text-gradient-primary">Fair Work Pact</span>
+            </h2>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '16px', maxWidth: '650px', margin: '0 auto', lineHeight: 1.6 }}>
+              A mutual agreement ensuring respect, security, and accountability for both the worker and the employer.
+            </p>
+          </div>
+
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
+            gap: '32px',
+            alignItems: 'stretch'
+          }}>
+            {/* Worker Rights Card */}
+            <div className="glass-panel animate-glow" style={{
+              padding: '36px',
+              border: '1px solid rgba(168, 85, 247, 0.2)',
+              boxShadow: '0 8px 32px 0 rgba(168, 85, 247, 0.05)',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '24px'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <div style={{
+                  width: '40px',
+                  height: '40px',
+                  borderRadius: '10px',
+                  background: 'rgba(168, 85, 247, 0.15)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  border: '1px solid rgba(168, 85, 247, 0.3)'
+                }}>
+                  <ShieldCheck size={20} color="#c084fc" />
+                </div>
+                <h3 style={{ fontSize: '20px', fontWeight: 700, color: '#fff', margin: 0 }}>
+                  🛡️ Worker Rights <span style={{ fontSize: '13px', color: 'var(--text-muted)', display: 'block', fontWeight: 500, marginTop: '2px' }}>(Employer Commitments)</span>
+                </h3>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <div style={{ display: 'flex', gap: '12px' }}>
+                  <div style={{ color: 'var(--success)', marginTop: '2px' }}>✓</div>
+                  <div>
+                    <strong style={{ color: '#fff', display: 'block', fontSize: '14px', marginBottom: '2px' }}>Fair Working Hours</strong>
+                    <span style={{ color: 'var(--text-secondary)', fontSize: '13px', lineHeight: 1.4 }}>Strict adherence to a standard, limited work schedule.</span>
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', gap: '12px' }}>
+                  <div style={{ color: 'var(--success)', marginTop: '2px' }}>✓</div>
+                  <div>
+                    <strong style={{ color: '#fff', display: 'block', fontSize: '14px', marginBottom: '2px' }}>Overtime Pay</strong>
+                    <span style={{ color: 'var(--text-secondary)', fontSize: '13px', lineHeight: 1.4 }}>Guaranteed extra compensation for any hours worked beyond the daily limit.</span>
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', gap: '12px' }}>
+                  <div style={{ color: 'var(--success)', marginTop: '2px' }}>✓</div>
+                  <div>
+                    <strong style={{ color: '#fff', display: 'block', fontSize: '14px', marginBottom: '2px' }}>Health & Well-being</strong>
+                    <span style={{ color: 'var(--text-secondary)', fontSize: '13px', lineHeight: 1.4 }}>Access to basic medical benefits and a safe working environment.</span>
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', gap: '12px' }}>
+                  <div style={{ color: 'var(--success)', marginTop: '2px' }}>✓</div>
+                  <div>
+                    <strong style={{ color: '#fff', display: 'block', fontSize: '14px', marginBottom: '2px' }}>Accommodation Support</strong>
+                    <span style={{ color: 'var(--text-secondary)', fontSize: '13px', lineHeight: 1.4 }}>Housing allowance or safe, provided accommodation where applicable.</span>
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', gap: '12px' }}>
+                  <div style={{ color: 'var(--success)', marginTop: '2px' }}>✓</div>
+                  <div>
+                    <strong style={{ color: '#fff', display: 'block', fontSize: '14px', marginBottom: '2px' }}>Job Security</strong>
+                    <span style={{ color: 'var(--text-secondary)', fontSize: '13px', lineHeight: 1.4 }}>Protection against unfair firing without valid cause or proper notice.</span>
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', gap: '12px' }}>
+                  <div style={{ color: 'var(--success)', marginTop: '2px' }}>✓</div>
+                  <div>
+                    <strong style={{ color: '#fff', display: 'block', fontSize: '14px', marginBottom: '2px' }}>Merit-Based Growth</strong>
+                    <span style={{ color: 'var(--text-secondary)', fontSize: '13px', lineHeight: 1.4 }}>Guaranteed salary raises or promotions upon successfully achieving predefined work targets.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Worker Duties Card */}
+            <div className="glass-panel animate-glow" style={{
+              padding: '36px',
+              border: '1px solid rgba(34, 211, 238, 0.2)',
+              boxShadow: '0 8px 32px 0 rgba(34, 211, 238, 0.05)',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '24px'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <div style={{
+                  width: '40px',
+                  height: '40px',
+                  borderRadius: '10px',
+                  background: 'rgba(34, 211, 238, 0.15)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  border: '1px solid rgba(34, 211, 238, 0.3)'
+                }}>
+                  <Sparkles size={20} color="#22d3ee" />
+                </div>
+                <h3 style={{ fontSize: '20px', fontWeight: 700, color: '#fff', margin: 0 }}>
+                  🤝 Worker Duties <span style={{ fontSize: '13px', color: 'var(--text-muted)', display: 'block', fontWeight: 500, marginTop: '2px' }}>(Employee Commitments)</span>
+                </h3>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <div style={{ display: 'flex', gap: '12px' }}>
+                  <div style={{ color: 'var(--secondary)', marginTop: '2px' }}>✦</div>
+                  <div>
+                    <strong style={{ color: '#fff', display: 'block', fontSize: '14px', marginBottom: '2px' }}>Punctuality</strong>
+                    <span style={{ color: 'var(--text-secondary)', fontSize: '13px', lineHeight: 1.4 }}>Consistently arriving on time and respecting the work schedule.</span>
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', gap: '12px' }}>
+                  <div style={{ color: 'var(--secondary)', marginTop: '2px' }}>✦</div>
+                  <div>
+                    <strong style={{ color: '#fff', display: 'block', fontSize: '14px', marginBottom: '2px' }}>Prompt Communication</strong>
+                    <span style={{ color: 'var(--text-secondary)', fontSize: '13px', lineHeight: 1.4 }}>Timely and professional responses to all work-related messages or requests.</span>
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', gap: '12px' }}>
+                  <div style={{ color: 'var(--secondary)', marginTop: '2px' }}>✦</div>
+                  <div>
+                    <strong style={{ color: '#fff', display: 'block', fontSize: '14px', marginBottom: '2px' }}>Responsibility</strong>
+                    <span style={{ color: 'var(--text-secondary)', fontSize: '13px', lineHeight: 1.4 }}>Taking full ownership of assigned tasks and performing them diligently.</span>
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', gap: '12px' }}>
+                  <div style={{ color: 'var(--secondary)', marginTop: '2px' }}>✦</div>
+                  <div>
+                    <strong style={{ color: '#fff', display: 'block', fontSize: '14px', marginBottom: '2px' }}>Absolute Integrity</strong>
+                    <span style={{ color: 'var(--text-secondary)', fontSize: '13px', lineHeight: 1.4 }}>Honesty in reporting hours, tasks, and issues.</span>
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', gap: '12px' }}>
+                  <div style={{ color: 'var(--secondary)', marginTop: '2px' }}>✦</div>
+                  <div>
+                    <strong style={{ color: '#fff', display: 'block', fontSize: '14px', marginBottom: '2px' }}>Professional Conduct</strong>
+                    <span style={{ color: 'var(--text-secondary)', fontSize: '13px', lineHeight: 1.4 }}>Respectful behavior towards coworkers and clients.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>

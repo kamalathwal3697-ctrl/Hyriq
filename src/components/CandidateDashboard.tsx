@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, MapPin, DollarSign, Briefcase, Filter, UserCheck, MessageCircle, FileText, Plus, X } from 'lucide-react';
+import { Search, MapPin, IndianRupee, Briefcase, Filter, UserCheck, MessageCircle, FileText, Plus, X, Sparkles } from 'lucide-react';
 import { useAppState } from '../context/AppContext';
 import type { Job, Application } from '../context/AppContext';
 import { ChatWindow } from './ChatWindow';
@@ -16,6 +16,9 @@ export const CandidateDashboard: React.FC = () => {
   } = useAppState();
 
   const [activeTab, setActiveTab] = useState<'explore' | 'applications' | 'profile'>('explore');
+  const [detailsTab, setDetailsTab] = useState<'info' | 'pact'>('info');
+  const [showApplyPactModal, setShowApplyPactModal] = useState(false);
+  const [pactChecked, setPactChecked] = useState(false);
 
   // Search & Filter States
   const [searchQuery, setSearchQuery] = useState('');
@@ -103,6 +106,10 @@ export const CandidateDashboard: React.FC = () => {
       setSelectedJob(jobs[0]);
     }
   }, [jobs, selectedJob]);
+
+  useEffect(() => {
+    setDetailsTab('info');
+  }, [selectedJob]);
 
   // Keep selected application updated with latest chat from global state
   const currentApp = applications.find(app => app.id === selectedApp?.id) || null;
@@ -427,6 +434,19 @@ export const CandidateDashboard: React.FC = () => {
                         <span className="badge badge-secondary">{job.type}</span>
                         <span className="badge badge-success" style={{ background: 'rgba(16, 185, 129, 0.06)' }}>{job.salary}</span>
                         
+                        {job.fairWorkPact && (
+                          <span className="badge badge-success" style={{
+                            background: 'rgba(16, 185, 129, 0.15)',
+                            border: '1px solid var(--success)',
+                            color: '#10b981',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '4px'
+                          }}>
+                            🛡️ Fair Work Pact
+                          </span>
+                        )}
+
                         {candidateProfile.onboardingCompleted && (
                           <span className="badge" style={{
                             background: calculateMatchScore(job) >= 75 ? 'var(--secondary-gradient)' : 'rgba(255, 255, 255, 0.03)',
@@ -484,7 +504,7 @@ export const CandidateDashboard: React.FC = () => {
                         <MapPin size={14} color="var(--text-muted)" /> Location: {selectedJob.location} ({selectedJob.mode})
                       </div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: 'var(--text-secondary)' }}>
-                        <DollarSign size={14} color="var(--text-muted)" /> Compensation: {selectedJob.salary}
+                        <IndianRupee size={14} color="var(--text-muted)" /> Compensation: {selectedJob.salary}
                       </div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: 'var(--text-secondary)' }}>
                         <Briefcase size={14} color="var(--text-muted)" /> Job Type: {selectedJob.type}
@@ -492,43 +512,127 @@ export const CandidateDashboard: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* Skills Grid */}
-                  <div>
-                    <h4 style={{ color: '#fff', fontSize: '14px', fontWeight: 600, marginBottom: '8px' }}>Required Skills</h4>
-                    <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                      {selectedJob.skills.map(skill => (
-                        <span key={skill} className="badge badge-secondary" style={{ borderRadius: '6px' }}>{skill}</span>
-                      ))}
-                    </div>
+                  {/* Job Details Tabs */}
+                  <div style={{ display: 'flex', borderBottom: '1px solid var(--border-color)', gap: '16px', marginBottom: '8px' }}>
+                    <button
+                      onClick={() => setDetailsTab('info')}
+                      style={{
+                        padding: '8px 0 12px 0',
+                        background: 'transparent',
+                        border: 'none',
+                        color: detailsTab === 'info' ? 'var(--primary)' : 'var(--text-secondary)',
+                        borderBottom: detailsTab === 'info' ? '2px solid var(--primary)' : 'none',
+                        cursor: 'pointer',
+                        fontSize: '14px',
+                        fontWeight: 600
+                      }}
+                    >
+                      Job Details
+                    </button>
+                    <button
+                      onClick={() => setDetailsTab('pact')}
+                      style={{
+                        padding: '8px 0 12px 0',
+                        background: 'transparent',
+                        border: 'none',
+                        color: detailsTab === 'pact' ? 'var(--primary)' : 'var(--text-secondary)',
+                        borderBottom: detailsTab === 'pact' ? '2px solid var(--primary)' : 'none',
+                        cursor: 'pointer',
+                        fontSize: '14px',
+                        fontWeight: 600,
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '6px'
+                      }}
+                    >
+                      🛡️ Fair Work Pact {selectedJob.fairWorkPact && <span style={{ fontSize: '10px', color: 'var(--success)' }}>● Verified</span>}
+                    </button>
                   </div>
 
-                  {/* Description */}
-                  <div>
-                    <h4 style={{ color: '#fff', fontSize: '14px', fontWeight: 600, marginBottom: '6px' }}>Job Description</h4>
-                    <p style={{ color: 'var(--text-secondary)', fontSize: '13px', lineHeight: '1.6' }}>{selectedJob.description}</p>
-                  </div>
-
-                  {/* Requirements */}
-                  <div>
-                    <h4 style={{ color: '#fff', fontSize: '14px', fontWeight: 600, marginBottom: '8px' }}>What you will bring</h4>
-                    <ul style={{ paddingLeft: '16px', color: 'var(--text-secondary)', fontSize: '13px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                      {selectedJob.requirements.map((req, i) => (
-                        <li key={i}>{req}</li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Benefits */}
-                  <div>
-                    <h4 style={{ color: '#fff', fontSize: '14px', fontWeight: 600, marginBottom: '8px' }}>Perks & Benefits</h4>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
-                      {selectedJob.benefits.map((benefit, i) => (
-                        <div key={i} style={{ fontSize: '12px', color: 'var(--text-secondary)', background: 'rgba(255,255,255,0.02)', padding: '8px', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.03)' }}>
-                          ✨ {benefit}
+                  {detailsTab === 'info' ? (
+                    <>
+                      {/* Skills Grid */}
+                      <div>
+                        <h4 style={{ color: '#fff', fontSize: '14px', fontWeight: 600, marginBottom: '8px' }}>Required Skills</h4>
+                        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                          {selectedJob.skills.map(skill => (
+                            <span key={skill} className="badge badge-secondary" style={{ borderRadius: '6px' }}>{skill}</span>
+                          ))}
                         </div>
-                      ))}
+                      </div>
+
+                      {/* Description */}
+                      <div>
+                        <h4 style={{ color: '#fff', fontSize: '14px', fontWeight: 600, marginBottom: '6px' }}>Job Description</h4>
+                        <p style={{ color: 'var(--text-secondary)', fontSize: '13px', lineHeight: '1.6' }}>{selectedJob.description}</p>
+                      </div>
+
+                      {/* Requirements */}
+                      <div>
+                        <h4 style={{ color: '#fff', fontSize: '14px', fontWeight: 600, marginBottom: '8px' }}>What you will bring</h4>
+                        <ul style={{ paddingLeft: '16px', color: 'var(--text-secondary)', fontSize: '13px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                          {selectedJob.requirements.map((req, i) => (
+                            <li key={i}>{req}</li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      {/* Benefits */}
+                      <div>
+                        <h4 style={{ color: '#fff', fontSize: '14px', fontWeight: 600, marginBottom: '8px' }}>Perks & Benefits</h4>
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+                          {selectedJob.benefits.map((benefit, i) => (
+                            <div key={i} style={{ fontSize: '12px', color: 'var(--text-secondary)', background: 'rgba(255,255,255,0.02)', padding: '8px', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.03)' }}>
+                              ✨ {benefit}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                      <div className="glass-panel" style={{
+                        background: 'rgba(16, 185, 129, 0.04)',
+                        border: '1px solid rgba(16, 185, 129, 0.2)',
+                        padding: '16px',
+                        borderRadius: '12px'
+                      }}>
+                        <h4 style={{ color: '#fff', fontSize: '14px', fontWeight: 600, marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                          <span style={{ fontSize: '16px' }}>🛡️</span> Fair Work Pact Signed
+                        </h4>
+                        <p style={{ color: 'var(--text-secondary)', fontSize: '12px', lineHeight: 1.5 }}>
+                          Both the candidate and the employer commit to a mutual standard of respect, security, and accountability.
+                        </p>
+                      </div>
+
+                      <div>
+                        <h5 style={{ color: 'var(--primary)', fontSize: '13px', fontWeight: 700, marginBottom: '8px' }}>
+                          🛡️ Worker Rights (Employer Commitments)
+                        </h5>
+                        <ul style={{ paddingLeft: '16px', color: 'var(--text-secondary)', fontSize: '12px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                          <li><strong>Fair Working Hours:</strong> Strict adherence to a standard, limited work schedule.</li>
+                          <li><strong>Overtime Pay:</strong> Guaranteed extra compensation for any hours worked beyond the daily limit.</li>
+                          <li><strong>Health & Well-being:</strong> Access to basic medical benefits and a safe working environment.</li>
+                          <li><strong>Accommodation Support:</strong> Housing allowance or safe, provided accommodation where applicable.</li>
+                          <li><strong>Job Security:</strong> Protection against unfair firing without valid cause or proper notice.</li>
+                          <li><strong>Merit-Based Growth:</strong> Guaranteed salary raises or promotions upon successfully achieving predefined work targets.</li>
+                        </ul>
+                      </div>
+
+                      <div style={{ borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '12px' }}>
+                        <h5 style={{ color: 'var(--secondary)', fontSize: '13px', fontWeight: 700, marginBottom: '8px' }}>
+                          🤝 Worker Duties (Employee Commitments)
+                        </h5>
+                        <ul style={{ paddingLeft: '16px', color: 'var(--text-secondary)', fontSize: '12px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                          <li><strong>Punctuality:</strong> Consistently arriving on time and respecting the work schedule.</li>
+                          <li><strong>Prompt Communication:</strong> Timely and professional responses to all work-related messages or requests.</li>
+                          <li><strong>Responsibility:</strong> Taking full ownership of assigned tasks and performing them diligently.</li>
+                          <li><strong>Absolute Integrity:</strong> Honesty in reporting hours, tasks, and issues.</li>
+                          <li><strong>Professional Conduct:</strong> Respectful behavior towards coworkers and clients.</li>
+                        </ul>
+                      </div>
                     </div>
-                  </div>
+                  )}
 
                   {/* Apply Actions */}
                   <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '16px', display: 'flex', gap: '12px' }}>
@@ -538,7 +642,14 @@ export const CandidateDashboard: React.FC = () => {
                       </button>
                     ) : (
                       <button 
-                        onClick={() => handleApply(selectedJob.id)} 
+                        onClick={() => {
+                          if (selectedJob.fairWorkPact) {
+                            setPactChecked(false);
+                            setShowApplyPactModal(true);
+                          } else {
+                            handleApply(selectedJob.id);
+                          }
+                        }} 
                         className="btn btn-primary animate-glow" 
                         style={{ flex: 1 }}
                       >
@@ -814,6 +925,159 @@ export const CandidateDashboard: React.FC = () => {
               </div>
             </div>
           </aside>
+        </div>
+      )}
+
+      {/* Fair Work Pact Application Intercept Modal */}
+      {showApplyPactModal && selectedJob && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(5, 3, 10, 0.8)',
+          backdropFilter: 'blur(10px)',
+          zIndex: 1000,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '20px'
+        }}>
+          <div className="glass-panel animate-glow" style={{
+            width: '100%',
+            maxWidth: '500px',
+            padding: '32px',
+            position: 'relative',
+            border: '1px solid rgba(34, 211, 238, 0.25)',
+            boxShadow: '0 0 30px rgba(34, 211, 238, 0.1)'
+          }}>
+            <button 
+              onClick={() => setShowApplyPactModal(false)}
+              style={{
+                position: 'absolute',
+                top: '16px',
+                right: '16px',
+                border: 'none',
+                background: 'transparent',
+                color: 'var(--text-secondary)',
+                cursor: 'pointer',
+                padding: '4px'
+              }}
+            >
+              <X size={20} />
+            </button>
+
+            <div style={{ textAlign: 'center', marginBottom: '24px' }}>
+              <div style={{
+                width: '50px',
+                height: '50px',
+                borderRadius: '12px',
+                background: 'rgba(34, 211, 238, 0.12)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '0 auto 16px auto',
+                border: '1px solid rgba(34, 211, 238, 0.3)'
+              }}>
+                <Sparkles size={24} color="#22d3ee" style={{ display: 'block', margin: 'auto' }} />
+              </div>
+              <h3 style={{ fontSize: '22px', fontWeight: 800, color: '#fff', fontFamily: 'Outfit' }}>
+                Commit to the Fair Work Pact
+              </h3>
+              <p style={{ color: 'var(--text-muted)', fontSize: '13px', marginTop: '6px' }}>
+                Applying for <strong>{selectedJob.title}</strong> at {selectedJob.companyName}
+              </p>
+            </div>
+
+            <div style={{
+              background: 'rgba(255,255,255,0.02)',
+              border: '1px solid var(--border-color)',
+              padding: '16px',
+              borderRadius: '10px',
+              marginBottom: '24px',
+              maxHeight: '240px',
+              overflowY: 'auto',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '12px'
+            }}>
+              <span style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: 700, letterSpacing: '0.5px' }}>YOUR EMPLOYEE COMMITMENTS</span>
+              
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                <div style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>
+                  <strong style={{ color: '#fff' }}> Punctuality:</strong> Consistently arriving on time and respecting the work schedule.
+                </div>
+                <div style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>
+                  <strong style={{ color: '#fff' }}> Prompt Communication:</strong> Timely and professional responses to all work-related messages or requests.
+                </div>
+                <div style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>
+                  <strong style={{ color: '#fff' }}> Responsibility:</strong> Taking full ownership of assigned tasks and performing them diligently.
+                </div>
+                <div style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>
+                  <strong style={{ color: '#fff' }}> Absolute Integrity:</strong> Honesty in reporting hours, tasks, and issues.
+                </div>
+                <div style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>
+                  <strong style={{ color: '#fff' }}> Professional Conduct:</strong> Respectful behavior towards coworkers and clients.
+                </div>
+              </div>
+            </div>
+
+            <label style={{
+              display: 'flex',
+              gap: '12px',
+              alignItems: 'flex-start',
+              cursor: 'pointer',
+              padding: '12px',
+              borderRadius: '8px',
+              background: pactChecked ? 'rgba(34, 211, 238, 0.05)' : 'transparent',
+              border: pactChecked ? '1px solid rgba(34, 211, 238, 0.2)' : '1px solid transparent',
+              marginBottom: '24px',
+              transition: 'all 0.2s ease'
+            }}>
+              <input
+                type="checkbox"
+                checked={pactChecked}
+                onChange={(e) => setPactChecked(e.target.checked)}
+                style={{
+                  accentColor: 'var(--secondary)',
+                  width: '18px',
+                  height: '18px',
+                  marginTop: '2px'
+                }}
+              />
+              <span style={{ fontSize: '13px', color: '#fff', lineHeight: 1.4 }}>
+                I commit to the Worker Duties (Punctuality, Integrity, Responsibility) as defined in the Fair Work Pact
+              </span>
+            </label>
+
+            <div style={{ display: 'flex', gap: '12px' }}>
+              <button 
+                onClick={() => setShowApplyPactModal(false)}
+                className="btn btn-outline"
+                style={{ flex: 1, padding: '12px' }}
+              >
+                Cancel
+              </button>
+              <button 
+                disabled={!pactChecked}
+                onClick={() => {
+                  setShowApplyPactModal(false);
+                  handleApply(selectedJob.id);
+                }}
+                className="btn btn-primary"
+                style={{
+                  flex: 1,
+                  padding: '12px',
+                  background: pactChecked ? 'var(--secondary-gradient)' : 'var(--border-color)',
+                  borderColor: pactChecked ? 'transparent' : 'var(--border-color)',
+                  opacity: pactChecked ? 1 : 0.6
+                }}
+              >
+                Submit Application
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>

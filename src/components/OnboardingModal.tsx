@@ -14,7 +14,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({ profile: _prof
   const [selectedModes, setSelectedModes] = useState<string[]>([]);
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
-  const [minSalary, setMinSalary] = useState(60000);
+  const [minSalary, setMinSalary] = useState(15000);
   const [experience, setExperience] = useState<'Entry-level' | 'Mid-level' | 'Senior-level'>('Entry-level');
 
   const popularSkills = [
@@ -299,14 +299,14 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({ profile: _prof
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <label style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-secondary)' }}>Minimum Target Salary</label>
                 <span style={{ fontSize: '14px', fontWeight: 700, color: 'var(--success)' }}>
-                  ${minSalary.toLocaleString()} / yr
+                  ₹{minSalary.toLocaleString()} / mo
                 </span>
               </div>
               <input
                 type="range"
-                min="30000"
-                max="180000"
-                step="5000"
+                min="10000"
+                max="100000"
+                step="2000"
                 value={minSalary}
                 onChange={(e) => setMinSalary(Number(e.target.value))}
                 style={{
@@ -320,9 +320,9 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({ profile: _prof
                 }}
               />
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', color: 'var(--text-muted)' }}>
-                <span>$30k</span>
-                <span>$100k</span>
-                <span>$180k</span>
+                <span>₹10k</span>
+                <span>₹50k</span>
+                <span>₹100k</span>
               </div>
             </div>
           </div>

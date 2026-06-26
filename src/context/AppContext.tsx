@@ -16,6 +16,7 @@ export interface Job {
   benefits: string[];
   postedDate: string;
   recruiterId: string;
+  fairWorkPact?: boolean;
 }
 
 export interface ChatMessage {

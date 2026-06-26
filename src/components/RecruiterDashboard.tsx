@@ -31,6 +31,7 @@ export const RecruiterDashboard: React.FC = () => {
   const [jobDesc, setJobDesc] = useState('');
   const [reqsText, setReqsText] = useState('');
   const [benefitsText, setBenefitsText] = useState('');
+  const [fairWorkPactChecked, setFairWorkPactChecked] = useState(false);
 
   // Manage listings states
   const [selectedJobId, setSelectedJobId] = useState<string>('');
@@ -56,6 +57,10 @@ export const RecruiterDashboard: React.FC = () => {
   const handlePostJob = (e: React.FormEvent) => {
     e.preventDefault();
     if (!jobTitle.trim() || !jobSalary.trim() || !jobDesc.trim()) return;
+    if (!fairWorkPactChecked) {
+      alert('You must commit to uphold the Hyriq Fair Work Pact to publish this job listing.');
+      return;
+    }
 
     const requirements = reqsText.split('\n').map(r => r.trim()).filter(Boolean);
     const benefits = benefitsText.split('\n').map(b => b.trim()).filter(Boolean);
@@ -71,7 +76,8 @@ export const RecruiterDashboard: React.FC = () => {
       skills: jobSkills.length > 0 ? jobSkills : ['React', 'TypeScript'],
       description: jobDesc,
       requirements: requirements.length > 0 ? requirements : ['2+ years experience in the field.'],
-      benefits: benefits.length > 0 ? benefits : ['Flexible hours.']
+      benefits: benefits.length > 0 ? benefits : ['Flexible hours.'],
+      fairWorkPact: true
     });
 
     // Reset Form
@@ -82,6 +88,7 @@ export const RecruiterDashboard: React.FC = () => {
     setJobDesc('');
     setReqsText('');
     setBenefitsText('');
+    setFairWorkPactChecked(false);
 
     alert('Job posted successfully! View it in "Manage Jobs" tab.');
     setActiveTab('manage');
@@ -344,7 +351,7 @@ export const RecruiterDashboard: React.FC = () => {
               <label style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-secondary)' }}>Compensation Range</label>
               <input
                 type="text"
-                placeholder="e.g. $80,000 - $110,000 / yr, $40 - $60 / hr"
+                placeholder="e.g. ₹20,000 - ₹30,000 / mo, ₹15,000 / mo"
                 value={jobSalary}
                 onChange={(e) => setJobSalary(e.target.value)}
                 className="glass-input"
@@ -429,6 +436,36 @@ export const RecruiterDashboard: React.FC = () => {
               rows={3}
               style={{ resize: 'none' }}
             />
+          </div>
+
+          {/* Fair Work Pact Commitment Checkbox */}
+          <div style={{
+            background: 'rgba(16, 185, 129, 0.04)',
+            border: '1px solid rgba(16, 185, 129, 0.2)',
+            padding: '20px',
+            borderRadius: '12px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '14px'
+          }}>
+            <h4 style={{ color: '#fff', fontSize: '15px', fontWeight: 700, margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span>🛡️</span> The Hyriq Fair Work Pact Commitment
+            </h4>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '13px', lineHeight: 1.5, margin: 0 }}>
+              By listing this job, you commit to respecting Worker Rights: limited fair working hours, guaranteed overtime compensation, safe working conditions, housing allowance/accommodation where applicable, merit-based advancement, and protection against unfair termination.
+            </p>
+            <label style={{ display: 'flex', gap: '10px', alignItems: 'center', cursor: 'pointer' }}>
+              <input
+                type="checkbox"
+                checked={fairWorkPactChecked}
+                onChange={(e) => setFairWorkPactChecked(e.target.checked)}
+                style={{ accentColor: 'var(--success)', width: '16px', height: '16px' }}
+                required
+              />
+              <span style={{ fontSize: '13px', color: '#fff', fontWeight: 600 }}>
+                I commit to uphold the Hyriq Fair Work Pact for this listing
+              </span>
+            </label>
           </div>
 
           <button type="submit" className="btn btn-primary" style={{ padding: '14px 28px', alignSelf: 'flex-start' }}>
