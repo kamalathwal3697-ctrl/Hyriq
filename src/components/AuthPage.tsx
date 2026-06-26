@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { User, Briefcase, Mail, Lock, Sparkles, LogIn, UserPlus } from 'lucide-react';
+import { User, Briefcase, Mail, Lock, Sparkles, LogIn, UserPlus, Shield, CheckCircle, CreditCard } from 'lucide-react';
+
+declare global {
+  interface Window {
+    Razorpay: any;
+  }
+}
 
 interface AuthPageProps {
   onLogin: (email: string, pass: string) => Promise<void>;
@@ -10,7 +16,7 @@ interface AuthPageProps {
     name: string;
     phone?: string;
     bio?: string;
-    paymentConfirmed?: boolean;
+    paymentId?: string;
   }) => Promise<void>;
 }
 
@@ -28,13 +34,10 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onSignup }) => {
   const [errorMsg, setErrorMsg] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // Paywall states
+  // Payment flow states
   const [showPayment, setShowPayment] = useState(false);
-  const [paymentType, setPaymentType] = useState<'upi' | 'card'>('upi');
-  const [upiId, setUpiId] = useState('');
-  const [cardNumber, setCardNumber] = useState('');
-  const [cardExpiry, setCardExpiry] = useState('');
-  const [cardCvv, setCardCvv] = useState('');
+  const [paymentProcessing, setPaymentProcessing] = useState(false);
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -45,14 +48,15 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onSignup }) => {
       if (isLogin) {
         await onLogin(email, password);
       } else {
-        await onSignup({
-          email,
-          pass: password,
-          role,
-          name,
-          phone,
-          bio
-        });
+        if (role === 'recruiter') {
+          // Recruiters register FREE — no payment needed
+          await onSignup({ email, pass: password, role, name, phone, bio });
+        } else {
+          // Candidates need to pay ₹99
+          setShowPayment(true);
+          setLoading(false);
+          return;
+        }
       }
     } catch (err: any) {
       if (err.requiresPayment) {
@@ -65,33 +69,100 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onSignup }) => {
     }
   };
 
-  const handlePaymentSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleRazorpayPayment = async () => {
+    setPaymentProcessing(true);
     setErrorMsg('');
-    setLoading(true);
 
     try {
-      // Simulate bank gateway delay
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      await onSignup({
-        email,
-        pass: password,
-        role,
-        name,
-        phone,
-        bio,
-        paymentConfirmed: true
+      // Step 1: Create order on backend
+      const orderRes = await fetch('/api/payments/create-order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
       });
-      setShowPayment(false);
+
+      if (!orderRes.ok) {
+        const errData = await orderRes.json();
+        throw new Error(errData.error || 'Failed to create payment order.');
+      }
+
+      const orderData = await orderRes.json();
+
+      // Step 2: Open Razorpay checkout
+      const options = {
+        key: orderData.keyId,
+        amount: orderData.amount,
+        currency: orderData.currency,
+        name: 'Hyriq',
+        description: 'Job Seeker Registration — 1 Year Access',
+        order_id: orderData.orderId,
+        handler: async function (response: any) {
+          try {
+            // Step 3: Verify payment on backend
+            const verifyRes = await fetch('/api/payments/verify', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature
+              })
+            });
+
+            const verifyData = await verifyRes.json();
+
+            if (!verifyRes.ok || !verifyData.verified) {
+              setErrorMsg('Payment verification failed. Please contact support.');
+              setPaymentProcessing(false);
+              return;
+            }
+
+            // Step 4: Complete signup with verified payment ID
+            setPaymentSuccess(true);
+            await onSignup({
+              email,
+              pass: password,
+              role,
+              name,
+              phone,
+              bio,
+              paymentId: response.razorpay_payment_id
+            });
+
+            setShowPayment(false);
+            setPaymentProcessing(false);
+          } catch (err: any) {
+            setErrorMsg(err.message || 'Signup failed after payment. Please contact support with your payment ID.');
+            setPaymentProcessing(false);
+          }
+        },
+        prefill: {
+          name: name,
+          email: email,
+          contact: phone || ''
+        },
+        theme: {
+          color: '#6366f1'
+        },
+        modal: {
+          ondismiss: function () {
+            setPaymentProcessing(false);
+          }
+        }
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.on('payment.failed', function (response: any) {
+        setErrorMsg(`Payment failed: ${response.error.description || 'Please try again.'}`);
+        setPaymentProcessing(false);
+      });
+      rzp.open();
     } catch (err: any) {
-      setErrorMsg(err.message || 'Payment processing failed. Please try again.');
-      setShowPayment(false);
-    } finally {
-      setLoading(false);
+      setErrorMsg(err.message || 'Could not initiate payment. Please try again.');
+      setPaymentProcessing(false);
     }
   };
 
+  // Payment screen for candidates
   if (showPayment) {
     return (
       <div className="container animate-fade-in" style={{
@@ -120,146 +191,149 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onSignup }) => {
             filter: 'blur(30px)',
             pointerEvents: 'none'
           }}></div>
+          <div style={{
+            position: 'absolute',
+            bottom: '-40px',
+            left: '-40px',
+            width: '120px',
+            height: '120px',
+            borderRadius: '50%',
+            background: 'rgba(99, 102, 241, 0.12)',
+            filter: 'blur(25px)',
+            pointerEvents: 'none'
+          }}></div>
 
           <div style={{ textAlign: 'center', marginBottom: '24px' }}>
-            <span className="badge badge-danger" style={{ marginBottom: '12px', fontSize: '11px' }}>
-              Slots Filled
-            </span>
+            <div style={{
+              width: '56px',
+              height: '56px',
+              borderRadius: '16px',
+              background: 'linear-gradient(135deg, #6366f1, #06b6d4)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              margin: '0 auto 16px'
+            }}>
+              <CreditCard size={28} color="#fff" />
+            </div>
             <h3 style={{ fontSize: '24px', fontWeight: 800, color: '#fff', fontFamily: 'Outfit' }}>
-              Activate Your Account
+              Complete Registration
             </h3>
             <p style={{ color: 'var(--text-secondary)', fontSize: '13px', marginTop: '6px' }}>
-              Early Bird Free Registrations have closed. Complete the ₹99 membership activation to unlock your dashboard.
+              One-time registration fee for job seekers
             </p>
           </div>
 
+          {/* Pricing Card */}
           <div className="glass-panel" style={{
-            background: 'rgba(255, 255, 255, 0.02)',
-            padding: '16px',
-            borderRadius: '12px',
+            background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(6, 182, 212, 0.08))',
+            padding: '24px',
+            borderRadius: '16px',
             marginBottom: '24px',
             textAlign: 'center',
-            border: '1px solid var(--border-color)'
+            border: '1px solid rgba(99, 102, 241, 0.2)'
           }}>
-            <span style={{ fontSize: '12px', color: 'var(--text-secondary)', display: 'block', fontWeight: 600 }}>MEMBERSHIP FEE</span>
-            <span style={{ fontSize: '28px', fontWeight: 800, color: 'var(--success)' }}>₹99.00</span>
+            <span style={{ fontSize: '12px', color: 'var(--text-secondary)', display: 'block', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase' }}>REGISTRATION FEE</span>
+            <div style={{ margin: '8px 0' }}>
+              <span style={{ fontSize: '40px', fontWeight: 800, color: '#fff', fontFamily: 'Outfit' }}>₹99</span>
+              <span style={{ fontSize: '14px', color: 'var(--text-secondary)', marginLeft: '4px' }}>/ year</span>
+            </div>
+            <span className="badge badge-success" style={{ fontSize: '10px' }}>
+              <CheckCircle size={10} style={{ marginRight: '4px' }} />
+              Valid for 12 months
+            </span>
           </div>
 
-          {/* Payment Type Switcher */}
-          <div style={{ display: 'flex', gap: '8px', background: 'rgba(255,255,255,0.03)', padding: '4px', borderRadius: '10px', marginBottom: '20px', border: '1px solid var(--border-color)' }}>
-            <button
-              type="button"
-              onClick={() => setPaymentType('upi')}
-              style={{
-                flex: 1,
-                padding: '8px',
-                borderRadius: '6px',
-                border: 'none',
-                cursor: 'pointer',
-                fontSize: '12px',
-                fontWeight: 600,
-                backgroundColor: paymentType === 'upi' ? 'rgba(255,255,255,0.08)' : 'transparent',
-                color: paymentType === 'upi' ? '#fff' : 'var(--text-secondary)',
-                transition: 'all 0.2s'
-              }}
-            >
-              UPI / QR
-            </button>
-            <button
-              type="button"
-              onClick={() => setPaymentType('card')}
-              style={{
-                flex: 1,
-                padding: '8px',
-                borderRadius: '6px',
-                border: 'none',
-                cursor: 'pointer',
-                fontSize: '12px',
-                fontWeight: 600,
-                backgroundColor: paymentType === 'card' ? 'rgba(255,255,255,0.08)' : 'transparent',
-                color: paymentType === 'card' ? '#fff' : 'var(--text-secondary)',
-                transition: 'all 0.2s'
-              }}
-            >
-              Credit/Debit Card
-            </button>
-          </div>
-
-          <form onSubmit={handlePaymentSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            {paymentType === 'upi' ? (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                <label style={{ fontSize: '12px', color: 'var(--text-secondary)', fontWeight: 600 }}>UPI ID</label>
-                <input
-                  type="text"
-                  placeholder="e.g. mobile@upi"
-                  value={upiId}
-                  onChange={(e) => setUpiId(e.target.value)}
-                  className="glass-input"
-                  required
-                />
+          {/* Features list */}
+          <div style={{ marginBottom: '24px' }}>
+            {[
+              'Apply to unlimited job listings',
+              'Direct chat with recruiters',
+              'Fair Work Pact legal protection',
+              'Priority visibility to employers'
+            ].map((feature, i) => (
+              <div key={i} style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px',
+                padding: '8px 0',
+                borderBottom: i < 3 ? '1px solid rgba(255,255,255,0.04)' : 'none'
+              }}>
+                <CheckCircle size={14} color="var(--success)" />
+                <span style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>{feature}</span>
               </div>
+            ))}
+          </div>
+
+          {/* Error */}
+          {errorMsg && (
+            <div style={{
+              background: 'var(--danger-bg)',
+              border: '1px solid rgba(244, 63, 94, 0.3)',
+              color: '#fda4af',
+              padding: '12px 16px',
+              borderRadius: '8px',
+              fontSize: '13px',
+              marginBottom: '16px',
+              fontWeight: 500
+            }}>
+              ⚠️ {errorMsg}
+            </div>
+          )}
+
+          {/* Pay button */}
+          <button
+            type="button"
+            onClick={handleRazorpayPayment}
+            className="btn btn-secondary animate-glow"
+            style={{ width: '100%', padding: '16px', fontSize: '15px', fontWeight: 700, position: 'relative', overflow: 'hidden' }}
+            disabled={paymentProcessing || paymentSuccess}
+          >
+            {paymentProcessing ? (
+              <>Processing Payment...</>
+            ) : paymentSuccess ? (
+              <>
+                <CheckCircle size={16} style={{ marginRight: '6px' }} />
+                Payment Successful — Creating Account...
+              </>
             ) : (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                  <label style={{ fontSize: '12px', color: 'var(--text-secondary)', fontWeight: 600 }}>Card Number</label>
-                  <input
-                    type="text"
-                    placeholder="4111 2222 3333 4444"
-                    value={cardNumber}
-                    onChange={(e) => setCardNumber(e.target.value)}
-                    className="glass-input"
-                    required
-                  />
-                </div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                    <label style={{ fontSize: '12px', color: 'var(--text-secondary)', fontWeight: 600 }}>Expiry</label>
-                    <input
-                      type="text"
-                      placeholder="MM/YY"
-                      value={cardExpiry}
-                      onChange={(e) => setCardExpiry(e.target.value)}
-                      className="glass-input"
-                      required
-                    />
-                  </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                    <label style={{ fontSize: '12px', color: 'var(--text-secondary)', fontWeight: 600 }}>CVV</label>
-                    <input
-                      type="password"
-                      placeholder="***"
-                      value={cardCvv}
-                      onChange={(e) => setCardCvv(e.target.value)}
-                      className="glass-input"
-                      required
-                    />
-                  </div>
-                </div>
-              </div>
+              <>
+                <Shield size={16} style={{ marginRight: '6px' }} />
+                Pay ₹99 & Register
+              </>
             )}
+          </button>
 
-            <button
-              type="submit"
-              className="btn btn-secondary animate-glow"
-              style={{ width: '100%', padding: '14px', marginTop: '12px' }}
-              disabled={loading}
-            >
-              {loading ? 'Processing ₹99 Secure Checkout...' : 'Pay ₹99 & Complete Registration'}
-            </button>
+          {/* Security badges */}
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '16px',
+            marginTop: '16px'
+          }}>
+            <span style={{ fontSize: '10px', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <Shield size={10} /> Secured by Razorpay
+            </span>
+            <span style={{ fontSize: '10px', color: 'var(--text-muted)' }}>•</span>
+            <span style={{ fontSize: '10px', color: 'var(--text-muted)' }}>UPI · Cards · Net Banking</span>
+          </div>
 
-            <button
-              type="button"
-              onClick={() => {
-                setShowPayment(false);
-                setErrorMsg('');
-              }}
-              className="btn btn-ghost"
-              style={{ width: '100%' }}
-              disabled={loading}
-            >
-              Cancel
-            </button>
-          </form>
+          {/* Back button */}
+          <button
+            type="button"
+            onClick={() => {
+              setShowPayment(false);
+              setErrorMsg('');
+              setPaymentProcessing(false);
+              setPaymentSuccess(false);
+            }}
+            className="btn btn-ghost"
+            style={{ width: '100%', marginTop: '12px' }}
+            disabled={paymentProcessing}
+          >
+            ← Back to Sign Up
+          </button>
         </div>
       </div>
     );
@@ -315,7 +389,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onSignup }) => {
             border: '1px solid var(--border-color)',
             padding: '4px',
             borderRadius: '12px',
-            marginBottom: '24px'
+            marginBottom: '16px'
           }}>
             <button
               type="button"
@@ -337,7 +411,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onSignup }) => {
                 transition: 'all 0.2s'
               }}
             >
-              <User size={14} /> Candidate
+              <User size={14} /> Job Seeker
             </button>
             <button
               type="button"
@@ -361,6 +435,41 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onSignup }) => {
             >
               <Briefcase size={14} /> Recruiter
             </button>
+          </div>
+        )}
+
+        {/* Role-based pricing hint */}
+        {!isLogin && (
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '6px',
+            padding: '8px 12px',
+            borderRadius: '8px',
+            marginBottom: '20px',
+            background: role === 'recruiter'
+              ? 'rgba(16, 185, 129, 0.08)'
+              : 'rgba(99, 102, 241, 0.08)',
+            border: `1px solid ${role === 'recruiter'
+              ? 'rgba(16, 185, 129, 0.2)'
+              : 'rgba(99, 102, 241, 0.2)'}`,
+          }}>
+            {role === 'recruiter' ? (
+              <>
+                <CheckCircle size={13} color="var(--success)" />
+                <span style={{ fontSize: '12px', color: 'var(--success)', fontWeight: 600 }}>
+                  Free Registration for Recruiters
+                </span>
+              </>
+            ) : (
+              <>
+                <CreditCard size={13} color="var(--primary)" />
+                <span style={{ fontSize: '12px', color: 'var(--primary)', fontWeight: 600 }}>
+                  ₹99/year Registration for Job Seekers
+                </span>
+              </>
+            )}
           </div>
         )}
 
@@ -459,7 +568,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onSignup }) => {
                 type="tel"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                placeholder="+1 (555) 123-4567"
+                placeholder="+91 98765 43210"
                 className="glass-input"
               />
             </div>
@@ -478,9 +587,13 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onSignup }) => {
               <>
                 Sign In <LogIn size={16} />
               </>
+            ) : role === 'recruiter' ? (
+              <>
+                Create Free Account <UserPlus size={16} />
+              </>
             ) : (
               <>
-                Create Account <UserPlus size={16} />
+                Continue to Payment — ₹99 <UserPlus size={16} />
               </>
             )}
           </button>
@@ -502,6 +615,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onSignup }) => {
             onClick={() => {
               setIsLogin(!isLogin);
               setErrorMsg('');
+              setShowPayment(false);
             }}
             style={{
               background: 'transparent',

@@ -2,13 +2,31 @@ import express from 'express';
 import cors from 'cors';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import dotenv from 'dotenv';
+import Razorpay from 'razorpay';
 import { initDb, readData, writeData } from './db.js';
+
+dotenv.config();
 
 const app = express();
 const PORT = 5000;
 const JWT_SECRET = 'hyriq_super_secret_vibe_key_123';
+
+// Razorpay Payment Gateway
+const razorpayKeyId = process.env.RAZORPAY_KEY_ID || 'rzp_test_placeholder';
+const razorpayKeySecret = process.env.RAZORPAY_KEY_SECRET || 'placeholder_secret';
+let razorpay;
+try {
+  razorpay = new Razorpay({
+    key_id: razorpayKeyId,
+    key_secret: razorpayKeySecret,
+  });
+} catch (e) {
+  console.warn('Razorpay initialization skipped (missing keys). Payment features will not work.');
+}
 
 app.use(cors());
 app.use(express.json());
@@ -46,9 +64,85 @@ app.get('/api/promo/slots', (req, res) => {
   });
 });
 
+// --- PAYMENT ROUTES ---
+
+// Create Razorpay order for candidate registration
+app.post('/api/payments/create-order', async (req, res) => {
+  if (!razorpay) {
+    return res.status(503).json({ error: 'Payment gateway not configured. Please set RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET environment variables.' });
+  }
+  try {
+    const options = {
+      amount: 9900, // ₹99 in paise
+      currency: 'INR',
+      receipt: `hyriq_reg_${Date.now()}`,
+      notes: {
+        purpose: 'Candidate Registration',
+        validity: '1 year'
+      }
+    };
+    const order = await razorpay.orders.create(options);
+    res.json({
+      orderId: order.id,
+      amount: order.amount,
+      currency: order.currency,
+      keyId: razorpayKeyId
+    });
+  } catch (err) {
+    console.error('Razorpay order creation failed:', err);
+    res.status(500).json({ error: 'Failed to create payment order. Please try again.' });
+  }
+});
+
+// Verify Razorpay payment signature
+app.post('/api/payments/verify', (req, res) => {
+  const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
+  if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature) {
+    return res.status(400).json({ error: 'Missing payment verification details.' });
+  }
+
+  // Verify HMAC signature
+  const generatedSignature = crypto
+    .createHmac('sha256', razorpayKeySecret)
+    .update(`${razorpay_order_id}|${razorpay_payment_id}`)
+    .digest('hex');
+
+  if (generatedSignature !== razorpay_signature) {
+    return res.status(400).json({ error: 'Payment verification failed. Invalid signature.' });
+  }
+
+  // Store payment record
+  const db = readData();
+  const paymentRecord = {
+    id: `pay-${Date.now()}`,
+    razorpayOrderId: razorpay_order_id,
+    razorpayPaymentId: razorpay_payment_id,
+    amount: 9900,
+    currency: 'INR',
+    status: 'verified',
+    createdAt: new Date().toISOString()
+  };
+
+  if (!db.payments) db.payments = [];
+  db.payments.push(paymentRecord);
+  writeData(db);
+
+  res.json({
+    verified: true,
+    paymentId: razorpay_payment_id
+  });
+});
+
+// Get Razorpay key ID for frontend
+app.get('/api/payments/key', (req, res) => {
+  res.json({ keyId: razorpayKeyId });
+});
+
+// --- AUTHENTICATION ROUTES ---
+
 // Sign Up
 app.post('/api/auth/signup', (req, res) => {
-  const { email, password, role, name, phone, bio, paymentConfirmed } = req.body;
+  const { email, password, role, name, phone, bio, paymentId } = req.body;
   if (!email || !password || !role || !name) {
     return res.status(400).json({ error: 'Email, password, role, and name are required' });
   }
@@ -57,19 +151,40 @@ app.post('/api/auth/signup', (req, res) => {
   const exists = db.users.find(u => u.email.toLowerCase() === email.toLowerCase());
   if (exists) return res.status(400).json({ error: 'Email already registered' });
 
-  // Check pricing policy
-  const totalUsersCount = db.users.length;
-  if (totalUsersCount >= 2 && !paymentConfirmed) {
-    return res.status(402).json({
-      error: 'Early Bird free slots are full! Registration now costs ₹99.',
-      requiresPayment: true,
-      amount: 99
-    });
+  // Role-based pricing: Recruiters are FREE, Candidates pay ₹99
+  if (role === 'candidate') {
+    if (!paymentId) {
+      return res.status(402).json({
+        error: 'Registration fee required for job seekers.',
+        requiresPayment: true,
+        amount: 99,
+        message: 'A one-time registration fee of ₹99 is required for job seekers. Valid for 1 year.'
+      });
+    }
+
+    // Verify payment exists in our records
+    if (!db.payments) db.payments = [];
+    const payment = db.payments.find(p => p.razorpayPaymentId === paymentId && p.status === 'verified');
+    if (!payment) {
+      return res.status(402).json({
+        error: 'Payment verification failed. Please complete the payment first.',
+        requiresPayment: true,
+        amount: 99
+      });
+    }
+
+    // Mark payment as used
+    payment.status = 'used';
+    payment.usedByEmail = email;
   }
 
   const salt = bcrypt.genSaltSync(10);
   const passwordHash = bcrypt.hashSync(password, salt);
   const userId = `user-${Date.now()}`;
+
+  const subscriptionExpiry = role === 'candidate'
+    ? new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString()
+    : undefined;
 
   const newUser = {
     id: userId,
@@ -83,6 +198,7 @@ app.post('/api/auth/signup', (req, res) => {
     experience: role === 'candidate' ? 'Entry-level' : undefined,
     resumeName: role === 'candidate' ? 'No resume uploaded' : undefined,
     onboardingCompleted: role === 'candidate' ? false : undefined,
+    subscriptionExpiry,
     preferences: role === 'candidate' ? { type: [], mode: [], minSalary: 0, experience: 'Entry-level' } : undefined,
     companyName: role === 'recruiter' ? `${name}'s Organization` : undefined,
     companyBio: role === 'recruiter' ? 'We are hiring progressive talent.' : undefined
@@ -96,7 +212,7 @@ app.post('/api/auth/signup', (req, res) => {
 
   res.status(201).json({
     token,
-    user: { id: userId, email: newUser.email, role: newUser.role, name: newUser.name }
+    user: { id: userId, email: newUser.email, role: newUser.role, name: newUser.name, subscriptionExpiry }
   });
 });
 

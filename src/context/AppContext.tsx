@@ -56,6 +56,7 @@ export interface CandidateProfile {
   experience: string;
   resumeName: string;
   onboardingCompleted?: boolean;
+  subscriptionExpiry?: string;
   preferences?: {
     type: string[];
     mode: string[];
@@ -91,7 +92,7 @@ interface AppContextType {
     name: string;
     phone?: string;
     bio?: string;
-    paymentConfirmed?: boolean;
+    paymentId?: string;
   }) => Promise<void>;
   logout: () => void;
   promoSlots: number;
@@ -338,7 +339,7 @@ export const AppStateProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     name: string;
     phone?: string;
     bio?: string;
-    paymentConfirmed?: boolean;
+    paymentId?: string;
   }) => {
     const res = await fetch('/api/auth/signup', {
       method: 'POST',
@@ -350,7 +351,7 @@ export const AppStateProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         name: details.name,
         phone: details.phone,
         bio: details.bio,
-        paymentConfirmed: details.paymentConfirmed
+        paymentId: details.paymentId
       })
     });
 

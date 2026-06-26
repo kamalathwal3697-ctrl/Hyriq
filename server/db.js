@@ -359,6 +359,7 @@ export const initDb = () => {
         experience: 'Entry-level',
         resumeName: 'Amanpreet_Singh_CV.pdf',
         onboardingCompleted: true,
+        subscriptionExpiry: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString(),
         preferences: {
           type: ['Full-time', 'Internship'],
           mode: ['Remote', 'Hybrid', 'On-site'],
@@ -421,7 +422,8 @@ export const initDb = () => {
       users: initialUsers,
       jobs: defaultJobs,
       applications: initialApplications,
-      messages: initialMessages
+      messages: initialMessages,
+      payments: []
     };
 
     fs.writeFileSync(DB_FILE, JSON.stringify(initialData, null, 2), 'utf-8');
