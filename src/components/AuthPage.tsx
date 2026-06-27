@@ -511,14 +511,14 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onSignup }) => {
 
           {/* Email Field */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-            <label style={{ fontSize: '12px', color: 'var(--text-secondary)', fontWeight: 600 }}>Email Address</label>
+            <label style={{ fontSize: '12px', color: 'var(--text-secondary)', fontWeight: 600 }}>Email Address / Username</label>
             <div style={{ position: 'relative' }}>
               <Mail size={14} color="var(--text-muted)" style={{ position: 'absolute', left: '16px', top: '15px' }} />
               <input
-                type="email"
+                type="text"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="alex@domain.com"
+                placeholder="alex@domain.com or username"
                 className="glass-input"
                 style={{ paddingLeft: '44px', width: '100%' }}
                 required
