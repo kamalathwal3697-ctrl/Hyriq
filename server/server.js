@@ -7,6 +7,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 import Razorpay from 'razorpay';
+import * as cheerio from 'cheerio';
 import { initDb, readData, writeData } from './db.js';
 
 dotenv.config({ path: path.join(path.dirname(fileURLToPath(import.meta.url)), '..', '.env') });
@@ -63,6 +64,84 @@ app.get('/api/promo/slots', (req, res) => {
     slotsLeft: Math.max(0, 2 - total),
     isFree: total < 2
   });
+});
+
+// Cache variables for government jobs
+let govtJobsCache = null;
+let govtJobsCacheTime = 0;
+
+// Get Punjab Government Jobs live scraping endpoint
+app.get('/api/govt-jobs', async (req, res) => {
+  const now = Date.now();
+  // Return cached result if fresh (1 hour)
+  if (govtJobsCache && (now - govtJobsCacheTime < 60 * 60 * 1000)) {
+    return res.json(govtJobsCache);
+  }
+
+  try {
+    const response = await fetch('https://www.freejobalert.com/punjab-government-jobs/');
+    if (!response.ok) throw new Error('Failed to fetch FreeJobAlert page');
+    
+    const html = await response.text();
+    const $ = cheerio.load(html);
+    
+    const jobs = [];
+    
+    // Find the correct table
+    // We search all tables for the headers 'Post Date' and 'Recruitment Board'
+    $('table').each((i, table) => {
+      const headerRow = $(table).find('tr').first();
+      const headers = headerRow.find('th, td').map((idx, el) => $(el).text().trim()).get();
+      
+      if (headers.includes('Post Date') && headers.includes('Recruitment Board')) {
+        // This is our target job list table!
+        $(table).find('tr').each((rowIdx, row) => {
+          if (rowIdx === 0) return; // skip header row
+          
+          const cols = $(row).find('td');
+          if (cols.length >= 6) {
+            const postDate = $(cols[0]).text().trim();
+            const recruitmentBoard = $(cols[1]).text().trim();
+            const title = $(cols[2]).text().trim().replace(/\uFFFD/g, '-').replace(/\?/g, '-');
+            const qualification = $(cols[3]).text().trim().replace(/\uFFFD/g, '-').replace(/\?/g, '-');
+            const advtNo = $(cols[4]).text().trim().replace(/\uFFFD/g, '-').replace(/\?/g, '-');
+            const lastDate = $(cols[5]).text().trim();
+            
+            // Extract the apply/more information link
+            const applyLink = $(cols[6]).find('a').attr('href') || $(cols[2]).find('a').attr('href') || 'https://www.freejobalert.com/punjab-government-jobs/';
+            
+            jobs.push({
+              id: `govt-${rowIdx}-${Date.now()}`,
+              postDate,
+              recruitmentBoard,
+              title,
+              qualification,
+              advtNo,
+              lastDate,
+              applyLink
+            });
+          }
+        });
+        return false; // break the .each loop
+      }
+    });
+
+    // Fallback if no table matched (prevent empty response)
+    if (jobs.length === 0) {
+      throw new Error('No jobs matched standard table layout');
+    }
+
+    govtJobsCache = jobs;
+    govtJobsCacheTime = now;
+    res.json(jobs);
+  } catch (err) {
+    console.error('Govt jobs scraping failed:', err);
+    // If scrap fails but we have stale cache, return it
+    if (govtJobsCache) {
+      return res.json(govtJobsCache);
+    }
+    res.status(500).json({ error: 'Failed to retrieve government jobs. Please try again later.' });
+  }
 });
 
 // --- PAYMENT ROUTES ---

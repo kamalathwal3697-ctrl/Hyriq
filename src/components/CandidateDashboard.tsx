@@ -16,13 +16,41 @@ export const CandidateDashboard: React.FC = () => {
     sendChatMessage
   } = useAppState();
 
-  const [activeTab, setActiveTab] = useState<'explore' | 'applications' | 'profile'>('explore');
+  const [activeTab, setActiveTab] = useState<'explore' | 'applications' | 'profile' | 'govt'>('explore');
   const [detailsTab, setDetailsTab] = useState<'info' | 'pact'>('info');
   const [showApplyPactModal, setShowApplyPactModal] = useState(false);
   const [pactChecked, setPactChecked] = useState(false);
   const [typedSignature, setTypedSignature] = useState('');
   const [showContractModal, setShowContractModal] = useState(false);
   const [contractApp, setContractApp] = useState<Application | null>(null);
+
+  // Government Jobs States
+  const [govtJobs, setGovtJobs] = useState<any[]>([]);
+  const [selectedGovtJob, setSelectedGovtJob] = useState<any | null>(null);
+  const [govtJobsLoading, setGovtJobsLoading] = useState(false);
+  const [govtJobsError, setGovtJobsError] = useState('');
+
+  // Fetch Government Jobs on tab activation
+  useEffect(() => {
+    if (activeTab === 'govt' && govtJobs.length === 0) {
+      setGovtJobsLoading(true);
+      setGovtJobsError('');
+      fetch('/api/govt-jobs')
+        .then(res => {
+          if (!res.ok) throw new Error('Failed to load government jobs');
+          return res.json();
+        })
+        .then(data => {
+          setGovtJobs(data);
+          if (data.length > 0) setSelectedGovtJob(data[0]);
+          setGovtJobsLoading(false);
+        })
+        .catch(err => {
+          setGovtJobsError(err.message || 'Failed to load government jobs');
+          setGovtJobsLoading(false);
+        });
+    }
+  }, [activeTab]);
 
   // Search & Filter States
   const [searchQuery, setSearchQuery] = useState('');
@@ -209,7 +237,7 @@ export const CandidateDashboard: React.FC = () => {
     }
   };
 
-  const isExplore = activeTab === 'explore';
+  const isLightMode = activeTab === 'explore' || activeTab === 'govt';
 
   return (
     <div 
@@ -217,9 +245,9 @@ export const CandidateDashboard: React.FC = () => {
       style={{ 
         paddingTop: '32px', 
         paddingBottom: '60px', 
-        background: isExplore ? '#F5F7FA' : 'transparent',
+        background: isLightMode ? '#F5F7FA' : 'transparent',
         minHeight: '100vh',
-        color: isExplore ? 'var(--corporate-blue)' : '#fff',
+        color: isLightMode ? 'var(--corporate-blue)' : '#fff',
         transition: 'all 0.3s ease'
       }}
     >
@@ -230,27 +258,34 @@ export const CandidateDashboard: React.FC = () => {
         {/* Dashboard Subheader Tabs */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', flexWrap: 'wrap', gap: '16px' }}>
           <div>
-            <h2 style={{ fontSize: '24px', fontWeight: 700, color: isExplore ? 'var(--corporate-blue)' : '#fff' }}>
+            <h2 style={{ fontSize: '24px', fontWeight: 700, color: isLightMode ? 'var(--corporate-blue)' : '#fff' }}>
               Welcome back, {candidateProfile.name}
             </h2>
-            <p style={{ color: isExplore ? '#475569' : 'var(--text-secondary)', fontSize: '14px' }}>
+            <p style={{ color: isLightMode ? '#475569' : 'var(--text-secondary)', fontSize: '14px' }}>
               Let's land your dream workspace.
             </p>
           </div>
 
-          <div className="tabs-header" style={{ background: isExplore ? 'rgba(26, 62, 98, 0.08)' : 'rgba(0, 0, 0, 0.2)', border: isExplore ? '1px solid rgba(26, 62, 98, 0.1)' : '1px solid var(--border-color)' }}>
+          <div className="tabs-header" style={{ background: isLightMode ? 'rgba(26, 62, 98, 0.08)' : 'rgba(0, 0, 0, 0.2)', border: isLightMode ? '1px solid rgba(26, 62, 98, 0.1)' : '1px solid var(--border-color)' }}>
             <button 
               className={`tab-btn ${activeTab === 'explore' ? 'active' : ''}`}
               onClick={() => setActiveTab('explore')}
-              style={{ color: activeTab === 'explore' ? (isExplore ? '#fff' : 'var(--text-primary)') : (isExplore ? 'var(--corporate-blue)' : 'var(--text-secondary)'), background: activeTab === 'explore' ? 'var(--corporate-blue)' : 'transparent' }}
+              style={{ color: activeTab === 'explore' ? '#fff' : (isLightMode ? 'var(--corporate-blue)' : 'var(--text-secondary)'), background: activeTab === 'explore' ? 'var(--corporate-blue)' : 'transparent' }}
             >
               <Briefcase size={16} />
               Explore Jobs
             </button>
             <button 
+              className={`tab-btn ${activeTab === 'govt' ? 'active' : ''}`}
+              onClick={() => setActiveTab('govt')}
+              style={{ color: activeTab === 'govt' ? '#fff' : (isLightMode ? 'var(--corporate-blue)' : 'var(--text-secondary)'), background: activeTab === 'govt' ? 'var(--corporate-blue)' : 'transparent' }}
+            >
+              🏛️ Govt Jobs
+            </button>
+            <button 
               className={`tab-btn ${activeTab === 'applications' ? 'active' : ''}`}
               onClick={() => setActiveTab('applications')}
-              style={{ color: activeTab === 'applications' ? '#fff' : (isExplore ? 'var(--corporate-blue)' : 'var(--text-secondary)'), background: activeTab === 'applications' ? 'var(--corporate-blue)' : 'transparent' }}
+              style={{ color: activeTab === 'applications' ? '#fff' : (isLightMode ? 'var(--corporate-blue)' : 'var(--text-secondary)'), background: activeTab === 'applications' ? 'var(--corporate-blue)' : 'transparent' }}
             >
               <MessageCircle size={16} />
               Applications ({applications.length})
@@ -258,7 +293,7 @@ export const CandidateDashboard: React.FC = () => {
             <button 
               className={`tab-btn ${activeTab === 'profile' ? 'active' : ''}`}
               onClick={() => setActiveTab('profile')}
-              style={{ color: activeTab === 'profile' ? '#fff' : (isExplore ? 'var(--corporate-blue)' : 'var(--text-secondary)'), background: activeTab === 'profile' ? 'var(--corporate-blue)' : 'transparent' }}
+              style={{ color: activeTab === 'profile' ? '#fff' : (isLightMode ? 'var(--corporate-blue)' : 'var(--text-secondary)'), background: activeTab === 'profile' ? 'var(--corporate-blue)' : 'transparent' }}
             >
               <FileText size={16} />
               My Profile
@@ -754,6 +789,156 @@ export const CandidateDashboard: React.FC = () => {
               )}
             </div>
           </main>
+        </div>
+      )}
+
+      {/* GOVT JOBS VIEW */}
+      {activeTab === 'govt' && (
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 380px', gap: '24px', alignItems: 'start' }} className="explore-grid">
+          {/* Left Column: Govt Jobs List */}
+          <main style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <h3 style={{ fontSize: '18px', fontWeight: 700, color: 'var(--corporate-blue)' }}>
+                Punjab Government Notifications (Live)
+              </h3>
+              <span className="seeker-tag" style={{ background: 'rgba(242, 153, 74, 0.1)', color: 'var(--tech-orange)', fontWeight: 600 }}>
+                {govtJobs.length} Notifications Found
+              </span>
+            </div>
+
+            {govtJobsLoading && (
+              <div className="seeker-light-card" style={{ padding: '40px', textAlign: 'center' }}>
+                <div className="animate-pulse" style={{ color: 'var(--corporate-blue)', fontWeight: 600 }}>
+                  🔍 Fetching latest government job listings...
+                </div>
+              </div>
+            )}
+
+            {govtJobsError && (
+              <div className="seeker-light-card" style={{ padding: '24px', borderLeft: '4px solid var(--danger)', color: 'red' }}>
+                ⚠️ {govtJobsError}
+              </div>
+            )}
+
+            {!govtJobsLoading && !govtJobsError && govtJobs.length === 0 && (
+              <div className="seeker-light-card" style={{ padding: '40px', textAlign: 'center' }}>
+                No active notifications found. Please check back later.
+              </div>
+            )}
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              {govtJobs.map((job) => {
+                const isSelected = selectedGovtJob?.id === job.id;
+                return (
+                  <div
+                    key={job.id}
+                    className={`seeker-light-card ${isSelected ? 'active' : ''}`}
+                    onClick={() => setSelectedGovtJob(job)}
+                    style={{
+                      padding: '16px',
+                      cursor: 'pointer',
+                      border: isSelected ? '2px solid var(--tech-orange)' : '1px solid rgba(26, 62, 98, 0.1)',
+                      boxShadow: isSelected ? '0 4px 12px rgba(26, 62, 98, 0.08)' : 'none',
+                      transition: 'all 0.2s ease',
+                      position: 'relative'
+                    }}
+                  >
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '8px' }}>
+                      <span className="seeker-tag" style={{ background: 'rgba(26, 62, 98, 0.08)', color: 'var(--corporate-blue)', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                        {job.recruitmentBoard}
+                      </span>
+                      <span style={{ fontSize: '12px', color: '#64748b' }}>
+                        Posted: {job.postDate}
+                      </span>
+                    </div>
+
+                    <h4 style={{ fontSize: '16px', fontWeight: 700, color: 'var(--corporate-blue)', marginBottom: '8px', lineHeight: '1.4' }}>
+                      {job.title}
+                    </h4>
+
+                    <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', fontSize: '13px', color: '#475569' }}>
+                      <div>
+                        <strong>🎓 Qualification:</strong> {job.qualification}
+                      </div>
+                      {job.lastDate && (
+                        <div>
+                          <strong>📅 Last Date:</strong> {job.lastDate}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </main>
+
+          {/* Right Column: Sticky Detail Panel */}
+          <aside style={{ position: 'sticky', top: '24px' }}>
+            {selectedGovtJob ? (
+              <div className="seeker-light-card" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px', border: '1px solid rgba(26, 62, 98, 0.1)' }}>
+                <div>
+                  <span className="seeker-tag" style={{ background: 'rgba(26, 62, 98, 0.08)', color: 'var(--corporate-blue)', marginBottom: '12px', display: 'inline-block' }}>
+                    {selectedGovtJob.recruitmentBoard}
+                  </span>
+                  <h3 style={{ fontSize: '20px', fontWeight: 800, color: 'var(--corporate-blue)', lineHeight: '1.4' }}>
+                    {selectedGovtJob.title}
+                  </h3>
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', borderTop: '1px solid rgba(26, 62, 98, 0.1)', borderBottom: '1px solid rgba(26, 62, 98, 0.1)', padding: '16px 0' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '120px 1fr', gap: '8px', fontSize: '14px' }}>
+                    <span style={{ color: '#64748b', fontWeight: 600 }}>Advt No:</span>
+                    <span style={{ color: 'var(--corporate-blue)' }}>{selectedGovtJob.advtNo || '—'}</span>
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: '120px 1fr', gap: '8px', fontSize: '14px' }}>
+                    <span style={{ color: '#64748b', fontWeight: 600 }}>Qualification:</span>
+                    <span style={{ color: 'var(--corporate-blue)', fontWeight: 600 }}>{selectedGovtJob.qualification}</span>
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: '120px 1fr', gap: '8px', fontSize: '14px' }}>
+                    <span style={{ color: '#64748b', fontWeight: 600 }}>Last Date:</span>
+                    <span style={{ color: 'var(--corporate-blue)', fontWeight: 600 }}>{selectedGovtJob.lastDate || '—'}</span>
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: '120px 1fr', gap: '8px', fontSize: '14px' }}>
+                    <span style={{ color: '#64748b', fontWeight: 600 }}>Posted On:</span>
+                    <span style={{ color: 'var(--corporate-blue)' }}>{selectedGovtJob.postDate}</span>
+                  </div>
+                </div>
+
+                <div style={{ background: 'rgba(242, 153, 74, 0.05)', border: '1px dashed rgba(242, 153, 74, 0.3)', borderRadius: '12px', padding: '16px', fontSize: '13px', color: '#475569', lineHeight: '1.5' }}>
+                  <strong>📢 Notice:</strong> This is a public sector vacancy. Application procedures vary (some require online submission on official department websites, while others require speed-post offline forms). Use the button below to view detailed procedures.
+                </div>
+
+                <a
+                  href={selectedGovtJob.applyLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-primary"
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '8px',
+                    background: 'var(--tech-orange)',
+                    borderColor: 'var(--tech-orange)',
+                    color: '#fff',
+                    fontWeight: 700,
+                    padding: '12px',
+                    borderRadius: '10px',
+                    textDecoration: 'none',
+                    textAlign: 'center',
+                    boxShadow: '0 4px 12px rgba(242, 153, 74, 0.2)',
+                    transition: 'all 0.2s ease'
+                  }}
+                >
+                  Apply & View Official Details 🏛️
+                </a>
+              </div>
+            ) : (
+              <div className="seeker-light-card" style={{ padding: '30px', textAlign: 'center', color: '#64748b' }}>
+                Select a notification to view application details.
+              </div>
+            )}
+          </aside>
         </div>
       )}
 
