@@ -912,7 +912,7 @@ export const CandidateDashboard: React.FC = () => {
                 {govtJobDetailsLoading ? (
                   <div style={{ padding: '40px 20px', textAlign: 'center', color: 'var(--corporate-blue)', fontWeight: 600 }}>
                     <div className="animate-pulse">
-                      ⏳ Loading full notifications, fee details & vacancy tables from FreeJobAlert...
+                      ⏳ Loading official job notifications, fee details & vacancy tables...
                     </div>
                   </div>
                 ) : selectedGovtJobDetails ? (
@@ -971,7 +971,7 @@ export const CandidateDashboard: React.FC = () => {
                     transition: 'all 0.2s ease'
                   }}
                 >
-                  Open Original Page on FreeJobAlert 🌐
+                  Open Official Application Portal 🏛️
                 </a>
               </div>
             ) : (
