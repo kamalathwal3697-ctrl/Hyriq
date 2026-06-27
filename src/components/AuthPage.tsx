@@ -82,7 +82,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onSignup }) => {
 
       if (!orderRes.ok) {
         const errData = await orderRes.json();
-        throw new Error(errData.error || 'Failed to create payment order.');
+        throw new Error((errData.error || 'Failed to create payment order.') + (errData.details ? ` (${errData.details})` : ''));
       }
 
       const orderData = await orderRes.json();

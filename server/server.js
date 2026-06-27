@@ -9,7 +9,7 @@ import dotenv from 'dotenv';
 import Razorpay from 'razorpay';
 import { initDb, readData, writeData } from './db.js';
 
-dotenv.config();
+dotenv.config({ path: path.join(path.dirname(fileURLToPath(import.meta.url)), '..', '.env') });
 
 const app = express();
 const PORT = 5000;
@@ -18,6 +18,7 @@ const JWT_SECRET = 'hyriq_super_secret_vibe_key_123';
 // Razorpay Payment Gateway
 const razorpayKeyId = process.env.RAZORPAY_KEY_ID || 'rzp_test_placeholder';
 const razorpayKeySecret = process.env.RAZORPAY_KEY_SECRET || 'placeholder_secret';
+console.log('Razorpay Key ID loaded:', razorpayKeyId ? razorpayKeyId.substring(0, 12) + '...' : 'MISSING');
 let razorpay;
 try {
   razorpay = new Razorpay({
@@ -66,8 +67,18 @@ app.get('/api/promo/slots', (req, res) => {
 
 // --- PAYMENT ROUTES ---
 
+// Debug: Razorpay status
+app.get('/api/payments/status', (req, res) => {
+  res.json({
+    razorpayInitialized: !!razorpay,
+    keyIdLoaded: !!razorpayKeyId && razorpayKeyId !== 'rzp_test_placeholder',
+    keyIdPrefix: razorpayKeyId ? razorpayKeyId.substring(0, 8) : 'NONE',
+  });
+});
+
 // Create Razorpay order for candidate registration
 app.post('/api/payments/create-order', async (req, res) => {
+  console.log('create-order called, razorpay exists:', !!razorpay);
   if (!razorpay) {
     return res.status(503).json({ error: 'Payment gateway not configured. Please set RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET environment variables.' });
   }
@@ -90,7 +101,10 @@ app.post('/api/payments/create-order', async (req, res) => {
     });
   } catch (err) {
     console.error('Razorpay order creation failed:', err);
-    res.status(500).json({ error: 'Failed to create payment order. Please try again.' });
+    res.status(500).json({ 
+      error: 'Failed to create payment order. Please try again.',
+      details: err.message || err
+    });
   }
 });
 
