@@ -4,7 +4,6 @@ import { useAppState } from '../context/AppContext';
 import type { Job, Application } from '../context/AppContext';
 import { ChatWindow } from './ChatWindow';
 import { OnboardingModal } from './OnboardingModal';
-import { BrainNLogo } from './BrainNLogo';
 
 export const CandidateDashboard: React.FC = () => {
   const {
@@ -608,7 +607,7 @@ export const CandidateDashboard: React.FC = () => {
                         </div>
                       </div>
                       
-                      <BrainNLogo size={72} variant="orange" className="animate-glow" style={{ zIndex: 1 }} />
+                      <img src="/logo.png" alt="Logo" className="animate-glow" style={{ width: '72px', height: '72px', borderRadius: '12px', objectFit: 'cover', zIndex: 1 }} />
                     </div>
                   )}
 

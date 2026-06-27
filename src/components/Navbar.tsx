@@ -2,7 +2,6 @@ import React from 'react';
 import { Briefcase, User, Shield, Compass, LogOut } from 'lucide-react';
 import { useAppState } from '../context/AppContext';
 import type { Perspective } from '../context/AppContext';
-import { BrainNLogo } from './BrainNLogo';
 
 export const Navbar: React.FC = () => {
   const { perspective, setPerspective, token, user, logout } = useAppState();
@@ -38,7 +37,7 @@ export const Navbar: React.FC = () => {
             cursor: 'pointer'
           }}
         >
-          <BrainNLogo size={38} variant="gradient" />
+          <img src="/logo.png" alt="Hyriq Logo" style={{ width: '38px', height: '38px', borderRadius: '8px', objectFit: 'cover' }} />
           <span className="brand-headline" style={{
             fontSize: '24px',
             fontWeight: 800
