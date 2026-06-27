@@ -30,7 +30,7 @@ const defaultJobs = [
       'Flexible weekend schedules.'
     ],
     postedDate: '2 days ago',
-    recruiterId: 'user-recruiter-1',
+    recruiterId: 'user-admin-raj',
     fairWorkPact: true
   },
   {
@@ -58,7 +58,7 @@ const defaultJobs = [
       'Complimentary brand apparel.'
     ],
     postedDate: '1 day ago',
-    recruiterId: 'user-recruiter-1',
+    recruiterId: 'user-admin-raj',
     fairWorkPact: true
   },
   {
@@ -86,7 +86,7 @@ const defaultJobs = [
       'Free education stipend for children of staff.'
     ],
     postedDate: '3 days ago',
-    recruiterId: 'user-recruiter-1',
+    recruiterId: 'user-admin-raj',
     fairWorkPact: true
   },
   {
@@ -114,7 +114,7 @@ const defaultJobs = [
       'Casual dress code and weekly tea offsites.'
     ],
     postedDate: '5 hours ago',
-    recruiterId: 'user-recruiter-1',
+    recruiterId: 'user-admin-raj',
     fairWorkPact: true
   },
   {
@@ -142,7 +142,7 @@ const defaultJobs = [
       'Annual safety training certification.'
     ],
     postedDate: '5 days ago',
-    recruiterId: 'user-recruiter-1',
+    recruiterId: 'user-admin-raj',
     fairWorkPact: true
   },
   {
@@ -169,7 +169,7 @@ const defaultJobs = [
       'Work-from-home setup support.'
     ],
     postedDate: 'Just now',
-    recruiterId: 'user-recruiter-1',
+    recruiterId: 'user-admin-raj',
     fairWorkPact: true
   },
   {
@@ -196,7 +196,7 @@ const defaultJobs = [
       'Recreation rooms and gym access.'
     ],
     postedDate: '1 day ago',
-    recruiterId: 'user-recruiter-1',
+    recruiterId: 'user-admin-raj',
     fairWorkPact: true
   },
   {
@@ -223,7 +223,7 @@ const defaultJobs = [
       'Paid summer and winter vacations.'
     ],
     postedDate: 'Just now',
-    recruiterId: 'user-recruiter-1',
+    recruiterId: 'user-admin-raj',
     fairWorkPact: true
   },
   {
@@ -251,7 +251,7 @@ const defaultJobs = [
       'Annual performance bonuses.'
     ],
     postedDate: '2 days ago',
-    recruiterId: 'user-recruiter-1',
+    recruiterId: 'user-admin-raj',
     fairWorkPact: true
   },
   {
@@ -279,7 +279,7 @@ const defaultJobs = [
       'Employee discounts on motorcycle service and parts.'
     ],
     postedDate: '1 day ago',
-    recruiterId: 'user-recruiter-1',
+    recruiterId: 'user-admin-raj',
     fairWorkPact: true
   },
   {
@@ -307,7 +307,7 @@ const defaultJobs = [
       'Safe and sanitized work environment.'
     ],
     postedDate: '3 days ago',
-    recruiterId: 'user-recruiter-1',
+    recruiterId: 'user-admin-raj',
     fairWorkPact: true
   },
   {
@@ -335,7 +335,7 @@ const defaultJobs = [
       'Annual salary reviews.'
     ],
     postedDate: 'Just now',
-    recruiterId: 'user-recruiter-1',
+    recruiterId: 'user-admin-raj',
     fairWorkPact: true
   },
   {
@@ -353,7 +353,7 @@ const defaultJobs = [
     requirements: ["Any graduate degree (B.Com, BBA preferred).","Good communication skills in Punjabi, Hindi, and basic English.","Own two-wheeler with a valid driving license.","Prior sales experience is a plus but freshers are welcome."],
     benefits: ["Travel allowance (petrol reimbursement).","Performance incentives and monthly bonuses.","Health insurance coverage.","Clear career progression pathway inside the bank."],
     postedDate: 'Just now',
-    recruiterId: 'user-recruiter-1',
+    recruiterId: 'user-admin-raj',
     fairWorkPact: true
   },
   {
@@ -371,7 +371,7 @@ const defaultJobs = [
     requirements: ["Graduation in any stream.","Excellent conversational skills in English and Punjabi.","Basic understanding of study visa documentation is preferred.","Comfortable working with Microsoft Excel and Google Sheets."],
     benefits: ["Monthly conversion incentives.","Paid sick leaves and casual leaves.","Professional work environment."],
     postedDate: 'Just now',
-    recruiterId: 'user-recruiter-1',
+    recruiterId: 'user-admin-raj',
     fairWorkPact: true
   },
   {
@@ -389,7 +389,7 @@ const defaultJobs = [
     requirements: ["12th pass (Higher Secondary) or equivalent.","Quick mental math skills and computer literacy.","Willingness to work in shifts (morning/evening).","Honest and punctual."],
     benefits: ["Overtime pay.","Store employee discounts.","Provident Fund (PF) options."],
     postedDate: 'Just now',
-    recruiterId: 'user-recruiter-1',
+    recruiterId: 'user-admin-raj',
     fairWorkPact: true
   },
   {
@@ -407,7 +407,7 @@ const defaultJobs = [
     requirements: ["M.A. in English and B.Ed. degree (Mandatory).","Minimum 2 years of teaching experience in a CBSE affiliated school.","Fluency in spoken and written English."],
     benefits: ["Provident Fund (PF) and Gratuity.","Free transport facility for staff.","Subsidized education for employee children."],
     postedDate: 'Just now',
-    recruiterId: 'user-recruiter-1',
+    recruiterId: 'user-admin-raj',
     fairWorkPact: true
   },
   {
@@ -425,7 +425,7 @@ const defaultJobs = [
     requirements: ["B.Tech (CSE/IT), BCA, or Diploma in Hardware & Networking.","Good command over English (both written and verbal).","Familiarity with Remote Desktop tools (AnyDesk, TeamViewer).","Stable home internet connection (broadband)."],
     benefits: ["Work from Home flexibility (Hybrid structure).","Broadband internet reimbursement.","Night shift allowances."],
     postedDate: 'Just now',
-    recruiterId: 'user-recruiter-1',
+    recruiterId: 'user-admin-raj',
     fairWorkPact: true
   },
   {
@@ -443,7 +443,7 @@ const defaultJobs = [
     requirements: ["B.Sc Nursing or GNM (General Nursing and Midwifery).","Valid registration with the Punjab Nurses Registration Council (PNRC).","Minimum 1 year of clinical experience in a multi-speciality hospital."],
     benefits: ["Free duty meals.","Health insurance for family.","Hostel accommodation support if required."],
     postedDate: 'Just now',
-    recruiterId: 'user-recruiter-1',
+    recruiterId: 'user-admin-raj',
     fairWorkPact: true
   },
   {
@@ -461,7 +461,7 @@ const defaultJobs = [
     requirements: ["Own smartphone (Android or iOS) with active internet.","Own motorcycle/scooter with RC and Insurance.","Valid Driving License and Aadhaar Card."],
     benefits: ["Instant daily payouts.","Accidental insurance coverage of ₹10 Lakhs.","Attractive rain and festival bonuses."],
     postedDate: 'Just now',
-    recruiterId: 'user-recruiter-1',
+    recruiterId: 'user-admin-raj',
     fairWorkPact: true
   },
   {
@@ -479,7 +479,7 @@ const defaultJobs = [
     requirements: ["B.Tech / B.E. in Civil Engineering.","2+ years of experience in industrial site construction.","Ability to read structural blueprints and draft reports in AutoCAD."],
     benefits: ["Company transport from Bathinda city to Refinery site.","Free site accommodation and meals.","Personal Protective Equipment (PPE) provided."],
     postedDate: 'Just now',
-    recruiterId: 'user-recruiter-1',
+    recruiterId: 'user-admin-raj',
     fairWorkPact: true
   }
 ];
@@ -540,7 +540,7 @@ export const initDb = () => {
         status: 'Interview',
         candidateSignature: 'Amanpreet Singh',
         candidateSignedAt: '2026-06-25T10:00:00.000Z',
-        recruiterSignature: 'Gaurav Gupta',
+        recruiterSignature: 'Raj Athwal',
         recruiterSignedAt: '2026-06-20T10:00:00.000Z'
       }
     ];

@@ -31,7 +31,7 @@ try {
       id: jobId,
       ...job,
       postedDate: "Just now",
-      recruiterId: "user-recruiter-1", // Seeded recruiter
+      recruiterId: "user-admin-raj", // Seeded admin recruiter
       fairWorkPact: true
     };
     
