@@ -14,7 +14,7 @@ dotenv.config({ path: path.join(path.dirname(fileURLToPath(import.meta.url)), '.
 
 const app = express();
 const PORT = 5000;
-const JWT_SECRET = 'hyriq_super_secret_vibe_key_123';
+const JWT_SECRET = process.env.JWT_SECRET || 'hyriq_super_secret_vibe_key_123';
 
 // Razorpay Payment Gateway
 const razorpayKeyId = process.env.RAZORPAY_KEY_ID || 'rzp_test_placeholder';
