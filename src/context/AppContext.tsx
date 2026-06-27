@@ -87,6 +87,7 @@ interface AppContextType {
   login: (email: string, pass: string) => Promise<void>;
   signup: (details: {
     email: string;
+    username?: string;
     pass: string;
     role: 'candidate' | 'recruiter';
     name: string;
@@ -334,6 +335,7 @@ export const AppStateProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   const signup = async (details: {
     email: string;
+    username?: string;
     pass: string;
     role: 'candidate' | 'recruiter';
     name: string;
@@ -346,6 +348,7 @@ export const AppStateProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         email: details.email,
+        username: details.username,
         password: details.pass,
         role: details.role,
         name: details.name,

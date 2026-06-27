@@ -11,6 +11,7 @@ interface AuthPageProps {
   onLogin: (email: string, pass: string) => Promise<void>;
   onSignup: (details: {
     email: string;
+    username?: string;
     pass: string;
     role: 'candidate' | 'recruiter';
     name: string;
@@ -26,6 +27,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onSignup }) => {
   
   // Shared Form inputs
   const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
@@ -50,7 +52,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onSignup }) => {
       } else {
         if (role === 'recruiter') {
           // Recruiters register FREE — no payment needed
-          await onSignup({ email, pass: password, role, name, phone, bio });
+          await onSignup({ email, username, pass: password, role, name, phone, bio });
         } else {
           // Candidates need to pay ₹99
           setShowPayment(true);
@@ -120,6 +122,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onSignup }) => {
             setPaymentSuccess(true);
             await onSignup({
               email,
+              username,
               pass: password,
               role,
               name,
@@ -505,6 +508,22 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onSignup }) => {
                 placeholder="e.g. Alex Mercer"
                 className="glass-input"
                 required
+              />
+            </div>
+          )}
+
+          {/* Username Field (Sign Up only) */}
+          {!isLogin && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+              <label style={{ fontSize: '12px', color: 'var(--text-secondary)', fontWeight: 600 }}>
+                Username (Optional)
+              </label>
+              <input
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="e.g. alex_mercer"
+                className="glass-input"
               />
             </div>
           )}

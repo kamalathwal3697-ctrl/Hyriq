@@ -235,7 +235,7 @@ app.get('/api/payments/key', (req, res) => {
 
 // Sign Up
 app.post('/api/auth/signup', (req, res) => {
-  const { email, password, role, name, phone, bio, paymentId } = req.body;
+  const { email, username, password, role, name, phone, bio, paymentId } = req.body;
   if (!email || !password || !role || !name) {
     return res.status(400).json({ error: 'Email, password, role, and name are required' });
   }
@@ -243,6 +243,11 @@ app.post('/api/auth/signup', (req, res) => {
   const db = readData();
   const exists = db.users.find(u => u.email.toLowerCase() === email.toLowerCase());
   if (exists) return res.status(400).json({ error: 'Email already registered' });
+
+  if (username) {
+    const existsUsername = db.users.find(u => u.username && u.username.toLowerCase() === username.toLowerCase());
+    if (existsUsername) return res.status(400).json({ error: 'Username already taken' });
+  }
 
   // Role-based pricing: Recruiters are FREE, Candidates pay ₹99
   if (role === 'candidate') {
@@ -282,6 +287,7 @@ app.post('/api/auth/signup', (req, res) => {
   const newUser = {
     id: userId,
     email: email.toLowerCase(),
+    username: username ? username.toLowerCase() : undefined,
     passwordHash,
     role,
     name,
@@ -317,7 +323,10 @@ app.post('/api/auth/login', (req, res) => {
   }
 
   const db = readData();
-  const user = db.users.find(u => u.email.toLowerCase() === email.toLowerCase());
+  const user = db.users.find(u => 
+    u.email.toLowerCase() === email.toLowerCase() || 
+    (u.username && u.username.toLowerCase() === email.toLowerCase())
+  );
   if (!user) return res.status(400).json({ error: 'Invalid email or password' });
 
   const isMatch = bcrypt.compareSync(password, user.passwordHash);
