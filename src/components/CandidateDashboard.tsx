@@ -659,8 +659,8 @@ export const CandidateDashboard: React.FC = () => {
               )}
             </div>
 
-            {/* Job Details Panel */}
-            <div style={{ position: 'sticky', top: '80px', maxHeight: 'calc(100vh - 100px)', overflowY: 'auto', paddingRight: '4px' }}>
+            {/* Job Details Panel — full-page overlay on mobile */}
+            <div className={`job-detail-panel ${selectedJob ? 'job-detail-open' : ''}`} style={{ position: 'sticky', top: '80px', maxHeight: 'calc(100vh - 100px)', overflowY: 'auto', paddingRight: '4px' }}>
               {selectedJob ? (
                 <div className="glass-panel" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px', background: '#0B0E14', color: '#fff', border: '1px solid rgba(255,255,255,0.08)' }}>
                   {/* Header */}
