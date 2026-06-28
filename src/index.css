@@ -503,4 +503,46 @@ body {
   color: #e28532 !important;
 }
 
+/* --- MOBILE NATIVE APP STYLING OVERRIDES --- */
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Disable tap highlight color & long press callbacks */
+* {
+  -webkit-tap-highlight-color: transparent !important;
+  -webkit-touch-callout: none;
+  outline: none !important;
+}
+
+input, textarea {
+  user-select: text !important;
+  -webkit-user-select: text !important;
+}
+
+/* Responsive displays */
+@media (max-width: 768px) {
+  /* Hide standard scrollbars on mobile */
+  ::-webkit-scrollbar {
+    display: none !important;
+    width: 0px !important;
+    height: 0px !important;
+  }
+  
+  .desktop-navbar {
+    display: none !important;
+  }
+  
+  footer {
+    display: none !important;
+  }
+
+  /* Padding for bottom nav bar override */
+  body, .container, main, .explore-grid, .recruiter-grid {
+    padding-bottom: 74px !important;
+  }
+}
+
 

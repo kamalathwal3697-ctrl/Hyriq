@@ -11,7 +11,7 @@ export const Navbar: React.FC = () => {
   };
 
   return (
-    <nav style={{
+    <nav className="desktop-navbar" style={{
       borderBottom: '1px solid var(--border-color)',
       background: 'rgba(9, 7, 20, 0.85)',
       backdropFilter: 'blur(12px)',

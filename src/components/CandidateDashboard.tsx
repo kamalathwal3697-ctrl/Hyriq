@@ -1697,6 +1697,55 @@ export const CandidateDashboard: React.FC = () => {
           </div>
         </div>
       )}
+      {/* Mobile Bottom Navigation Bar */}
+      <div className="mobile-bottom-nav" style={{
+        position: 'fixed',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        height: '64px',
+        background: '#0B0E14',
+        borderTop: '1px solid rgba(255, 255, 255, 0.08)',
+        display: 'none',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        zIndex: 1000,
+        boxShadow: '0 -4px 20px rgba(0,0,0,0.4)',
+        paddingBottom: 'safe-area-inset-bottom'
+      }}>
+        {[
+          { id: 'explore', label: 'Jobs', icon: '💼' },
+          { id: 'govt', label: 'Govt Jobs', icon: '🏛️' },
+          { id: 'applications', label: 'Applications', icon: '📩' },
+          { id: 'profile', label: 'Profile', icon: '👤' }
+        ].map(item => {
+          const isActive = activeTab === item.id;
+          return (
+            <button
+              key={item.id}
+              onClick={() => setActiveTab(item.id as any)}
+              style={{
+                background: 'transparent',
+                border: 'none',
+                color: isActive ? 'var(--tech-orange)' : 'var(--text-secondary)',
+                fontSize: '11px',
+                fontWeight: 600,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: '4px',
+                cursor: 'pointer',
+                flex: 1,
+                padding: '8px 0',
+                transition: 'all 0.2s'
+              }}
+            >
+              <span style={{ fontSize: '20px' }}>{item.icon}</span>
+              <span>{item.label}</span>
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 };
