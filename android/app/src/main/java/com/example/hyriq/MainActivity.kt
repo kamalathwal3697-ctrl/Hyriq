@@ -80,6 +80,11 @@ fun HyriqWebView(url: String) {
         webChromeClient = WebChromeClient()
         settings.javaScriptEnabled = true
         settings.domStorageEnabled = true
+        settings.databaseEnabled = true
+        settings.javaScriptCanOpenWindowsAutomatically = true
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            settings.mixedContentMode = android.webkit.WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
+        }
         settings.loadWithOverviewMode = true
         settings.useWideViewPort = true
         loadUrl(url)
