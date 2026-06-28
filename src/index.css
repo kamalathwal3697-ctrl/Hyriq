@@ -572,4 +572,12 @@ input, textarea {
   display: none !important;
 }
 
+/* Responsive Grid Overrides for Mobile WebView */
+@media (max-width: 1024px) {
+  .profile-grid, .explore-grid {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+}
+
 
