@@ -58,6 +58,7 @@ export interface CandidateProfile {
   resumeName: string;
   onboardingCompleted?: boolean;
   subscriptionExpiry?: string;
+  logoSeed?: string;
   preferences?: {
     type: string[];
     mode: string[];

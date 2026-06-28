@@ -145,6 +145,33 @@ export const CandidateDashboard: React.FC = () => {
   const [profileExperience, setProfileExperience] = useState(candidateProfile.experience);
   const [profileSaved, setProfileSaved] = useState(false);
 
+  // Extended Resume States
+  const [profileAvatar, setProfileAvatar] = useState(candidateProfile.logoSeed || '🧑‍💻');
+  const [academics, setAcademics] = useState<Array<{ degree: string; school: string; year: string; grade: string }>>([
+    { degree: 'B.Tech in Computer Science', school: 'Thapar University, Patiala', year: '2025', grade: '8.5 CGPA' }
+  ]);
+  const [workExperiences, setWorkExperiences] = useState<Array<{ role: string; company: string; duration: string; description: string }>>([
+    { role: 'Frontend Intern', company: 'Google Development Group', duration: '3 Months (2025)', description: 'Assisted in designing clean UI panels for GDG portals using React.' }
+  ]);
+  const [certifications, setCertifications] = useState<Array<{ name: string; issuer: string; year: string }>>([
+    { name: 'AWS Certified Cloud Practitioner', issuer: 'Amazon Web Services', year: '2025' }
+  ]);
+
+  // Form helpers
+  const [newDegree, setNewDegree] = useState('');
+  const [newSchool, setNewSchool] = useState('');
+  const [newAcadYear, setNewAcadYear] = useState('');
+  const [newGrade, setNewGrade] = useState('');
+
+  const [newRole, setNewRole] = useState('');
+  const [newCompany, setNewCompany] = useState('');
+  const [newWorkDuration, setNewWorkDuration] = useState('');
+  const [newWorkDesc, setNewWorkDesc] = useState('');
+
+  const [newCertName, setNewCertName] = useState('');
+  const [newCertIssuer, setNewCertIssuer] = useState('');
+  const [newCertYear, setNewCertYear] = useState('');
+
   // Load queries from landing page redirect
   useEffect(() => {
     const landingSearch = localStorage.getItem('hyriq_landing_search');
@@ -236,10 +263,62 @@ export const CandidateDashboard: React.FC = () => {
       bio: profileBio,
       skills: candidateProfile.skills,
       experience: profileExperience,
-      resumeName: candidateProfile.resumeName
+      resumeName: candidateProfile.resumeName,
+      logoSeed: profileAvatar
     });
     setProfileSaved(true);
     setTimeout(() => setProfileSaved(false), 3000);
+  };
+
+  // Add & Remove Helpers
+  const handleAddAcademic = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newDegree.trim() || !newSchool.trim()) return;
+    setAcademics(prev => [
+      ...prev,
+      { degree: newDegree.trim(), school: newSchool.trim(), year: newAcadYear.trim() || '2026', grade: newGrade.trim() || 'N/A' }
+    ]);
+    setNewDegree('');
+    setNewSchool('');
+    setNewAcadYear('');
+    setNewGrade('');
+  };
+
+  const handleRemoveAcademic = (index: number) => {
+    setAcademics(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const handleAddExperience = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newRole.trim() || !newCompany.trim()) return;
+    setWorkExperiences(prev => [
+      ...prev,
+      { role: newRole.trim(), company: newCompany.trim(), duration: newWorkDuration.trim() || 'Present', description: newWorkDesc.trim() || 'No description provided.' }
+    ]);
+    setNewRole('');
+    setNewCompany('');
+    setNewWorkDuration('');
+    setNewWorkDesc('');
+  };
+
+  const handleRemoveExperience = (index: number) => {
+    setWorkExperiences(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const handleAddCertification = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newCertName.trim() || !newCertIssuer.trim()) return;
+    setCertifications(prev => [
+      ...prev,
+      { name: newCertName.trim(), issuer: newCertIssuer.trim(), year: newCertYear.trim() || '2026' }
+    ]);
+    setNewCertName('');
+    setNewCertIssuer('');
+    setNewCertYear('');
+  };
+
+  const handleRemoveCertification = (index: number) => {
+    setCertifications(prev => prev.filter((_, i) => i !== index));
   };
 
   const handleAddSkill = (e: React.FormEvent) => {
@@ -1213,131 +1292,442 @@ export const CandidateDashboard: React.FC = () => {
 
       {/* PROFILE VIEW */}
       {activeTab === 'profile' && (
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 340px', gap: '24px', alignItems: 'start' }} className="profile-grid">
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 360px', gap: '24px', alignItems: 'start' }} className="profile-grid">
           {/* Main Info Card */}
-          <main className="glass-panel" style={{ padding: '32px' }}>
-            <h3 style={{ fontSize: '20px', fontWeight: 700, color: '#fff', marginBottom: '24px', borderBottom: '1px solid var(--border-color)', paddingBottom: '12px' }}>
-              Candidate Information
-            </h3>
+          <main style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+            <div className="glass-panel" style={{ padding: '32px' }}>
+              <h3 style={{ fontSize: '20px', fontWeight: 700, color: '#fff', marginBottom: '24px', borderBottom: '1px solid var(--border-color)', paddingBottom: '12px' }}>
+                👤 Personal Details & DP
+              </h3>
 
-            <form onSubmit={handleProfileSave} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+              {/* Avatar / DP Picker */}
+              <div style={{ marginBottom: '24px' }}>
+                <label style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-secondary)', display: 'block', marginBottom: '10px' }}>Select App Display Picture (DP)</label>
+                <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                  {['🧑‍💻', '🚀', '🤖', '🎨', '💼', '🎓', '🦖', '🌟', '🦄'].map(emoji => (
+                    <button
+                      key={emoji}
+                      type="button"
+                      onClick={() => setProfileAvatar(emoji)}
+                      style={{
+                        width: '46px',
+                        height: '46px',
+                        borderRadius: '50%',
+                        fontSize: '22px',
+                        background: profileAvatar === emoji ? 'var(--corporate-blue)' : 'rgba(255,255,255,0.03)',
+                        border: profileAvatar === emoji ? '2px solid var(--tech-orange)' : '1px solid rgba(255,255,255,0.08)',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        transition: 'all 0.2s'
+                      }}
+                    >
+                      {emoji}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <form onSubmit={handleProfileSave} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    <label style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-secondary)' }}>Full Name</label>
+                    <input 
+                      type="text" 
+                      value={profileName} 
+                      onChange={(e) => setProfileName(e.target.value)}
+                      className="glass-input" 
+                      required 
+                    />
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    <label style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-secondary)' }}>Experience Tier</label>
+                    <select 
+                      value={profileExperience}
+                      onChange={(e) => setProfileExperience(e.target.value)}
+                      className="glass-input"
+                      style={{ height: '45px' }}
+                    >
+                      <option value="Entry-level">Entry-level</option>
+                      <option value="Mid-level">Mid-level</option>
+                      <option value="Senior-level">Senior-level</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    <label style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-secondary)' }}>Email Address</label>
+                    <input 
+                      type="email" 
+                      value={profileEmail} 
+                      onChange={(e) => setProfileEmail(e.target.value)}
+                      className="glass-input" 
+                      required 
+                    />
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    <label style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-secondary)' }}>Phone Number</label>
+                    <input 
+                      type="tel" 
+                      value={profilePhone} 
+                      onChange={(e) => setProfilePhone(e.target.value)}
+                      className="glass-input" 
+                      required 
+                    />
+                  </div>
+                </div>
+
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <label style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-secondary)' }}>Full Name</label>
+                  <label style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-secondary)' }}>Bio / Intro</label>
+                  <textarea 
+                    value={profileBio} 
+                    onChange={(e) => setProfileBio(e.target.value)}
+                    className="glass-input" 
+                    rows={4}
+                    style={{ resize: 'none' }}
+                    required
+                  />
+                </div>
+
+                <div style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
+                  <button type="submit" className="btn btn-primary">Save Personal Details</button>
+                  
+                  {candidateProfile.onboardingCompleted && (
+                    <button 
+                      type="button" 
+                      onClick={() => {
+                        setCandidateProfile(prev => ({ ...prev, onboardingCompleted: false }));
+                        alert('Preferences reset! You will be guided to the onboarding vibe setup.');
+                      }}
+                      className="btn btn-outline" 
+                      style={{ borderColor: 'rgba(244, 63, 94, 0.3)', color: '#fda4af' }}
+                    >
+                      Reset Onboarding Quiz
+                    </button>
+                  )}
+
+                  {profileSaved && <span style={{ color: 'var(--success)', fontSize: '13px', fontWeight: 600 }}>✓ Info saved in profile</span>}
+                </div>
+              </form>
+            </div>
+
+            {/* Academics & Qualifications Editor */}
+            <div className="glass-panel" style={{ padding: '32px' }}>
+              <h3 style={{ fontSize: '18px', fontWeight: 700, color: '#fff', marginBottom: '20px', borderBottom: '1px solid var(--border-color)', paddingBottom: '12px' }}>
+                🎓 Academics & Qualifications
+              </h3>
+              
+              {/* Existing Academic Entries */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '24px' }}>
+                {academics.length === 0 ? (
+                  <p style={{ color: 'var(--text-muted)', fontSize: '13px' }}>No academic credentials added yet.</p>
+                ) : (
+                  academics.map((acad, idx) => (
+                    <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'rgba(255,255,255,0.02)', padding: '12px 16px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.06)' }}>
+                      <div>
+                        <strong style={{ color: '#fff', fontSize: '14px' }}>{acad.degree}</strong>
+                        <p style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>{acad.school} ({acad.year}) — {acad.grade}</p>
+                      </div>
+                      <button 
+                        onClick={() => handleRemoveAcademic(idx)}
+                        style={{ border: 'none', background: 'transparent', color: '#f43f5e', cursor: 'pointer' }}
+                      >
+                        <X size={16} />
+                      </button>
+                    </div>
+                  ))
+                )}
+              </div>
+
+              {/* Add Academic Form */}
+              <form onSubmit={handleAddAcademic} style={{ display: 'flex', flexDirection: 'column', gap: '12px', background: 'rgba(0,0,0,0.15)', padding: '16px', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.04)' }}>
+                <span style={{ fontSize: '12px', fontWeight: 700, color: 'var(--text-secondary)' }}>Add Qualification</span>
+                <input 
+                  type="text" 
+                  value={newDegree} 
+                  onChange={(e) => setNewDegree(e.target.value)} 
+                  placeholder="Degree e.g. B.Tech Computer Science" 
+                  className="glass-input" 
+                  style={{ padding: '10px 14px', fontSize: '13px' }}
+                />
+                <input 
+                  type="text" 
+                  value={newSchool} 
+                  onChange={(e) => setNewSchool(e.target.value)} 
+                  placeholder="School / University Name" 
+                  className="glass-input" 
+                  style={{ padding: '10px 14px', fontSize: '13px' }}
+                />
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
                   <input 
                     type="text" 
-                    value={profileName} 
-                    onChange={(e) => setProfileName(e.target.value)}
+                    value={newAcadYear} 
+                    onChange={(e) => setNewAcadYear(e.target.value)} 
+                    placeholder="Year (e.g. 2025)" 
                     className="glass-input" 
-                    required 
+                    style={{ padding: '10px 14px', fontSize: '13px' }}
                   />
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <label style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-secondary)' }}>Experience Tier</label>
-                  <select 
-                    value={profileExperience}
-                    onChange={(e) => setProfileExperience(e.target.value)}
-                    className="glass-input"
-                    style={{ height: '45px' }}
-                  >
-                    <option value="Entry-level">Entry-level</option>
-                    <option value="Mid-level">Mid-level</option>
-                    <option value="Senior-level">Senior-level</option>
-                  </select>
-                </div>
-              </div>
-
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <label style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-secondary)' }}>Email Address</label>
                   <input 
-                    type="email" 
-                    value={profileEmail} 
-                    onChange={(e) => setProfileEmail(e.target.value)}
+                    type="text" 
+                    value={newGrade} 
+                    onChange={(e) => setNewGrade(e.target.value)} 
+                    placeholder="Score / Grade (e.g. 8.5 CGPA)" 
                     className="glass-input" 
-                    required 
+                    style={{ padding: '10px 14px', fontSize: '13px' }}
                   />
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <label style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-secondary)' }}>Phone Number</label>
-                  <input 
-                    type="tel" 
-                    value={profilePhone} 
-                    onChange={(e) => setProfilePhone(e.target.value)}
-                    className="glass-input" 
-                    required 
-                  />
-                </div>
-              </div>
+                <button type="submit" className="btn btn-outline" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', fontSize: '13px', padding: '10px' }}>
+                  <Plus size={14} /> Add Academic Record
+                </button>
+              </form>
+            </div>
 
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                <label style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-secondary)' }}>Bio / Intro</label>
-                <textarea 
-                  value={profileBio} 
-                  onChange={(e) => setProfileBio(e.target.value)}
-                  className="glass-input" 
-                  rows={4}
-                  style={{ resize: 'none' }}
-                  required
-                />
-              </div>
+            {/* Work Experiences Editor */}
+            <div className="glass-panel" style={{ padding: '32px' }}>
+              <h3 style={{ fontSize: '18px', fontWeight: 700, color: '#fff', marginBottom: '20px', borderBottom: '1px solid var(--border-color)', paddingBottom: '12px' }}>
+                💼 Past Work Experience
+              </h3>
 
-              <div style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
-                <button type="submit" className="btn btn-primary">Save Profile Info</button>
-                
-                {candidateProfile.onboardingCompleted && (
-                  <button 
-                    type="button" 
-                    onClick={() => {
-                      setCandidateProfile(prev => ({ ...prev, onboardingCompleted: false }));
-                      alert('Preferences reset! You will be guided to the onboarding vibe setup.');
-                    }}
-                    className="btn btn-outline" 
-                    style={{ borderColor: 'rgba(244, 63, 94, 0.3)', color: '#fda4af' }}
-                  >
-                    Reset Onboarding Quiz
-                  </button>
+              {/* Existing Work Entries */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '24px' }}>
+                {workExperiences.length === 0 ? (
+                  <p style={{ color: 'var(--text-muted)', fontSize: '13px' }}>No work history added yet.</p>
+                ) : (
+                  workExperiences.map((work, idx) => (
+                    <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', background: 'rgba(255,255,255,0.02)', padding: '14px 16px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.06)' }}>
+                      <div>
+                        <strong style={{ color: '#fff', fontSize: '14px' }}>{work.role} at {work.company}</strong>
+                        <span style={{ fontSize: '11px', color: 'var(--tech-orange)', display: 'block', margin: '2px 0' }}>{work.duration}</span>
+                        <p style={{ fontSize: '12px', color: 'var(--text-secondary)', marginTop: '4px' }}>{work.description}</p>
+                      </div>
+                      <button 
+                        onClick={() => handleRemoveExperience(idx)}
+                        style={{ border: 'none', background: 'transparent', color: '#f43f5e', cursor: 'pointer', marginTop: '2px' }}
+                      >
+                        <X size={16} />
+                      </button>
+                    </div>
+                  ))
                 )}
-
-                {profileSaved && <span style={{ color: 'var(--success)', fontSize: '13px', fontWeight: 600 }}>✓ Changes saved in state</span>}
               </div>
-            </form>
+
+              {/* Add Work Form */}
+              <form onSubmit={handleAddExperience} style={{ display: 'flex', flexDirection: 'column', gap: '12px', background: 'rgba(0,0,0,0.15)', padding: '16px', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.04)' }}>
+                <span style={{ fontSize: '12px', fontWeight: 700, color: 'var(--text-secondary)' }}>Add Work Experience</span>
+                <input 
+                  type="text" 
+                  value={newRole} 
+                  onChange={(e) => setNewRole(e.target.value)} 
+                  placeholder="Job Role / Title e.g. React Developer" 
+                  className="glass-input" 
+                  style={{ padding: '10px 14px', fontSize: '13px' }}
+                />
+                <input 
+                  type="text" 
+                  value={newCompany} 
+                  onChange={(e) => setNewCompany(e.target.value)} 
+                  placeholder="Company / Employer Name" 
+                  className="glass-input" 
+                  style={{ padding: '10px 14px', fontSize: '13px' }}
+                />
+                <input 
+                  type="text" 
+                  value={newWorkDuration} 
+                  onChange={(e) => setNewWorkDuration(e.target.value)} 
+                  placeholder="Duration (e.g. June 2024 - Dec 2024)" 
+                  className="glass-input" 
+                  style={{ padding: '10px 14px', fontSize: '13px' }}
+                />
+                <textarea 
+                  value={newWorkDesc} 
+                  onChange={(e) => setNewWorkDesc(e.target.value)} 
+                  placeholder="Role description & key deliverables..." 
+                  className="glass-input" 
+                  rows={2}
+                  style={{ padding: '10px 14px', fontSize: '13px', resize: 'none' }}
+                />
+                <button type="submit" className="btn btn-outline" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', fontSize: '13px', padding: '10px' }}>
+                  <Plus size={14} /> Add Experience record
+                </button>
+              </form>
+            </div>
+
+            {/* Certifications Editor */}
+            <div className="glass-panel" style={{ padding: '32px' }}>
+              <h3 style={{ fontSize: '18px', fontWeight: 700, color: '#fff', marginBottom: '20px', borderBottom: '1px solid var(--border-color)', paddingBottom: '12px' }}>
+                📜 Certifications & Credentials
+              </h3>
+
+              {/* Existing Certs Entries */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '24px' }}>
+                {certifications.length === 0 ? (
+                  <p style={{ color: 'var(--text-muted)', fontSize: '13px' }}>No certifications added yet.</p>
+                ) : (
+                  certifications.map((cert, idx) => (
+                    <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'rgba(255,255,255,0.02)', padding: '12px 16px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.06)' }}>
+                      <div>
+                        <strong style={{ color: '#fff', fontSize: '14px' }}>{cert.name}</strong>
+                        <p style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>{cert.issuer} ({cert.year})</p>
+                      </div>
+                      <button 
+                        onClick={() => handleRemoveCertification(idx)}
+                        style={{ border: 'none', background: 'transparent', color: '#f43f5e', cursor: 'pointer' }}
+                      >
+                        <X size={16} />
+                      </button>
+                    </div>
+                  ))
+                )}
+              </div>
+
+              {/* Add Cert Form */}
+              <form onSubmit={handleAddCertification} style={{ display: 'flex', flexDirection: 'column', gap: '12px', background: 'rgba(0,0,0,0.15)', padding: '16px', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.04)' }}>
+                <span style={{ fontSize: '12px', fontWeight: 700, color: 'var(--text-secondary)' }}>Add Certification</span>
+                <input 
+                  type="text" 
+                  value={newCertName} 
+                  onChange={(e) => setNewCertName(e.target.value)} 
+                  placeholder="Credential Name e.g. AWS practitioner" 
+                  className="glass-input" 
+                  style={{ padding: '10px 14px', fontSize: '13px' }}
+                />
+                <input 
+                  type="text" 
+                  value={newCertIssuer} 
+                  onChange={(e) => setNewCertIssuer(e.target.value)} 
+                  placeholder="Issuer Organisation e.g. Amazon Web Services" 
+                  className="glass-input" 
+                  style={{ padding: '10px 14px', fontSize: '13px' }}
+                />
+                <input 
+                  type="text" 
+                  value={newCertYear} 
+                  onChange={(e) => setNewCertYear(e.target.value)} 
+                  placeholder="Year Achieved" 
+                  className="glass-input" 
+                  style={{ padding: '10px 14px', fontSize: '13px' }}
+                />
+                <button type="submit" className="btn btn-outline" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', fontSize: '13px', padding: '10px' }}>
+                  <Plus size={14} /> Add Certification
+                </button>
+              </form>
+            </div>
           </main>
 
-          {/* Sidebar Skills & Resume */}
-          <aside style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-            {/* Skills Card */}
-            <div className="glass-panel" style={{ padding: '24px' }}>
-              <h4 style={{ color: '#fff', fontSize: '16px', fontWeight: 600, marginBottom: '16px', borderBottom: '1px solid var(--border-color)', paddingBottom: '10px' }}>
-                My Skills
-              </h4>
-
-              {/* Skill chips */}
-              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '20px' }}>
-                {candidateProfile.skills.map(skill => (
-                  <span 
-                    key={skill} 
-                    className="badge badge-secondary" 
-                    style={{ gap: '6px', paddingRight: '6px', fontSize: '12px' }}
-                  >
-                    {skill}
-                    <button 
-                      onClick={() => handleRemoveSkill(skill)}
-                      style={{ border: 'none', background: 'transparent', color: '#67e8f9', cursor: 'pointer', display: 'flex', alignItems: 'center' }}
-                    >
-                      <X size={12} />
-                    </button>
-                  </span>
-                ))}
+          {/* Live CV Resume Card Preview Panel (Aside) */}
+          <aside style={{ display: 'flex', flexDirection: 'column', gap: '24px', position: 'sticky', top: '100px' }}>
+            <div className="glass-panel" style={{ padding: '28px', background: '#0B0E14', border: '2px solid var(--corporate-blue)' }}>
+              {/* DP Banner */}
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', marginBottom: '20px' }}>
+                <div style={{
+                  width: '74px',
+                  height: '74px',
+                  borderRadius: '50%',
+                  background: 'rgba(255,255,255,0.03)',
+                  border: '2px solid var(--tech-orange)',
+                  fontSize: '40px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginBottom: '12px',
+                  boxShadow: '0 4px 15px rgba(242,153,74,0.25)'
+                }}>
+                  {profileAvatar}
+                </div>
+                <h4 style={{ color: '#fff', fontSize: '18px', fontWeight: 800 }}>{profileName || 'Candidate Name'}</h4>
+                <span className="badge badge-secondary" style={{ fontSize: '11px', marginTop: '4px' }}>{profileExperience}</span>
               </div>
 
-              {/* Add Skill form */}
+              {/* Personal Info fields */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: '16px', marginBottom: '16px', fontSize: '12px', color: 'var(--text-secondary)' }}>
+                <div>📧 <strong style={{ color: '#fff' }}>{profileEmail}</strong></div>
+                <div>📞 <strong style={{ color: '#fff' }}>{profilePhone}</strong></div>
+                {profileBio && (
+                  <p style={{ fontStyle: 'italic', color: 'var(--text-muted)', marginTop: '8px', lineHeight: '1.4' }}>
+                    "{profileBio}"
+                  </p>
+                )}
+              </div>
+
+              {/* live academics */}
+              {academics.length > 0 && (
+                <div style={{ marginBottom: '16px' }}>
+                  <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', display: 'block', marginBottom: '6px' }}>Education</span>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                    {academics.map((acad, idx) => (
+                      <div key={idx} style={{ fontSize: '12px' }}>
+                        <span style={{ color: '#fff', fontWeight: 600 }}>🎓 {acad.degree}</span>
+                        <p style={{ color: 'var(--text-secondary)', fontSize: '11px', paddingLeft: '16px' }}>{acad.school} ({acad.year}) — {acad.grade}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* live experiences */}
+              {workExperiences.length > 0 && (
+                <div style={{ marginBottom: '16px' }}>
+                  <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', display: 'block', marginBottom: '6px' }}>Work History</span>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    {workExperiences.map((work, idx) => (
+                      <div key={idx} style={{ fontSize: '12px' }}>
+                        <span style={{ color: '#fff', fontWeight: 600 }}>💼 {work.role} at {work.company}</span>
+                        <span style={{ fontSize: '10px', color: 'var(--tech-orange)', display: 'block', paddingLeft: '16px' }}>{work.duration}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* live certifications */}
+              {certifications.length > 0 && (
+                <div style={{ marginBottom: '16px' }}>
+                  <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', display: 'block', marginBottom: '6px' }}>Certificates</span>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                    {certifications.map((cert, idx) => (
+                      <div key={idx} style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>
+                        🏆 <strong style={{ color: '#fff' }}>{cert.name}</strong> ({cert.issuer} - {cert.year})
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* live skills */}
+              {candidateProfile.skills.length > 0 && (
+                <div>
+                  <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', display: 'block', marginBottom: '6px' }}>Verified Skills</span>
+                  <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+                    {candidateProfile.skills.map(skill => (
+                      <span key={skill} className="badge badge-secondary" style={{ fontSize: '10px', padding: '2px 8px', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                        {skill}
+                        <button
+                          type="button"
+                          onClick={() => handleRemoveSkill(skill)}
+                          style={{ border: 'none', background: 'transparent', color: '#67e8f9', cursor: 'pointer', padding: 0, display: 'flex', alignItems: 'center' }}
+                        >
+                          <X size={10} />
+                        </button>
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Add Skill Widget inside preview column */}
+            <div className="glass-panel" style={{ padding: '24px' }}>
+              <h4 style={{ color: '#fff', fontSize: '15px', fontWeight: 600, marginBottom: '12px' }}>
+                Add Skills
+              </h4>
               <form onSubmit={handleAddSkill} style={{ display: 'flex', gap: '8px' }}>
                 <input 
                   type="text" 
                   value={newSkill} 
                   onChange={(e) => setNewSkill(e.target.value)}
-                  placeholder="e.g. Next.js, SQL..." 
+                  placeholder="e.g. React, Python..." 
                   className="glass-input"
                   style={{ flex: 1, padding: '8px 12px', fontSize: '13px' }}
                 />
@@ -1345,37 +1735,6 @@ export const CandidateDashboard: React.FC = () => {
                   <Plus size={16} />
                 </button>
               </form>
-            </div>
-
-            {/* Resume Uploader Mock */}
-            <div className="glass-panel" style={{ padding: '24px' }}>
-              <h4 style={{ color: '#fff', fontSize: '16px', fontWeight: 600, marginBottom: '16px', borderBottom: '1px solid var(--border-color)', paddingBottom: '10px' }}>
-                Resume
-              </h4>
-              <div style={{
-                border: '1px dashed var(--border-color)',
-                borderRadius: '12px',
-                padding: '20px',
-                textAlign: 'center',
-                background: 'rgba(255, 255, 255, 0.01)',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: '12px'
-              }}>
-                <FileText size={32} color="var(--primary)" />
-                <div>
-                  <p style={{ color: '#fff', fontSize: '13px', fontWeight: 600 }}>{candidateProfile.resumeName}</p>
-                  <p style={{ color: 'var(--text-muted)', fontSize: '11px' }}>PDF format (1.2 MB)</p>
-                </div>
-                <button 
-                  onClick={() => alert('Resume upload simulated. File updated in candidate profile!')}
-                  className="btn btn-outline" 
-                  style={{ fontSize: '12px', padding: '8px 16px', width: '100%' }}
-                >
-                  Upload New CV
-                </button>
-              </div>
             </div>
           </aside>
         </div>
