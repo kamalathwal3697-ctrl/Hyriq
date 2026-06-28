@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, MapPin, IndianRupee, Briefcase, Filter, UserCheck, MessageCircle, FileText, Plus, X, Sparkles } from 'lucide-react';
+import { Search, MapPin, IndianRupee, Briefcase, Filter, UserCheck, MessageCircle, FileText, Plus, X, Sparkles, ArrowLeft } from 'lucide-react';
 import { useAppState } from '../context/AppContext';
 import type { Job, Application } from '../context/AppContext';
 import { ChatWindow } from './ChatWindow';
@@ -573,6 +573,25 @@ export const CandidateDashboard: React.FC = () => {
                 <div className="glass-panel" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px', background: '#0B0E14', color: '#fff', border: '1px solid rgba(255,255,255,0.08)' }}>
                   {/* Header */}
                   <div>
+                    <button
+                      onClick={() => setSelectedJob(null)}
+                      style={{
+                        background: 'transparent',
+                        border: 'none',
+                        color: 'var(--text-secondary)',
+                        fontSize: '14px',
+                        fontWeight: 600,
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        marginBottom: '16px',
+                        padding: '4px 0'
+                      }}
+                      className="mobile-back-btn"
+                    >
+                      <ArrowLeft size={16} /> Back to Listings
+                    </button>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '16px' }}>
                       <div>
                         <span className="badge badge-primary" style={{ marginBottom: '8px', background: 'rgba(242,153,74,0.15)', color: 'var(--tech-orange)', border: '1px solid rgba(242,153,74,0.3)' }}>{selectedJob.experience}</span>

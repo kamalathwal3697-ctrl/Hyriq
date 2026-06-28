@@ -557,6 +557,15 @@ input, textarea {
     box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.5) !important;
     z-index: 999 !important;
   }
+
+  .mobile-back-btn {
+    display: flex !important;
+  }
+}
+
+/* Hide back button on desktop */
+.mobile-back-btn {
+  display: none !important;
 }
 
 
