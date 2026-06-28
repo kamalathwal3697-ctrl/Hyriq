@@ -561,6 +561,10 @@ input, textarea {
   .mobile-back-btn {
     display: flex !important;
   }
+
+  .mobile-header-bar {
+    display: flex !important;
+  }
 }
 
 /* Hide back button on desktop */

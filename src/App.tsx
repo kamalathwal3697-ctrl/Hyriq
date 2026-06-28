@@ -8,7 +8,7 @@ import { AuthPage } from './components/AuthPage';
 import './App.css';
 
 const AppContent: React.FC = () => {
-  const { perspective, token, login, signup } = useAppState();
+  const { perspective, setPerspective, token, login, signup } = useAppState();
 
   const renderMainContent = () => {
     if (perspective === 'visitor') {
@@ -35,6 +35,29 @@ const AppContent: React.FC = () => {
   return (
     <div className="app-container">
       <Navbar />
+      
+      {/* Mobile Top Branding Bar */}
+      <div className="mobile-header-bar" style={{
+        position: 'sticky',
+        top: 0,
+        height: '56px',
+        background: 'rgba(9, 11, 16, 0.85)',
+        backdropFilter: 'blur(16px)',
+        borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+        display: 'none',
+        alignItems: 'center',
+        justifyContent: 'center',
+        zIndex: 1001,
+        padding: '0 16px'
+      }}>
+        <div 
+          onClick={() => setPerspective('visitor')}
+          style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}
+        >
+          <img src="/logo.png" alt="Hyriq Logo" style={{ width: '30px', height: '30px', borderRadius: '6px', objectFit: 'cover' }} />
+          <span style={{ fontSize: '18px', fontWeight: 800, color: '#fff', fontFamily: 'Outfit' }}>Hyriq</span>
+        </div>
+      </div>
       
       <main style={{ flex: 1 }}>
         {renderMainContent()}
