@@ -108,6 +108,10 @@ interface AppContextType {
   updateApplicationStatus: (appId: string, status: Application['status']) => Promise<void>;
   sendChatMessage: (appId: string, text: string, sender: 'candidate' | 'recruiter') => Promise<void>;
   deleteJob: (jobId: string) => Promise<void>;
+  candidateTab: 'explore' | 'govt' | 'applications' | 'profile';
+  setCandidateTab: (tab: 'explore' | 'govt' | 'applications' | 'profile') => void;
+  recruiterTab: 'overview' | 'post-job' | 'manage';
+  setRecruiterTab: (tab: 'overview' | 'post-job' | 'manage') => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -128,6 +132,8 @@ export const AppStateProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   const [jobs, setJobs] = useState<Job[]>([]);
   const [applications, setApplications] = useState<Application[]>([]);
+  const [candidateTab, setCandidateTab] = useState<'explore' | 'govt' | 'applications' | 'profile'>('explore');
+  const [recruiterTab, setRecruiterTab] = useState<'overview' | 'post-job' | 'manage'>('overview');
   const [promoSlots, setPromoSlots] = useState<number>(100);
   
   const lastMessageIdsRef = useRef<Set<string>>(new Set());
@@ -554,7 +560,11 @@ export const AppStateProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         sendChatMessage,
         deleteJob,
         promoSlots,
-        fetchPromoSlots
+        fetchPromoSlots,
+        candidateTab,
+        setCandidateTab,
+        recruiterTab,
+        setRecruiterTab
       }}
     >
       {children}

@@ -9,7 +9,18 @@ import { Menu, X, Search, Briefcase, Download, LogOut } from 'lucide-react';
 import './App.css';
 
 const AppContent: React.FC = () => {
-  const { perspective, setPerspective, token, user, login, signup, logout } = useAppState();
+  const { 
+    perspective, 
+    setPerspective, 
+    token, 
+    user, 
+    login, 
+    signup, 
+    logout,
+    candidateProfile,
+    setCandidateTab,
+    setRecruiterTab
+  } = useAppState();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const renderMainContent = () => {
@@ -75,9 +86,14 @@ const AppContent: React.FC = () => {
           }}
         >
           {token && user?.name && (
-            <span style={{ fontSize: '12px', color: 'var(--text-secondary)', fontWeight: 600 }}>
-              {user.name.split(' ')[0]}
-            </span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <span style={{ fontSize: '18px' }}>
+                {perspective === 'candidate' ? (candidateProfile?.logoSeed || '🧑‍💻') : '💼'}
+              </span>
+              <span style={{ fontSize: '12px', color: 'var(--text-secondary)', fontWeight: 600 }}>
+                {user.name.split(' ')[0]}
+              </span>
+            </div>
           )}
           <Menu size={24} />
         </button>
@@ -123,16 +139,30 @@ const AppContent: React.FC = () => {
               </button>
             </div>
 
-            {/* Profile Section */}
-            <div style={{
-              background: 'rgba(255,255,255,0.02)',
-              border: '1px solid rgba(255,255,255,0.06)',
-              padding: '16px',
-              borderRadius: '16px',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '12px'
-            }}>
+            {/* Profile Section (Clickable) */}
+            <div 
+              onClick={() => {
+                if (perspective === 'candidate') {
+                  setCandidateTab('profile');
+                  setIsMobileMenuOpen(false);
+                } else if (perspective === 'recruiter') {
+                  setRecruiterTab('overview');
+                  setIsMobileMenuOpen(false);
+                }
+              }}
+              style={{
+                background: 'rgba(255,255,255,0.02)',
+                border: '1px solid rgba(255,255,255,0.06)',
+                padding: '16px',
+                borderRadius: '16px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px',
+                cursor: 'pointer',
+                transition: 'background 0.2s ease'
+              }}
+              className="drawer-profile-card"
+            >
               <div style={{
                 width: '40px',
                 height: '40px',
@@ -141,10 +171,9 @@ const AppContent: React.FC = () => {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                color: '#fff',
-                fontWeight: 700
+                fontSize: '20px'
               }}>
-                {token && user?.name ? user.name.substring(0,2).toUpperCase() : 'G'}
+                {perspective === 'candidate' ? (candidateProfile?.logoSeed || '🧑‍💻') : '💼'}
               </div>
               <div>
                 <span style={{ fontSize: '14px', fontWeight: 700, color: '#fff', display: 'block' }}>
@@ -210,6 +239,18 @@ const AppContent: React.FC = () => {
               >
                 <Search size={16} /> Find a Job
               </a>
+
+              {token && perspective === 'candidate' && (
+                <a 
+                  onClick={() => {
+                    setCandidateTab('profile');
+                    setIsMobileMenuOpen(false);
+                  }}
+                  style={{ display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--tech-orange)', textDecoration: 'none', fontSize: '14px', fontWeight: 600, padding: '8px 0', cursor: 'pointer' }}
+                >
+                  👤 My Profile
+                </a>
+              )}
               
               <a 
                 onClick={() => {

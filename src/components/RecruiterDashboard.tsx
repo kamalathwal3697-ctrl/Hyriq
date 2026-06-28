@@ -13,10 +13,10 @@ export const RecruiterDashboard: React.FC = () => {
     createJob,
     updateApplicationStatus,
     sendChatMessage,
-    deleteJob
+    deleteJob,
+    recruiterTab: activeTab,
+    setRecruiterTab: setActiveTab
   } = useAppState();
-
-  const [activeTab, setActiveTab] = useState<'overview' | 'post-job' | 'manage'>('overview');
   const [showContractModal, setShowContractModal] = useState(false);
   const [contractApp, setContractApp] = useState<any>(null);
 

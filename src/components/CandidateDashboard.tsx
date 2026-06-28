@@ -12,10 +12,10 @@ export const CandidateDashboard: React.FC = () => {
     candidateProfile,
     setCandidateProfile,
     applyForJob,
-    sendChatMessage
+    sendChatMessage,
+    candidateTab: activeTab,
+    setCandidateTab: setActiveTab
   } = useAppState();
-
-  const [activeTab, setActiveTab] = useState<'explore' | 'applications' | 'profile' | 'govt'>('explore');
   const [detailsTab, setDetailsTab] = useState<'info' | 'pact'>('info');
   const [showApplyPactModal, setShowApplyPactModal] = useState(false);
   const [pactChecked, setPactChecked] = useState(false);
