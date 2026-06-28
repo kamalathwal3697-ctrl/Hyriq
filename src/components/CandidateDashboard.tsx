@@ -2374,26 +2374,28 @@ export const CandidateDashboard: React.FC = () => {
           </div>
         </div>
       )}
-      {/* Mobile Bottom Navigation Bar */}
+      {/* Mobile Bottom Navigation Bar – Icon Only */}
       <div className="mobile-bottom-nav" style={{
         position: 'fixed',
         bottom: 0,
         left: 0,
         right: 0,
-        height: '64px',
-        background: '#0B0E14',
-        borderTop: '1px solid rgba(255, 255, 255, 0.08)',
-        display: 'none',
+        height: '60px',
+        background: isLightMode ? 'rgba(255,255,255,0.95)' : 'rgba(11,14,20,0.97)',
+        backdropFilter: 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)',
+        borderTop: isLightMode ? '1px solid rgba(26,62,98,0.12)' : '1px solid rgba(255,255,255,0.06)',
+        display: 'flex',
         justifyContent: 'space-around',
         alignItems: 'center',
         zIndex: 1000,
-        boxShadow: '0 -4px 20px rgba(0,0,0,0.4)',
-        paddingBottom: 'safe-area-inset-bottom'
+        boxShadow: isLightMode ? '0 -2px 16px rgba(0,0,0,0.06)' : '0 -4px 20px rgba(0,0,0,0.5)',
+        padding: '0 4px'
       }}>
         {[
-          { id: 'explore', label: 'Home', icon: '🏠' },
-          { id: 'applications', label: 'Message', icon: '📩' },
-          { id: 'search', label: 'Search', icon: '🔍', action: () => {
+          { id: 'explore', icon: <Briefcase size={20} />, label: 'Explore' },
+          { id: 'govt', icon: <span style={{ fontSize: '18px' }}>🏛️</span>, label: 'Govt' },
+          { id: 'search', icon: <Search size={20} />, label: 'Search', action: () => {
               setActiveTab('explore');
               setTimeout(() => {
                 const el = document.getElementById('dashboard-search-input');
@@ -2404,8 +2406,9 @@ export const CandidateDashboard: React.FC = () => {
               }, 150);
             }
           },
-          { id: 'profile', label: 'Profile', icon: '👤' },
-          { id: 'settings', label: 'Settings', icon: '⚙️' }
+          { id: 'applications', icon: <MessageCircle size={20} />, label: 'Apps' },
+          { id: 'profile', icon: <UserCheck size={20} />, label: 'Profile' },
+          { id: 'settings', icon: <Settings size={20} />, label: 'Settings' }
         ].map(item => {
           const isActive = activeTab === item.id;
           return (
@@ -2415,21 +2418,31 @@ export const CandidateDashboard: React.FC = () => {
               style={{
                 background: 'transparent',
                 border: 'none',
-                color: isActive ? 'var(--tech-orange)' : 'var(--text-secondary)',
-                fontSize: '11px',
-                fontWeight: 600,
+                color: isActive ? 'var(--tech-orange)' : (isLightMode ? '#94a3b8' : 'rgba(255,255,255,0.35)'),
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                gap: '4px',
+                justifyContent: 'center',
+                gap: '2px',
                 cursor: 'pointer',
                 flex: 1,
-                padding: '8px 0',
-                transition: 'all 0.2s'
+                padding: '6px 0',
+                transition: 'color 0.2s',
+                position: 'relative'
               }}
             >
-              <span style={{ fontSize: '20px' }}>{item.icon}</span>
-              <span>{item.label}</span>
+              {isActive && (
+                <span style={{
+                  position: 'absolute',
+                  top: '-1px',
+                  width: '20px',
+                  height: '3px',
+                  borderRadius: '0 0 4px 4px',
+                  background: 'var(--tech-orange)'
+                }} />
+              )}
+              {item.icon}
+              <span style={{ fontSize: '9px', fontWeight: 600, letterSpacing: '0.3px' }}>{item.label}</span>
             </button>
           );
         })}
