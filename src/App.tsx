@@ -8,7 +8,7 @@ import { AuthPage } from './components/AuthPage';
 import './App.css';
 
 const AppContent: React.FC = () => {
-  const { perspective, setPerspective, token, login, signup } = useAppState();
+  const { perspective, setPerspective, token, login, signup, logout } = useAppState();
 
   const renderMainContent = () => {
     if (perspective === 'visitor') {
@@ -46,7 +46,7 @@ const AppContent: React.FC = () => {
         borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
         display: 'none',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         zIndex: 1001,
         padding: '0 16px'
       }}>
@@ -56,6 +56,60 @@ const AppContent: React.FC = () => {
         >
           <img src="/logo.png" alt="Hyriq Logo" style={{ width: '30px', height: '30px', borderRadius: '6px', objectFit: 'cover' }} />
           <span style={{ fontSize: '18px', fontWeight: 800, color: '#fff', fontFamily: 'Outfit' }}>Hyriq</span>
+        </div>
+
+        {/* APK & Session Actions */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <a 
+            href="/hyriq.apk" 
+            download="hyriq.apk"
+            style={{
+              background: 'rgba(249, 115, 22, 0.1)',
+              border: '1px solid rgba(249, 115, 22, 0.3)',
+              color: '#f97316',
+              padding: '6px 12px',
+              borderRadius: '20px',
+              fontSize: '11px',
+              fontWeight: 700,
+              textDecoration: 'none'
+            }}
+          >
+            APK 📱
+          </a>
+
+          {!token ? (
+            <button 
+              onClick={() => setPerspective('candidate')}
+              style={{
+                background: 'var(--tech-orange)',
+                color: '#fff',
+                border: 'none',
+                padding: '6px 12px',
+                borderRadius: '20px',
+                fontSize: '11px',
+                fontWeight: 750,
+                cursor: 'pointer'
+              }}
+            >
+              Sign In
+            </button>
+          ) : (
+            <button 
+              onClick={logout}
+              style={{
+                background: 'transparent',
+                border: '1px solid rgba(255, 255, 255, 0.2)',
+                color: 'var(--text-secondary)',
+                padding: '6px 12px',
+                borderRadius: '20px',
+                fontSize: '11px',
+                fontWeight: 600,
+                cursor: 'pointer'
+              }}
+            >
+              Logout
+            </button>
+          )}
         </div>
       </div>
       
