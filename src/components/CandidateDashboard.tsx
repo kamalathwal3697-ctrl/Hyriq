@@ -1627,103 +1627,176 @@ export const CandidateDashboard: React.FC = () => {
 
           {/* Live CV Resume Card Preview Panel (Aside) */}
           <aside style={{ display: 'flex', flexDirection: 'column', gap: '24px', position: 'sticky', top: '100px' }}>
-            <div className="glass-panel" style={{ padding: '28px', background: '#0B0E14', border: '2px solid var(--corporate-blue)' }}>
-              {/* DP Banner */}
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', marginBottom: '20px' }}>
+            <div className="glass-panel" style={{ padding: '24px', background: '#0B0E14', border: '2px solid var(--corporate-blue)', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+              {/* Profile Card Header (Francisco style) */}
+              <div style={{ display: 'flex', gap: '20px', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap-reverse' }}>
+                <div style={{ flex: 1, minWidth: '150px' }}>
+                  {/* Visual Page dots */}
+                  <div style={{ display: 'flex', gap: '6px', marginBottom: '12px' }}>
+                    <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--tech-orange)' }}></span>
+                    <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--text-muted)' }}></span>
+                    <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--text-muted)' }}></span>
+                  </div>
+                  <h2 style={{ fontSize: '24px', fontWeight: 900, color: 'var(--tech-orange)', textTransform: 'uppercase', lineHeight: '1.1', fontFamily: 'Outfit', letterSpacing: '0.5px' }}>
+                    {profileName ? profileName.split(' ')[0] : 'Candidate'}<br/>
+                    {profileName ? profileName.split(' ').slice(1).join(' ') : 'Name'}
+                  </h2>
+                  <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', display: 'block', marginTop: '6px', letterSpacing: '1px' }}>
+                    {profileExperience ? `${profileExperience.toUpperCase()} PROFESSIONAL` : 'JOB SEEKER'}
+                  </span>
+                </div>
+                
+                {/* Highlighted DP Container (circular orange frame) */}
                 <div style={{
-                  width: '74px',
-                  height: '74px',
+                  position: 'relative',
+                  width: '90px',
+                  height: '90px',
                   borderRadius: '50%',
-                  background: 'rgba(255,255,255,0.03)',
-                  border: '2px solid var(--tech-orange)',
-                  fontSize: '40px',
+                  background: 'linear-gradient(135deg, var(--tech-orange) 0%, #1A3E62 100%)',
+                  padding: '4px',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  marginBottom: '12px',
-                  boxShadow: '0 4px 15px rgba(242,153,74,0.25)'
+                  boxShadow: '0 8px 24px rgba(242, 153, 74, 0.25)'
                 }}>
-                  {profileAvatar}
+                  <div style={{
+                    width: '100%',
+                    height: '100%',
+                    borderRadius: '50%',
+                    background: '#0B0E14',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '44px'
+                  }}>
+                    {profileAvatar}
+                  </div>
                 </div>
-                <h4 style={{ color: '#fff', fontSize: '18px', fontWeight: 800 }}>{profileName || 'Candidate Name'}</h4>
-                <span className="badge badge-secondary" style={{ fontSize: '11px', marginTop: '4px' }}>{profileExperience}</span>
               </div>
 
-              {/* Personal Info fields */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: '16px', marginBottom: '16px', fontSize: '12px', color: 'var(--text-secondary)' }}>
-                <div>📧 <strong style={{ color: '#fff' }}>{profileEmail}</strong></div>
-                <div>📞 <strong style={{ color: '#fff' }}>{profilePhone}</strong></div>
-                {profileBio && (
-                  <p style={{ fontStyle: 'italic', color: 'var(--text-muted)', marginTop: '8px', lineHeight: '1.4' }}>
-                    "{profileBio}"
-                  </p>
-                )}
+              {/* Layout Grid inside Card */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '20px', borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: '20px' }}>
+                
+                {/* Column blocks */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                  
+                  {/* About Me Orange check block */}
+                  <div style={{
+                    background: 'rgba(242, 153, 74, 0.05)',
+                    border: '1px solid rgba(242, 153, 74, 0.15)',
+                    padding: '16px',
+                    borderRadius: '16px',
+                    position: 'relative',
+                    overflow: 'hidden'
+                  }}>
+                    {/* Tiny Checkered graphic mimic */}
+                    <div style={{ position: 'absolute', top: '10px', right: '10px', fontSize: '12px', opacity: 0.35 }}>🏁</div>
+                    <span style={{ fontSize: '11px', fontWeight: 800, color: 'var(--tech-orange)', textTransform: 'uppercase', display: 'block', marginBottom: '8px', letterSpacing: '0.5px' }}>About Me</span>
+                    <p style={{ fontSize: '12.5px', color: 'var(--text-secondary)', lineHeight: '1.45', margin: 0 }}>
+                      {profileBio || 'Write a brief description about your core competencies, qualifications, and personal career path objectives.'}
+                    </p>
+                  </div>
+
+                  {/* Education */}
+                  {academics.length > 0 && (
+                    <div>
+                      <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', display: 'block', marginBottom: '8px', letterSpacing: '0.5px' }}>Education</span>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                        {academics.map((acad, idx) => (
+                          <div key={idx} style={{ position: 'relative', paddingLeft: '14px', borderLeft: '2px solid var(--tech-orange)' }}>
+                            <strong style={{ color: '#fff', fontSize: '12.5px', display: 'block' }}>{acad.degree}</strong>
+                            <span style={{ fontSize: '11px', color: 'var(--text-secondary)' }}>{acad.school}</span>
+                            <span style={{ fontSize: '10.5px', color: 'var(--text-muted)', display: 'block', marginTop: '2px' }}>Year: {acad.year} • Score: {acad.grade}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Skills with Progress bars */}
+                  {candidateProfile.skills.length > 0 && (
+                    <div>
+                      <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', display: 'block', marginBottom: '8px', letterSpacing: '0.5px' }}>Skills & Proficiencies</span>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                        {candidateProfile.skills.map((skill, index) => (
+                          <div key={skill} style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                              <span style={{ fontSize: '11.5px', color: 'var(--text-secondary)' }}>{skill}</span>
+                              <button
+                                type="button"
+                                onClick={() => handleRemoveSkill(skill)}
+                                style={{ border: 'none', background: 'transparent', color: '#f43f5e', cursor: 'pointer', padding: 0, fontSize: '10px' }}
+                              >
+                                Remove
+                              </button>
+                            </div>
+                            {/* Visual Progress bar */}
+                            <div style={{ width: '100%', height: '6px', background: 'rgba(255,255,255,0.06)', borderRadius: '3px', overflow: 'hidden' }}>
+                              <div style={{
+                                width: `${Math.max(45, 95 - index * 10)}%`,
+                                height: '100%',
+                                background: 'linear-gradient(90deg, var(--corporate-blue) 0%, var(--tech-orange) 100%)',
+                                borderRadius: '3px'
+                              }}></div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Past Experiences */}
+                  {workExperiences.length > 0 && (
+                    <div>
+                      <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', display: 'block', marginBottom: '8px', letterSpacing: '0.5px' }}>Experience Timeline</span>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                        {workExperiences.map((work, idx) => (
+                          <div key={idx} style={{ position: 'relative', paddingLeft: '14px', borderLeft: '2px solid var(--corporate-blue)' }}>
+                            <strong style={{ color: '#fff', fontSize: '13px', display: 'block' }}>{work.role}</strong>
+                            <span style={{ fontSize: '11.5px', color: 'var(--tech-orange)', fontWeight: 600 }}>{work.company}</span>
+                            <span style={{ fontSize: '10.5px', color: 'var(--text-muted)', display: 'block', margin: '2px 0' }}>{work.duration}</span>
+                            <p style={{ fontSize: '11.5px', color: 'var(--text-secondary)', margin: '4px 0 0 0', lineHeight: '1.4' }}>{work.description}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Certifications */}
+                  {certifications.length > 0 && (
+                    <div>
+                      <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', display: 'block', marginBottom: '8px', letterSpacing: '0.5px' }}>Certifications</span>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                        {certifications.map((cert, idx) => (
+                          <div key={idx} style={{ fontSize: '12px', color: 'var(--text-secondary)', background: 'rgba(255,255,255,0.01)', border: '1px solid rgba(255,255,255,0.04)', padding: '8px 12px', borderRadius: '10px' }}>
+                            🏆 <strong style={{ color: '#fff' }}>{cert.name}</strong>
+                            <p style={{ color: 'var(--text-muted)', fontSize: '10.5px', margin: '2px 0 0 0' }}>{cert.issuer} — {cert.year}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                </div>
               </div>
 
-              {/* live academics */}
-              {academics.length > 0 && (
-                <div style={{ marginBottom: '16px' }}>
-                  <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', display: 'block', marginBottom: '6px' }}>Education</span>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                    {academics.map((acad, idx) => (
-                      <div key={idx} style={{ fontSize: '12px' }}>
-                        <span style={{ color: '#fff', fontWeight: 600 }}>🎓 {acad.degree}</span>
-                        <p style={{ color: 'var(--text-secondary)', fontSize: '11px', paddingLeft: '16px' }}>{acad.school} ({acad.year}) — {acad.grade}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* live experiences */}
-              {workExperiences.length > 0 && (
-                <div style={{ marginBottom: '16px' }}>
-                  <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', display: 'block', marginBottom: '6px' }}>Work History</span>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                    {workExperiences.map((work, idx) => (
-                      <div key={idx} style={{ fontSize: '12px' }}>
-                        <span style={{ color: '#fff', fontWeight: 600 }}>💼 {work.role} at {work.company}</span>
-                        <span style={{ fontSize: '10px', color: 'var(--tech-orange)', display: 'block', paddingLeft: '16px' }}>{work.duration}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* live certifications */}
-              {certifications.length > 0 && (
-                <div style={{ marginBottom: '16px' }}>
-                  <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', display: 'block', marginBottom: '6px' }}>Certificates</span>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                    {certifications.map((cert, idx) => (
-                      <div key={idx} style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>
-                        🏆 <strong style={{ color: '#fff' }}>{cert.name}</strong> ({cert.issuer} - {cert.year})
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* live skills */}
-              {candidateProfile.skills.length > 0 && (
-                <div>
-                  <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', display: 'block', marginBottom: '6px' }}>Verified Skills</span>
-                  <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
-                    {candidateProfile.skills.map(skill => (
-                      <span key={skill} className="badge badge-secondary" style={{ fontSize: '10px', padding: '2px 8px', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                        {skill}
-                        <button
-                          type="button"
-                          onClick={() => handleRemoveSkill(skill)}
-                          style={{ border: 'none', background: 'transparent', color: '#67e8f9', cursor: 'pointer', padding: 0, display: 'flex', alignItems: 'center' }}
-                        >
-                          <X size={10} />
-                        </button>
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
+              {/* Bottom Contact Card Bar */}
+              <div style={{
+                background: 'rgba(242, 153, 74, 0.07)',
+                border: '1px solid rgba(242, 153, 74, 0.15)',
+                padding: '16px',
+                borderRadius: '16px',
+                marginTop: '10px',
+                display: 'grid',
+                gridTemplateColumns: '1fr',
+                gap: '8px',
+                fontSize: '11.5px',
+                color: 'var(--text-secondary)'
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>✉️ <strong>{profileEmail}</strong></div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>📞 <strong>{profilePhone}</strong></div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>📍 <strong>Bathinda, Punjab</strong></div>
+              </div>
             </div>
 
             {/* Add Skill Widget inside preview column */}
