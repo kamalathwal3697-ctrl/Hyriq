@@ -48,6 +48,34 @@ export const Navbar: React.FC = () => {
 
         {/* Dynamic Navigation Links based on role */}
         <div style={{ display: 'flex', gap: '24px', alignItems: 'center' }}>
+          <a 
+            href="/hyriq.apk"
+            download="hyriq.apk"
+            style={{ 
+              color: '#f97316', 
+              textDecoration: 'none', 
+              fontWeight: 600, 
+              fontSize: '13px', 
+              cursor: 'pointer', 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '6px',
+              background: 'rgba(249, 115, 22, 0.08)',
+              padding: '6px 12px',
+              borderRadius: '20px',
+              border: '1px solid rgba(249, 115, 22, 0.2)',
+              transition: 'all 0.2s'
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.background = 'rgba(249, 115, 22, 0.15)';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.background = 'rgba(249, 115, 22, 0.08)';
+            }}
+          >
+            <span>📱 Download APK</span>
+          </a>
+
           {perspective === 'visitor' && (
             <>
               <a 

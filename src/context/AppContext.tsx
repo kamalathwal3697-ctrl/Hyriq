@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
 
 export interface Job {
   id: string;
@@ -125,6 +125,15 @@ export const AppStateProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [applications, setApplications] = useState<Application[]>([]);
   const [promoSlots, setPromoSlots] = useState<number>(100);
   
+  const lastMessageIdsRef = useRef<Set<string>>(new Set());
+
+  // Request browser notification permissions on token activation
+  useEffect(() => {
+    if (token && 'Notification' in window && Notification.permission === 'default') {
+      Notification.requestPermission();
+    }
+  }, [token]);
+  
   const [candidateProfile, setCandidateProfile] = useState<CandidateProfile>({
     name: '',
     email: '',
@@ -187,7 +196,39 @@ export const AppStateProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       });
       if (res.ok) {
         const data = await res.json();
+        
+        let newIncomingMessage = false;
+        let senderName = 'Hyriq Chat';
+        let msgText = '';
+        const newIds = new Set<string>();
+        
+        data.forEach((app: any) => {
+          if (app.messages) {
+            app.messages.forEach((msg: any) => {
+              newIds.add(msg.id);
+              
+              if (
+                lastMessageIdsRef.current.size > 0 &&
+                !lastMessageIdsRef.current.has(msg.id) &&
+                msg.sender !== user?.role
+              ) {
+                newIncomingMessage = true;
+                senderName = msg.sender === 'candidate' ? 'Job Seeker' : 'Recruiter';
+                msgText = msg.text;
+              }
+            });
+          }
+        });
+        
+        lastMessageIdsRef.current = newIds;
         setApplications(data);
+        
+        if (newIncomingMessage && 'Notification' in window && Notification.permission === 'granted') {
+          new Notification(`💬 New Message from ${senderName}`, {
+            body: msgText,
+            icon: '/logo.png'
+          });
+        }
       }
     } catch (err) {
       console.error('Error fetching applications:', err);
