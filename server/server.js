@@ -472,7 +472,7 @@ app.post('/api/jobs', authenticateToken, (req, res) => {
     return res.status(403).json({ error: 'Only recruiters can post jobs' });
   }
 
-  const { title, companyName, location, type, mode, salary, experience, skills, description, requirements, benefits, fairWorkPact } = req.body;
+  const { title, companyName, location, type, mode, salary, experience, skills, description, requirements, benefits, fairWorkPact, chatLiveHours } = req.body;
   if (!title || !salary || !description) {
     return res.status(400).json({ error: 'Job title, salary, and description are required' });
   }
@@ -499,7 +499,8 @@ app.post('/api/jobs', authenticateToken, (req, res) => {
     benefits: benefits || [],
     postedDate: 'Just now',
     recruiterId: req.user.id,
-    fairWorkPact: true
+    fairWorkPact: true,
+    chatLiveHours: chatLiveHours || 'Not Scheduled'
   };
 
   db.jobs.unshift(newJob);

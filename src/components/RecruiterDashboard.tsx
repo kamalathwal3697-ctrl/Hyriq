@@ -34,6 +34,7 @@ export const RecruiterDashboard: React.FC = () => {
   const [reqsText, setReqsText] = useState('');
   const [benefitsText, setBenefitsText] = useState('');
   const [fairWorkPactChecked, setFairWorkPactChecked] = useState(false);
+  const [chatLiveHours, setChatLiveHours] = useState('10:00 AM - 12:00 PM');
 
   // Manage listings states
   const [selectedJobId, setSelectedJobId] = useState<string>('');
@@ -79,7 +80,8 @@ export const RecruiterDashboard: React.FC = () => {
       description: jobDesc,
       requirements: requirements.length > 0 ? requirements : ['2+ years experience in the field.'],
       benefits: benefits.length > 0 ? benefits : ['Flexible hours.'],
-      fairWorkPact: true
+      fairWorkPact: true,
+      chatLiveHours: chatLiveHours || 'Not Scheduled'
     });
 
     // Reset Form
@@ -91,6 +93,7 @@ export const RecruiterDashboard: React.FC = () => {
     setReqsText('');
     setBenefitsText('');
     setFairWorkPactChecked(false);
+    setChatLiveHours('10:00 AM - 12:00 PM');
 
     alert('Job posted successfully! View it in "Manage Jobs" tab.');
     setActiveTab('manage');
@@ -369,6 +372,25 @@ export const RecruiterDashboard: React.FC = () => {
                 onChange={(e) => setJobLoc(e.target.value)}
                 className="glass-input"
               />
+            </div>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <label style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-secondary)' }}>Daily Chat Live Hours</label>
+              <input
+                type="text"
+                placeholder="e.g. 10:00 AM - 12:00 PM, 2:00 PM - 5:00 PM"
+                value={chatLiveHours}
+                onChange={(e) => setChatLiveHours(e.target.value)}
+                className="glass-input"
+              />
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <label style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-secondary)' }}>Chat Mode Status Indicator</label>
+              <div style={{ display: 'flex', alignItems: 'center', height: '45px', padding: '0 12px', background: 'rgba(255, 255, 255, 0.02)', border: '1px solid var(--border-color)', borderRadius: '8px', fontSize: '13px', color: 'var(--text-muted)' }}>
+                ℹ️ Display scheduled hour blocks dynamically to matching applicants.
+              </div>
             </div>
           </div>
 

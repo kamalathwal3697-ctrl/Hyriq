@@ -599,6 +599,10 @@ export const CandidateDashboard: React.FC = () => {
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: 'var(--text-secondary)' }}>
                         <Briefcase size={14} color="var(--text-muted)" /> Job Type: {selectedJob.type}
                       </div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: '#10b981', fontWeight: 600, borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '8px', marginTop: '4px' }}>
+                        <span style={{ display: 'inline-block', width: '8px', height: '8px', borderRadius: '50%', background: '#10b981' }}></span>
+                        💬 Chat Live Hours: {selectedJob.chatLiveHours || '10:00 AM - 1:00 PM'}
+                      </div>
                     </div>
                   </div>
 

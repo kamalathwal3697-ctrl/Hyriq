@@ -17,6 +17,7 @@ export interface Job {
   postedDate: string;
   recruiterId: string;
   fairWorkPact?: boolean;
+  chatLiveHours?: string;
 }
 
 export interface ChatMessage {
