@@ -5,7 +5,7 @@ import { LandingPage } from './components/LandingPage';
 import { CandidateDashboard } from './components/CandidateDashboard';
 import { RecruiterDashboard } from './components/RecruiterDashboard';
 import { AuthPage } from './components/AuthPage';
-import { Menu, X, Search, Briefcase, Download, LogOut } from 'lucide-react';
+import { Menu, X, Search, Briefcase, Download, LogOut, ArrowLeft } from 'lucide-react';
 import './App.css';
 
 const AppContent: React.FC = () => {
@@ -63,12 +63,33 @@ const AppContent: React.FC = () => {
         zIndex: 1001,
         padding: '0 16px'
       }}>
-        <div 
-          onClick={() => setPerspective('visitor')}
-          style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}
-        >
-          <img src="/logo.png" alt="Hyriq Logo" style={{ width: '30px', height: '30px', borderRadius: '6px', objectFit: 'cover' }} />
-          <span style={{ fontSize: '18px', fontWeight: 800, color: '#fff', fontFamily: 'Outfit' }}>Hyriq</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <button
+            onClick={() => window.history.back()}
+            style={{
+              background: 'rgba(255,255,255,0.06)',
+              border: '1px solid rgba(255,255,255,0.1)',
+              borderRadius: '10px',
+              color: '#fff',
+              width: '32px',
+              height: '32px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              flexShrink: 0
+            }}
+            title="Go Back"
+          >
+            <ArrowLeft size={16} />
+          </button>
+          <div 
+            onClick={() => setPerspective('visitor')}
+            style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}
+          >
+            <img src="/logo.png" alt="Hyriq Logo" style={{ width: '30px', height: '30px', borderRadius: '6px', objectFit: 'cover' }} />
+            <span style={{ fontSize: '18px', fontWeight: 800, color: '#fff', fontFamily: 'Outfit' }}>Hyriq</span>
+          </div>
         </div>
 
         {/* Hamburger Menu Toggle */}
