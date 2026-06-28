@@ -520,6 +520,33 @@ export const CandidateDashboard: React.FC = () => {
                 >
                   <X size={14} />
                 </button>
+
+                {/* Matches Only Toggle */}
+                {candidateProfile.onboardingCompleted && (
+                  <button
+                    type="button"
+                    onClick={() => setMatchesOnly(!matchesOnly)}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '4px',
+                      background: matchesOnly ? 'var(--tech-orange)' : 'rgba(26,62,98,0.06)',
+                      color: matchesOnly ? '#fff' : 'var(--corporate-blue)',
+                      border: 'none',
+                      borderRadius: '8px',
+                      padding: '4px 10px',
+                      fontSize: '11px',
+                      fontWeight: 700,
+                      cursor: 'pointer',
+                      whiteSpace: 'nowrap',
+                      transition: 'all 0.2s',
+                      flexShrink: 0
+                    }}
+                  >
+                    <Sparkles size={12} />
+                    Match {matchesOnly ? 'ON' : 'OFF'}
+                  </button>
+                )}
               </div>
             </aside>
 
@@ -527,53 +554,26 @@ export const CandidateDashboard: React.FC = () => {
           <main style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', alignItems: 'start' }} className="explore-main">
             {/* Job List Feed */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-              {/* Inline Search Bar */}
-              <div style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
-                <div style={{ display: 'flex', alignItems: 'center', flex: 1, gap: '8px', padding: '2px 8px' }} className="seeker-light-card">
-                  <div style={{ display: 'flex', alignItems: 'center', flex: 1, padding: '10px 14px', gap: '8px' }}>
-                    <Search size={16} color="var(--corporate-blue)" />
-                    <input
-                      id="dashboard-search-input"
-                      type="text"
-                      placeholder="Title or skill..."
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      style={{ background: 'transparent', border: 'none', outline: 'none', color: 'var(--corporate-blue)', fontSize: '13px', width: '100%', fontWeight: 500 }}
-                    />
-                  </div>
-                  <div style={{ width: '1px', height: '24px', backgroundColor: 'rgba(26, 62, 98, 0.15)' }}></div>
-                  <div style={{ display: 'flex', alignItems: 'center', flex: 1, padding: '10px 14px', gap: '8px' }}>
-                    <MapPin size={16} color="var(--corporate-blue)" />
-                    <input
-                      type="text"
-                      placeholder="Remote/Location..."
-                      value={locationQuery}
-                      onChange={(e) => setLocationQuery(e.target.value)}
-                      style={{ background: 'transparent', border: 'none', outline: 'none', color: 'var(--corporate-blue)', fontSize: '13px', width: '100%', fontWeight: 500 }}
-                    />
-                  </div>
-                </div>
-
-                {candidateProfile.onboardingCompleted && (
-                  <button
-                    type="button"
-                    onClick={() => setMatchesOnly(!matchesOnly)}
-                    className="btn btn-seeker-active"
-                    style={{
-                      padding: '12px 18px',
-                      fontSize: '13px',
-                      borderRadius: '12px',
-                      whiteSpace: 'nowrap',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '6px',
-                      opacity: matchesOnly ? 1 : 0.75,
-                      background: matchesOnly ? 'var(--tech-orange)' : 'var(--corporate-blue)'
-                    }}
-                  >
-                    ⚡ Matches Only: {matchesOnly ? 'ON' : 'OFF'}
-                  </button>
-                )}
+              {/* Single Search Bar: Title / Location */}
+              <div className="seeker-light-card" style={{ display: 'flex', alignItems: 'center', padding: '4px 12px', borderRadius: '12px' }}>
+                <Search size={15} color="var(--corporate-blue)" style={{ flexShrink: 0 }} />
+                <input
+                  id="dashboard-search-input"
+                  type="text"
+                  placeholder="Title or skill..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  style={{ background: 'transparent', border: 'none', outline: 'none', color: 'var(--corporate-blue)', fontSize: '13px', fontWeight: 500, flex: 1, padding: '10px 8px', minWidth: 0 }}
+                />
+                <span style={{ color: 'rgba(26,62,98,0.3)', fontSize: '16px', fontWeight: 300, flexShrink: 0, userSelect: 'none' }}>/</span>
+                <MapPin size={15} color="var(--corporate-blue)" style={{ flexShrink: 0, marginLeft: '4px' }} />
+                <input
+                  type="text"
+                  placeholder="Location..."
+                  value={locationQuery}
+                  onChange={(e) => setLocationQuery(e.target.value)}
+                  style={{ background: 'transparent', border: 'none', outline: 'none', color: 'var(--corporate-blue)', fontSize: '13px', fontWeight: 500, flex: 1, padding: '10px 8px', minWidth: 0 }}
+                />
               </div>
 
               {sortedJobs.length === 0 ? (
