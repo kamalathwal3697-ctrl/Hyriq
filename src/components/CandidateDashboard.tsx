@@ -30,6 +30,8 @@ export const CandidateDashboard: React.FC = () => {
   const [govtJobsError, setGovtJobsError] = useState('');
   const [selectedGovtJobDetails, setSelectedGovtJobDetails] = useState('');
   const [govtJobDetailsLoading, setgovtJobDetailsLoading] = useState(false);
+  const [selectedGovtCategory, setSelectedGovtCategory] = useState('all');
+  const [selectedGovtState, setSelectedGovtState] = useState('all');
 
   // Fetch Government Job Details when a card is selected
   useEffect(() => {
@@ -54,12 +56,18 @@ export const CandidateDashboard: React.FC = () => {
     }
   }, [selectedGovtJob]);
 
-  // Fetch Government Jobs on tab activation
+  // Fetch Government Jobs based on state & category filters
   useEffect(() => {
-    if (activeTab === 'govt' && govtJobs.length === 0) {
+    if (activeTab === 'govt') {
       setGovtJobsLoading(true);
       setGovtJobsError('');
-      fetch('/api/govt-jobs')
+      setSelectedGovtJob(null);
+      
+      const query = new URLSearchParams();
+      if (selectedGovtCategory !== 'all') query.append('category', selectedGovtCategory);
+      if (selectedGovtState !== 'all') query.append('state', selectedGovtState);
+      
+      fetch(`/api/govt-jobs?${query.toString()}`)
         .then(res => {
           if (!res.ok) throw new Error('Failed to load government jobs');
           return res.json();
@@ -70,11 +78,12 @@ export const CandidateDashboard: React.FC = () => {
           setGovtJobsLoading(false);
         })
         .catch(err => {
-          setGovtJobsError(err.message || 'Failed to load government jobs');
+          setGovtJobs([]);
+          setGovtJobsError(err.message || 'No job notifications match this selection.');
           setGovtJobsLoading(false);
         });
     }
-  }, [activeTab]);
+  }, [activeTab, selectedGovtCategory, selectedGovtState]);
 
   // Search & Filter States
   const [searchQuery, setSearchQuery] = useState('');
@@ -821,9 +830,103 @@ export const CandidateDashboard: React.FC = () => {
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 380px', gap: '24px', alignItems: 'start' }} className="explore-grid">
           {/* Left Column: Govt Jobs List */}
           <main style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            
+            {/* TABS ROW 1: Categories */}
+            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '4px' }}>
+              {[
+                { id: 'all', label: 'All India Govt Jobs' },
+                { id: 'bank', label: 'Bank Jobs' },
+                { id: 'teaching', label: 'Teaching Jobs' },
+                { id: 'engineering', label: 'Engineering Jobs' },
+                { id: 'railway', label: 'Railway Jobs' },
+                { id: 'defence', label: 'Police/Defence Jobs' }
+              ].map(cat => {
+                const isActive = selectedGovtCategory === cat.id && selectedGovtState === 'all';
+                return (
+                  <button
+                    key={cat.id}
+                    onClick={() => {
+                      setSelectedGovtCategory(cat.id);
+                      setSelectedGovtState('all');
+                    }}
+                    style={{
+                      background: isActive ? 'var(--corporate-blue)' : 'rgba(26, 62, 98, 0.08)',
+                      color: isActive ? '#fff' : 'var(--corporate-blue)',
+                      border: 'none',
+                      padding: '8px 16px',
+                      borderRadius: '8px',
+                      fontWeight: 600,
+                      fontSize: '13px',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease'
+                    }}
+                  >
+                    {cat.label}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* TABS ROW 2: States */}
+            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '16px', borderBottom: '1px solid rgba(26, 62, 98, 0.1)', paddingBottom: '16px' }}>
+              {[
+                { id: 'all', label: 'All States' },
+                { id: 'pb', label: 'Punjab (PB)' },
+                { id: 'hr', label: 'Haryana (HR)' },
+                { id: 'dl', label: 'Delhi (DL)' },
+                { id: 'hp', label: 'Himachal (HP)' },
+                { id: 'rj', label: 'Rajasthan (RJ)' },
+                { id: 'up', label: 'Uttar Pradesh (UP)' },
+                { id: 'mh', label: 'Maharashtra (MH)' },
+                { id: 'ap', label: 'Andhra (AP)' },
+                { id: 'as', label: 'Assam (AS)' },
+                { id: 'br', label: 'Bihar (BR)' },
+                { id: 'cg', label: 'Chhattisgarh (CG)' },
+                { id: 'gj', label: 'Gujarat (GJ)' },
+                { id: 'jh', label: 'Jharkhand (JH)' },
+                { id: 'ka', label: 'Karnataka (KA)' },
+                { id: 'kl', label: 'Kerala (KL)' },
+                { id: 'mp', label: 'Madhya Pradesh (MP)' },
+                { id: 'od', label: 'Odisha (OD)' },
+                { id: 'tn', label: 'Tamil Nadu (TN)' },
+                { id: 'ts', label: 'Telangana (TS)' },
+                { id: 'uk', label: 'Uttarakhand (UK)' },
+                { id: 'wb', label: 'West Bengal (WB)' }
+              ].map(st => {
+                const isActive = selectedGovtState === st.id;
+                return (
+                  <button
+                    key={st.id}
+                    onClick={() => {
+                      setSelectedGovtState(st.id);
+                      setSelectedGovtCategory('all');
+                    }}
+                    style={{
+                      background: isActive ? 'var(--tech-orange)' : 'rgba(26, 62, 98, 0.04)',
+                      color: isActive ? '#fff' : '#64748b',
+                      border: 'none',
+                      padding: '6px 12px',
+                      borderRadius: '6px',
+                      fontWeight: 600,
+                      fontSize: '12px',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease'
+                    }}
+                  >
+                    {st.label}
+                  </button>
+                );
+              })}
+            </div>
+
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <h3 style={{ fontSize: '18px', fontWeight: 700, color: 'var(--corporate-blue)' }}>
-                Punjab Government Notifications (Live)
+                {selectedGovtState !== 'all' 
+                  ? `${selectedGovtState.toUpperCase()} Government Notifications` 
+                  : selectedGovtCategory !== 'all' 
+                    ? `${selectedGovtCategory.toUpperCase()} Government Notifications`
+                    : "National Government Notifications"
+                }
               </h3>
               <span className="seeker-tag" style={{ background: 'rgba(242, 153, 74, 0.1)', color: 'var(--tech-orange)', fontWeight: 600 }}>
                 {govtJobs.length} Notifications Found

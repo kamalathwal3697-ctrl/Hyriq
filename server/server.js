@@ -66,35 +66,76 @@ app.get('/api/promo/slots', (req, res) => {
   });
 });
 
-// Cache variables for government jobs
-let govtJobsCache = null;
-let govtJobsCacheTime = 0;
+// Cache maps for government jobs
+const govtJobsCache = new Map();
+const govtJobsCacheTime = new Map();
 
 // Get Punjab Government Jobs live scraping endpoint
 app.get('/api/govt-jobs', async (req, res) => {
+  const { category, state } = req.query;
+  const cacheKey = `${category || 'all'}_${state || 'all'}`;
+  
   const now = Date.now();
-  // Return cached result if fresh (1 hour)
-  if (govtJobsCache && (now - govtJobsCacheTime < 60 * 60 * 1000)) {
-    return res.json(govtJobsCache);
+  const cachedTime = govtJobsCacheTime.get(cacheKey) || 0;
+  if (govtJobsCache.has(cacheKey) && (now - cachedTime < 60 * 60 * 1000)) {
+    return res.json(govtJobsCache.get(cacheKey));
+  }
+
+  // Determine target URL
+  let targetUrl = 'https://www.freejobalert.com/government-jobs/'; // default all india
+  
+  if (state && state !== 'all') {
+    const stateMap = {
+      'ap': 'andhra-pradesh',
+      'as': 'assam',
+      'br': 'bihar',
+      'cg': 'chhattisgarh',
+      'dl': 'delhi',
+      'gj': 'gujarat',
+      'hp': 'himachal-pradesh',
+      'hr': 'haryana',
+      'jh': 'jharkhand',
+      'ka': 'karnataka',
+      'kl': 'kerala',
+      'mh': 'maharashtra',
+      'mp': 'madhya-pradesh',
+      'od': 'odisha',
+      'pb': 'punjab',
+      'rj': 'rajasthan',
+      'tn': 'tamil-nadu',
+      'ts': 'telangana',
+      'uk': 'uttarakhand',
+      'up': 'uttar-pradesh',
+      'wb': 'west-bengal'
+    };
+    const stateName = stateMap[state.toLowerCase()] || state.toLowerCase();
+    targetUrl = `https://www.freejobalert.com/${stateName}-government-jobs/`;
+  } else if (category && category !== 'all') {
+    const categoryMap = {
+      'bank': 'bank-jobs',
+      'teaching': 'teaching-jobs',
+      'engineering': 'engineering-jobs',
+      'railway': 'railway-jobs',
+      'defence': 'defence-jobs'
+    };
+    const categoryPath = categoryMap[category.toLowerCase()] || 'government-jobs';
+    targetUrl = `https://www.freejobalert.com/${categoryPath}/`;
   }
 
   try {
-    const response = await fetch('https://www.freejobalert.com/government-jobs/');
-    if (!response.ok) throw new Error('Failed to fetch FreeJobAlert page');
+    const response = await fetch(targetUrl);
+    if (!response.ok) throw new Error(`Failed to fetch FreeJobAlert page: ${targetUrl}`);
     
     const html = await response.text();
     const $ = cheerio.load(html);
     
     const jobs = [];
     
-    // Find the correct table
-    // We search all tables for the headers 'Post Date' and 'Recruitment Board'
     $('table').each((i, table) => {
       const headerRow = $(table).find('tr').first();
       const headers = headerRow.find('th, td').map((idx, el) => $(el).text().trim()).get();
       
       if (headers.includes('Post Date') && headers.includes('Recruitment Board')) {
-        // This is our target job list table!
         $(table).find('tr').each((rowIdx, row) => {
           if (rowIdx === 0) return; // skip header row
           
@@ -107,11 +148,10 @@ app.get('/api/govt-jobs', async (req, res) => {
             const advtNo = $(cols[4]).text().trim().replace(/\uFFFD/g, '-').replace(/\?/g, '-');
             const lastDate = $(cols[5]).text().trim();
             
-            // Extract the apply/more information link
-            const applyLink = $(cols[6]).find('a').attr('href') || $(cols[2]).find('a').attr('href') || 'https://www.freejobalert.com/government-jobs/';
+            const applyLink = $(cols[6]).find('a').attr('href') || $(cols[2]).find('a').attr('href') || targetUrl;
             
             jobs.push({
-              id: `govt-${i}-${rowIdx}-${Date.now()}`,
+              id: `govt-${cacheKey}-${i}-${rowIdx}-${Date.now()}`,
               postDate,
               recruitmentBoard,
               title,
@@ -125,19 +165,17 @@ app.get('/api/govt-jobs', async (req, res) => {
       }
     });
 
-    // Fallback if no table matched (prevent empty response)
     if (jobs.length === 0) {
       throw new Error('No jobs matched standard table layout');
     }
 
-    govtJobsCache = jobs;
-    govtJobsCacheTime = now;
+    govtJobsCache.set(cacheKey, jobs);
+    govtJobsCacheTime.set(cacheKey, now);
     res.json(jobs);
   } catch (err) {
-    console.error('Govt jobs scraping failed:', err);
-    // If scrap fails but we have stale cache, return it
-    if (govtJobsCache) {
-      return res.json(govtJobsCache);
+    console.error(`Govt jobs scraping failed for ${targetUrl}:`, err);
+    if (govtJobsCache.has(cacheKey)) {
+      return res.json(govtJobsCache.get(cacheKey));
     }
     res.status(500).json({ error: 'Failed to retrieve government jobs. Please try again later.' });
   }
