@@ -212,15 +212,6 @@ export const CandidateDashboard: React.FC = () => {
   // Keep selected application updated with latest chat from global state
   const currentApp = applications.find(app => app.id === selectedApp?.id) || null;
 
-  // Toggle checklist filters
-  const toggleFilter = (list: string[], setList: React.Dispatch<React.SetStateAction<string[]>>, item: string) => {
-    if (list.includes(item)) {
-      setList(list.filter(i => i !== item));
-    } else {
-      setList([...list, item]);
-    }
-  };
-
   // Filter Jobs logic
   const filteredJobs = jobs.filter(job => {
     const matchesSearch = searchQuery === '' || 
@@ -432,100 +423,104 @@ export const CandidateDashboard: React.FC = () => {
 
         {/* EXPLORE JOBS VIEW */}
         {activeTab === 'explore' && (
-          <div style={{ display: 'grid', gridTemplateColumns: '260px 1fr', gap: '24px', alignItems: 'start' }} className="explore-grid">
-            {/* Filters Sidebar */}
-            <aside className="seeker-light-card" style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '20px', borderRadius: '16px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', borderBottom: '1px solid rgba(26, 62, 98, 0.1)', paddingBottom: '12px' }}>
-                <Filter size={16} color="var(--tech-orange)" />
-                <h3 style={{ fontSize: '16px', fontWeight: 700, color: 'var(--corporate-blue)' }}>Filters</h3>
-              </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }} className="explore-grid">
+            {/* Compact Inline Filter Bar */}
+            <aside className="seeker-light-card" style={{ padding: '10px 16px', borderRadius: '14px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--tech-orange)', flexShrink: 0 }}>
+                  <Filter size={14} />
+                  <span style={{ fontSize: '12px', fontWeight: 700, color: 'var(--corporate-blue)' }}>Filters</span>
+                </div>
 
-              {/* Category Filter */}
-              <div>
-                <label style={{ fontSize: '12px', fontWeight: 700, color: 'var(--corporate-blue)', display: 'block', marginBottom: '8px' }}>Category</label>
-                <select 
-                  value={categoryFilter}
-                  onChange={(e) => setCategoryFilter(e.target.value)}
-                  className="seeker-light-input" 
-                  style={{ width: '100%', padding: '8px 12px', fontSize: '13px' }}
+                {/* Category */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px', background: 'rgba(26,62,98,0.06)', borderRadius: '8px', padding: '4px 8px' }}>
+                  <Briefcase size={13} color="var(--corporate-blue)" />
+                  <select
+                    value={categoryFilter}
+                    onChange={(e) => setCategoryFilter(e.target.value)}
+                    style={{ border: 'none', background: 'transparent', fontSize: '11px', fontWeight: 600, color: 'var(--corporate-blue)', outline: 'none', cursor: 'pointer', padding: '2px 0' }}
+                  >
+                    <option value="">Category</option>
+                    <option value="Tech & Engineering">Tech & Engineering</option>
+                    <option value="Design & Product">Design & Product</option>
+                    <option value="Marketing & Content">Marketing & Content</option>
+                    <option value="Sales & Operations">Sales & Operations</option>
+                  </select>
+                </div>
+
+                {/* Work Mode */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px', background: 'rgba(26,62,98,0.06)', borderRadius: '8px', padding: '4px 8px' }}>
+                  <MapPin size={13} color="var(--corporate-blue)" />
+                  <select
+                    value={modeFilter.length === 1 ? modeFilter[0] : ''}
+                    onChange={(e) => setModeFilter(e.target.value ? [e.target.value] : [])}
+                    style={{ border: 'none', background: 'transparent', fontSize: '11px', fontWeight: 600, color: 'var(--corporate-blue)', outline: 'none', cursor: 'pointer', padding: '2px 0' }}
+                  >
+                    <option value="">Mode</option>
+                    <option value="Remote">Remote</option>
+                    <option value="Hybrid">Hybrid</option>
+                    <option value="On-site">On-site</option>
+                  </select>
+                </div>
+
+                {/* Job Type */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px', background: 'rgba(26,62,98,0.06)', borderRadius: '8px', padding: '4px 8px' }}>
+                  <FileText size={13} color="var(--corporate-blue)" />
+                  <select
+                    value={typeFilter.length === 1 ? typeFilter[0] : ''}
+                    onChange={(e) => setTypeFilter(e.target.value ? [e.target.value] : [])}
+                    style={{ border: 'none', background: 'transparent', fontSize: '11px', fontWeight: 600, color: 'var(--corporate-blue)', outline: 'none', cursor: 'pointer', padding: '2px 0' }}
+                  >
+                    <option value="">Type</option>
+                    <option value="Full-time">Full-time</option>
+                    <option value="Part-time">Part-time</option>
+                    <option value="Internship">Internship</option>
+                    <option value="Contract">Contract</option>
+                  </select>
+                </div>
+
+                {/* Experience */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px', background: 'rgba(26,62,98,0.06)', borderRadius: '8px', padding: '4px 8px' }}>
+                  <Sparkles size={13} color="var(--corporate-blue)" />
+                  <select
+                    value={experienceFilter.length === 1 ? experienceFilter[0] : ''}
+                    onChange={(e) => setExperienceFilter(e.target.value ? [e.target.value] : [])}
+                    style={{ border: 'none', background: 'transparent', fontSize: '11px', fontWeight: 600, color: 'var(--corporate-blue)', outline: 'none', cursor: 'pointer', padding: '2px 0' }}
+                  >
+                    <option value="">Exp</option>
+                    <option value="Entry-level">Entry</option>
+                    <option value="Mid-level">Mid</option>
+                    <option value="Senior-level">Senior</option>
+                  </select>
+                </div>
+
+                {/* Reset */}
+                <button
+                  onClick={() => {
+                    setCategoryFilter('');
+                    setTypeFilter([]);
+                    setModeFilter([]);
+                    setExperienceFilter([]);
+                    setSearchQuery('');
+                    setLocationQuery('');
+                  }}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    color: '#ef4444',
+                    fontSize: '11px',
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                    padding: '4px 6px',
+                    borderRadius: '6px',
+                    flexShrink: 0,
+                    transition: 'background 0.15s'
+                  }}
+                  title="Reset All Filters"
                 >
-                  <option value="">All Categories</option>
-                  <option value="Tech & Engineering">Tech & Engineering</option>
-                  <option value="Design & Product">Design & Product</option>
-                  <option value="Marketing & Content">Marketing & Content</option>
-                  <option value="Sales & Operations">Sales & Operations</option>
-                </select>
+                  <X size={14} />
+                </button>
               </div>
-
-              {/* Mode Filter */}
-              <div>
-                <label style={{ fontSize: '12px', fontWeight: 700, color: 'var(--corporate-blue)', display: 'block', marginBottom: '8px' }}>Work Mode</label>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  {['Remote', 'Hybrid', 'On-site'].map(mode => (
-                    <label key={mode} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: '#475569', cursor: 'pointer', fontWeight: 500 }}>
-                      <input 
-                        type="checkbox" 
-                        checked={modeFilter.includes(mode)} 
-                        onChange={() => toggleFilter(modeFilter, setModeFilter, mode)}
-                        style={{ accentColor: 'var(--tech-orange)' }}
-                      />
-                      {mode}
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              {/* Type Filter */}
-              <div>
-                <label style={{ fontSize: '12px', fontWeight: 700, color: 'var(--corporate-blue)', display: 'block', marginBottom: '8px' }}>Job Type</label>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  {['Full-time', 'Part-time', 'Internship', 'Contract'].map(type => (
-                    <label key={type} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: '#475569', cursor: 'pointer', fontWeight: 500 }}>
-                      <input 
-                        type="checkbox" 
-                        checked={typeFilter.includes(type)} 
-                        onChange={() => toggleFilter(typeFilter, setTypeFilter, type)}
-                        style={{ accentColor: 'var(--tech-orange)' }}
-                      />
-                      {type}
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              {/* Experience Level */}
-              <div>
-                <label style={{ fontSize: '12px', fontWeight: 700, color: 'var(--corporate-blue)', display: 'block', marginBottom: '8px' }}>Experience</label>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  {['Entry-level', 'Mid-level', 'Senior-level'].map(exp => (
-                    <label key={exp} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: '#475569', cursor: 'pointer', fontWeight: 500 }}>
-                      <input 
-                        type="checkbox" 
-                        checked={experienceFilter.includes(exp)} 
-                        onChange={() => toggleFilter(experienceFilter, setExperienceFilter, exp)}
-                        style={{ accentColor: 'var(--tech-orange)' }}
-                      />
-                      {exp}
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              {/* Reset Filters */}
-              <button 
-                className="btn btn-outline" 
-                style={{ fontSize: '12px', padding: '8px 16px', borderColor: 'rgba(26, 62, 98, 0.2)', color: 'var(--corporate-blue)', fontWeight: 600 }}
-                onClick={() => {
-                  setCategoryFilter('');
-                  setTypeFilter([]);
-                  setModeFilter([]);
-                  setExperienceFilter([]);
-                  setSearchQuery('');
-                  setLocationQuery('');
-                }}
-              >
-                Reset All Filters
-              </button>
             </aside>
 
           {/* Main Job Listing + Detail Split */}
