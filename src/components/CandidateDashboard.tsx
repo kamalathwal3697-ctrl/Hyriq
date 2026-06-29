@@ -111,7 +111,9 @@ export const CandidateDashboard: React.FC = () => {
       if (selectedGovtCategory === 'saved') {
         setGovtJobsLoading(true);
         setGovtJobs(savedGovtJobs);
-        if (savedGovtJobs.length > 0) setSelectedGovtJob(savedGovtJobs[0]);
+        if (savedGovtJobs.length > 0 && window.innerWidth > 1024) {
+          setSelectedGovtJob(savedGovtJobs[0]);
+        }
         setGovtJobsLoading(false);
         setGovtJobsError('');
         return;
@@ -131,7 +133,9 @@ export const CandidateDashboard: React.FC = () => {
         })
         .then(data => {
           setGovtJobs(data);
-          if (data.length > 0) setSelectedGovtJob(data[0]);
+          if (data.length > 0 && window.innerWidth > 1024) {
+            setSelectedGovtJob(data[0]);
+          }
           setGovtJobsLoading(false);
         })
         .catch(err => {
