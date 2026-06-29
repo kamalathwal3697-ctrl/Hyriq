@@ -2037,283 +2037,290 @@ export const CandidateDashboard: React.FC = () => {
       {/* Standalone full-page overlay details view rendered outside .container to bypass Android WebView transform rendering context bugs */}
       {activeTab === 'explore' && selectedJob && (
         <div className={`job-detail-panel job-detail-open ${isClosingExplore ? 'job-detail-closing' : ''}`}>
-          <div className="glass-panel" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px', background: '#0B0E14', color: '#fff', border: '1px solid rgba(255,255,255,0.08)' }}>
-            {/* Header */}
-            <div>
+          <div className="glass-panel" style={{ padding: '0', display: 'flex', flexDirection: 'column', height: '100%', background: '#0B0E14', color: '#fff', border: '1px solid rgba(255,255,255,0.08)' }}>
+            {/* Header: Sticky at Top */}
+            <div style={{ padding: '24px 24px 16px 24px', flexShrink: 0, borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
               <button
                 onClick={handleCloseJobDetails}
                 style={{
-                      background: 'transparent',
-                      border: 'none',
-                      color: 'var(--text-secondary)',
-                      fontSize: '14px',
-                      fontWeight: 600,
-                      cursor: 'pointer',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '6px',
-                      marginBottom: '16px',
-                      padding: '4px 0'
-                    }}
-                    className="mobile-back-btn"
-                  >
-                    <ArrowLeft size={16} /> Back to Listings
-                  </button>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '16px' }}>
-                    <div>
-                      <span className="badge badge-primary" style={{ marginBottom: '8px', background: 'rgba(242,153,74,0.15)', color: 'var(--tech-orange)', border: '1px solid rgba(242,153,74,0.3)' }}>{selectedJob.experience}</span>
-                      <h3 style={{ color: '#fff', fontSize: '20px', fontWeight: 800, marginBottom: '4px' }}>{selectedJob.title}</h3>
-                      <p style={{ color: 'var(--tech-orange)', fontWeight: 700, fontSize: '15px' }}>{selectedJob.companyName}</p>
-                    </div>
-                    <div className="avatar" style={{
-                      width: '50px',
-                      height: '50px',
-                      fontSize: '18px',
-                      background: `linear-gradient(135deg, #1A3E62 0%, #F2994A 100%)`
-                    }}>
-                      {selectedJob.logoSeed}
-                    </div>
-                  </div>
-
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', background: 'rgba(255,255,255,0.02)', padding: '12px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: 'var(--text-secondary)' }}>
-                      <MapPin size={14} color="var(--text-muted)" /> Location: {selectedJob.location} ({selectedJob.mode})
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: 'var(--text-secondary)' }}>
-                      <IndianRupee size={14} color="var(--text-muted)" /> Compensation: {selectedJob.salary}
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: 'var(--text-secondary)' }}>
-                      <Briefcase size={14} color="var(--text-muted)" /> Job Type: {selectedJob.type}
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: '#10b981', fontWeight: 600, borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '8px', marginTop: '4px' }}>
-                      <span style={{ display: 'inline-block', width: '8px', height: '8px', borderRadius: '50%', background: '#10b981' }}></span>
-                      💬 Chat Live Hours: {selectedJob.chatLiveHours || '10:00 AM - 1:00 PM'}
-                    </div>
-                  </div>
+                  background: 'transparent',
+                  border: 'none',
+                  color: 'var(--text-secondary)',
+                  fontSize: '14px',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  marginBottom: '16px',
+                  padding: '4px 0'
+                }}
+                className="mobile-back-btn"
+              >
+                <ArrowLeft size={16} /> Back to Listings
+              </button>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
+                <div>
+                  <span className="badge badge-primary" style={{ marginBottom: '8px', background: 'rgba(242,153,74,0.15)', color: 'var(--tech-orange)', border: '1px solid rgba(242,153,74,0.3)' }}>{selectedJob.experience}</span>
+                  <h3 style={{ color: '#fff', fontSize: '20px', fontWeight: 800, marginBottom: '4px' }}>{selectedJob.title}</h3>
+                  <p style={{ color: 'var(--tech-orange)', fontWeight: 700, fontSize: '15px', margin: 0 }}>{selectedJob.companyName}</p>
                 </div>
-
-                {/* Compatibility Score Widget */}
-                {candidateProfile.onboardingCompleted && (
-                  <div style={{
-                    background: 'linear-gradient(135deg, #132B45 0%, #1A3E62 100%)',
-                    border: '1.5px solid rgba(242, 153, 74, 0.4)',
-                    borderRadius: '16px',
-                    padding: '20px',
-                    color: '#fff',
-                    position: 'relative',
-                    overflow: 'hidden',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '16px',
-                    boxShadow: '0 8px 24px rgba(26, 62, 98, 0.3)'
-                  }}>
-                    <div style={{ flex: 1, zIndex: 2 }}>
-                      <h5 style={{ fontSize: '11px', fontWeight: 800, letterSpacing: '1px', color: 'var(--tech-orange)', textTransform: 'uppercase', marginBottom: '4px' }}>
-                        Compatibility Score
-                      </h5>
-                      <p style={{ fontSize: '12px', color: 'rgba(255, 255, 255, 0.8)', lineHeight: '1.4' }}>
-                        Based on work mode alignment, experience tier, job type, and key skills.
-                      </p>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '10px' }}>
-                        <span style={{ fontSize: '28px', fontWeight: 800, color: '#fff' }}>
-                          {calculateMatchScore(selectedJob)}%
-                        </span>
-                        <span style={{
-                          fontSize: '11px',
-                          fontWeight: 600,
-                          background: 'rgba(242, 153, 74, 0.2)',
-                          color: 'var(--tech-orange)',
-                          padding: '2px 8px',
-                          borderRadius: '20px'
-                        }}>
-                          {calculateMatchScore(selectedJob) >= 80 ? 'High Vibe 🔥' : calculateMatchScore(selectedJob) >= 50 ? 'Good Vibe' : 'Low Alignment'}
-                        </span>
-                      </div>
-                    </div>
-                    
-                    <img src="/logo.png" alt="Logo" className="animate-glow" style={{ width: '72px', height: '72px', borderRadius: '12px', objectFit: 'cover', zIndex: 1 }} />
-                  </div>
-                )}
-
-                {/* Job Details Tabs */}
-                <div style={{ display: 'flex', borderBottom: '1px solid var(--border-color)', gap: '16px', marginBottom: '8px' }}>
-                  <button
-                    onClick={() => setDetailsTab('info')}
-                    style={{
-                      padding: '8px 0 12px 0',
-                      background: 'transparent',
-                      border: 'none',
-                      color: detailsTab === 'info' ? 'var(--tech-orange)' : 'var(--text-secondary)',
-                      borderBottom: detailsTab === 'info' ? '2px solid var(--tech-orange)' : 'none',
-                      cursor: 'pointer',
-                      fontSize: '14px',
-                      fontWeight: 600
-                    }}
-                  >
-                    Job Details
-                  </button>
-                  <button
-                    onClick={() => setDetailsTab('pact')}
-                    style={{
-                      padding: '8px 0 12px 0',
-                      background: 'transparent',
-                      border: 'none',
-                      color: detailsTab === 'pact' ? 'var(--tech-orange)' : 'var(--text-secondary)',
-                      borderBottom: detailsTab === 'pact' ? '2px solid var(--tech-orange)' : 'none',
-                      cursor: 'pointer',
-                      fontSize: '14px',
-                      fontWeight: 600,
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '6px'
-                    }}
-                  >
-                    🛡️ Fair Work Pact {selectedJob.fairWorkPact && <span style={{ fontSize: '10px', color: 'var(--success)' }}>● Verified</span>}
-                  </button>
+                <div className="avatar" style={{
+                  width: '50px',
+                  height: '50px',
+                  fontSize: '18px',
+                  background: `linear-gradient(135deg, #1A3E62 0%, #F2994A 100%)`
+                }}>
+                  {selectedJob.logoSeed}
                 </div>
-
-                {detailsTab === 'info' ? (
-                  <>
-                    {/* Skills Grid */}
-                    <div>
-                      <h4 style={{ color: '#fff', fontSize: '14px', fontWeight: 600, marginBottom: '8px' }}>Required Skills</h4>
-                      <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                        {selectedJob.skills.map(skill => (
-                          <span key={skill} className="badge badge-secondary" style={{ borderRadius: '6px' }}>{skill}</span>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Description */}
-                    <div>
-                      <h4 style={{ color: '#fff', fontSize: '14px', fontWeight: 600, marginBottom: '6px' }}>Job Description</h4>
-                      <p style={{ color: 'var(--text-secondary)', fontSize: '13px', lineHeight: '1.6' }}>{selectedJob.description}</p>
-                    </div>
-
-                    {/* Requirements */}
-                    <div>
-                      <h4 style={{ color: '#fff', fontSize: '14px', fontWeight: 600, marginBottom: '8px' }}>What you will bring</h4>
-                      <ul style={{ paddingLeft: '16px', color: 'var(--text-secondary)', fontSize: '13px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                        {selectedJob.requirements.map((req, i) => (
-                          <li key={i}>{req}</li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    {/* Benefits */}
-                    <div>
-                      <h4 style={{ color: '#fff', fontSize: '14px', fontWeight: 600, marginBottom: '8px' }}>Perks & Benefits</h4>
-                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
-                        {selectedJob.benefits.map((benefit, i) => (
-                          <div key={i} style={{ fontSize: '12px', color: 'var(--text-secondary)', background: 'rgba(255,255,255,0.02)', padding: '8px', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.03)' }}>
-                            ✨ {benefit}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                    <div className="glass-panel" style={{
-                      background: 'rgba(16, 185, 129, 0.04)',
-                      border: '1px solid rgba(16, 185, 129, 0.2)',
-                      padding: '16px',
-                      borderRadius: '12px'
-                    }}>
-                      <h4 style={{ color: '#fff', fontSize: '14px', fontWeight: 600, marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                        <span style={{ fontSize: '16px' }}>🛡️</span> Fair Work Pact Signed
-                      </h4>
-                      <p style={{ color: 'var(--text-secondary)', fontSize: '12px', lineHeight: 1.5 }}>
-                        Both the candidate and the employer commit to a mutual standard of respect, security, and accountability.
-                      </p>
-                    </div>
-
-                    <div>
-                      <h5 style={{ color: 'var(--primary)', fontSize: '13px', fontWeight: 700, marginBottom: '8px' }}>
-                        🛡️ Worker Rights (Employer Commitments)
-                      </h5>
-                      <ul style={{ paddingLeft: '16px', color: 'var(--text-secondary)', fontSize: '12px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                        <li><strong>Fair Working Hours:</strong> Strict adherence to a standard, limited work schedule.</li>
-                        <li><strong>Overtime Pay:</strong> Guaranteed extra compensation for any hours worked beyond the daily limit.</li>
-                        <li><strong>Health & Well-being:</strong> Access to basic medical benefits and a safe working environment.</li>
-                        <li><strong>Accommodation Support:</strong> Housing allowance or safe, provided accommodation where applicable.</li>
-                        <li><strong>Job Security:</strong> Protection against unfair firing without valid cause or proper notice.</li>
-                        <li><strong>Merit-Based Growth:</strong> Guaranteed salary raises or promotions upon successfully achieving predefined work targets.</li>
-                      </ul>
-                    </div>
-
-                    <div style={{ borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '12px' }}>
-                      <h5 style={{ color: 'var(--secondary)', fontSize: '13px', fontWeight: 700, marginBottom: '8px' }}>
-                        🤝 Worker Duties (Employee Commitments)
-                      </h5>
-                      <ul style={{ paddingLeft: '16px', color: 'var(--text-secondary)', fontSize: '12px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                        <li><strong>Punctuality:</strong> Consistently arriving on time and respecting the work schedule.</li>
-                        <li><strong>Prompt Communication:</strong> Timely and professional responses to all work-related messages or requests.</li>
-                        <li><strong>Responsibility:</strong> Taking full ownership of assigned tasks and performing them diligently.</li>
-                        <li><strong>Absolute Integrity:</strong> Honesty in reporting hours, tasks, and issues.</li>
-                        <li><strong>Professional Conduct:</strong> Respectful behavior towards coworkers and clients.</li>
-                      </ul>
-                    </div>
-                  </div>
-                )}
-
-                {/* Apply Actions */}
-                <div className="mobile-fixed-bottom-actions" style={{ borderTop: '1px solid var(--border-color)', paddingTop: '16px', display: 'flex', gap: '12px' }}>
-                  {applications.some(app => app.jobId === selectedJob.id && app.candidateId === 'cand-1') ? (
-                    <div style={{ display: 'flex', gap: '12px', width: '100%' }}>
-                      <button className="btn btn-outline" style={{ flex: 1 }} disabled>
-                        Applied ✓
-                      </button>
-                      {selectedJob.fairWorkPact && (
-                        <button 
-                          onClick={() => {
-                            const matchingApp = applications.find(app => app.jobId === selectedJob.id && app.candidateId === 'cand-1');
-                            if (matchingApp) {
-                              setContractApp(matchingApp);
-                              setShowContractModal(true);
-                            }
-                          }}
-                          className="btn btn-primary animate-glow" 
-                          style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}
-                        >
-                          🛡️ View Pact Deed
-                        </button>
-                      )}
-                    </div>
-                  ) : (
-                    <button 
-                      onClick={() => {
-                        if (selectedJob.fairWorkPact) {
-                          setPactChecked(false);
-                          setTypedSignature('');
-                          setShowApplyPactModal(true);
-                        } else {
-                          handleApply(selectedJob.id);
-                        }
-                      }} 
-                      className="btn animate-glow" 
-                      style={{ 
-                        flex: 1, 
-                        background: 'var(--tech-orange)', 
-                        color: '#fff',
-                        fontWeight: 700,
-                        boxShadow: '0 4px 15px -3px rgba(242, 153, 74, 0.4)'
-                      }}
-                    >
-                      Apply Now
-                    </button>
-                  )}
               </div>
             </div>
+
+            {/* Scrollable Body Content */}
+            <div style={{ flex: 1, overflowY: 'auto', padding: '20px 24px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', background: 'rgba(255,255,255,0.02)', padding: '12px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: 'var(--text-secondary)' }}>
+                  <MapPin size={14} color="var(--text-muted)" /> Location: {selectedJob.location} ({selectedJob.mode})
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: 'var(--text-secondary)' }}>
+                  <IndianRupee size={14} color="var(--text-muted)" /> Compensation: {selectedJob.salary}
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: 'var(--text-secondary)' }}>
+                  <Briefcase size={14} color="var(--text-muted)" /> Job Type: {selectedJob.type}
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: '#10b981', fontWeight: 600, borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '8px', marginTop: '4px' }}>
+                  <span style={{ display: 'inline-block', width: '8px', height: '8px', borderRadius: '50%', background: '#10b981' }}></span>
+                  💬 Chat Live Hours: {selectedJob.chatLiveHours || '10:00 AM - 1:00 PM'}
+                </div>
+              </div>
+
+              {/* Compatibility Score Widget */}
+              {candidateProfile.onboardingCompleted && (
+                <div style={{
+                  background: 'linear-gradient(135deg, #132B45 0%, #1A3E62 100%)',
+                  border: '1.5px solid rgba(242, 153, 74, 0.4)',
+                  borderRadius: '16px',
+                  padding: '20px',
+                  color: '#fff',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '16px',
+                  boxShadow: '0 8px 24px rgba(26, 62, 98, 0.3)'
+                }}>
+                  <div style={{ flex: 1, zIndex: 2 }}>
+                    <h5 style={{ fontSize: '11px', fontWeight: 800, letterSpacing: '1px', color: 'var(--tech-orange)', textTransform: 'uppercase', marginBottom: '4px' }}>
+                      Compatibility Score
+                    </h5>
+                    <p style={{ fontSize: '12px', color: 'rgba(255, 255, 255, 0.8)', lineHeight: '1.4' }}>
+                      Based on work mode alignment, experience tier, job type, and key skills.
+                    </p>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '10px' }}>
+                      <span style={{ fontSize: '28px', fontWeight: 800, color: '#fff' }}>
+                        {calculateMatchScore(selectedJob)}%
+                      </span>
+                      <span style={{
+                        fontSize: '11px',
+                        fontWeight: 600,
+                        background: 'rgba(242, 153, 74, 0.2)',
+                        color: 'var(--tech-orange)',
+                        padding: '2px 8px',
+                        borderRadius: '20px'
+                      }}>
+                        {calculateMatchScore(selectedJob) >= 80 ? 'High Vibe 🔥' : calculateMatchScore(selectedJob) >= 50 ? 'Good Vibe' : 'Low Alignment'}
+                      </span>
+                    </div>
+                  </div>
+                  
+                  <img src="/logo.png" alt="Logo" className="animate-glow" style={{ width: '72px', height: '72px', borderRadius: '12px', objectFit: 'cover', zIndex: 1 }} />
+                </div>
+              )}
+
+              {/* Job Details Tabs */}
+              <div style={{ display: 'flex', borderBottom: '1px solid var(--border-color)', gap: '16px', marginBottom: '8px' }}>
+                <button
+                  onClick={() => setDetailsTab('info')}
+                  style={{
+                    padding: '8px 0 12px 0',
+                    background: 'transparent',
+                    border: 'none',
+                    color: detailsTab === 'info' ? 'var(--tech-orange)' : 'var(--text-secondary)',
+                    borderBottom: detailsTab === 'info' ? '2px solid var(--tech-orange)' : 'none',
+                    cursor: 'pointer',
+                    fontSize: '14px',
+                    fontWeight: 600
+                  }}
+                >
+                  Job Details
+                </button>
+                <button
+                  onClick={() => setDetailsTab('pact')}
+                  style={{
+                    padding: '8px 0 12px 0',
+                    background: 'transparent',
+                    border: 'none',
+                    color: detailsTab === 'pact' ? 'var(--tech-orange)' : 'var(--text-secondary)',
+                    borderBottom: detailsTab === 'pact' ? '2px solid var(--tech-orange)' : 'none',
+                    cursor: 'pointer',
+                    fontSize: '14px',
+                    fontWeight: 600,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px'
+                  }}
+                >
+                  🛡️ Fair Work Pact {selectedJob.fairWorkPact && <span style={{ fontSize: '10px', color: 'var(--success)' }}>● Verified</span>}
+                </button>
+              </div>
+
+              {detailsTab === 'info' ? (
+                <>
+                  {/* Skills Grid */}
+                  <div>
+                    <h4 style={{ color: '#fff', fontSize: '14px', fontWeight: 600, marginBottom: '8px' }}>Required Skills</h4>
+                    <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                      {selectedJob.skills.map(skill => (
+                        <span key={skill} className="badge badge-secondary" style={{ borderRadius: '6px' }}>{skill}</span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Description */}
+                  <div>
+                    <h4 style={{ color: '#fff', fontSize: '14px', fontWeight: 600, marginBottom: '6px' }}>Job Description</h4>
+                    <p style={{ color: 'var(--text-secondary)', fontSize: '13px', lineHeight: '1.6', margin: 0 }}>{selectedJob.description}</p>
+                  </div>
+
+                  {/* Requirements */}
+                  <div>
+                    <h4 style={{ color: '#fff', fontSize: '14px', fontWeight: 600, marginBottom: '8px' }}>What you will bring</h4>
+                    <ul style={{ paddingLeft: '16px', color: 'var(--text-secondary)', fontSize: '13px', display: 'flex', flexDirection: 'column', gap: '6px', margin: 0 }}>
+                      {selectedJob.requirements.map((req, i) => (
+                        <li key={i}>{req}</li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Benefits */}
+                  <div>
+                    <h4 style={{ color: '#fff', fontSize: '14px', fontWeight: 600, marginBottom: '8px' }}>Perks & Benefits</h4>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+                      {selectedJob.benefits.map((benefit, i) => (
+                        <div key={i} style={{ fontSize: '12px', color: 'var(--text-secondary)', background: 'rgba(255,255,255,0.02)', padding: '8px', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.03)' }}>
+                          ✨ {benefit}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div className="glass-panel" style={{
+                    background: 'rgba(16, 185, 129, 0.04)',
+                    border: '1px solid rgba(16, 185, 129, 0.2)',
+                    padding: '16px',
+                    borderRadius: '12px'
+                  }}>
+                    <h4 style={{ color: '#fff', fontSize: '14px', fontWeight: 600, marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <span style={{ fontSize: '16px' }}>🛡️</span> Fair Work Pact Signed
+                    </h4>
+                    <p style={{ color: 'var(--text-secondary)', fontSize: '12px', lineHeight: 1.5, margin: 0 }}>
+                      Both the candidate and the employer commit to a mutual standard of respect, security, and accountability.
+                    </p>
+                  </div>
+
+                  <div>
+                    <h5 style={{ color: 'var(--primary)', fontSize: '13px', fontWeight: 700, marginBottom: '8px' }}>
+                      🛡️ Worker Rights (Employer Commitments)
+                    </h5>
+                    <ul style={{ paddingLeft: '16px', color: 'var(--text-secondary)', fontSize: '12px', display: 'flex', flexDirection: 'column', gap: '8px', margin: 0 }}>
+                      <li><strong>Fair Working Hours:</strong> Strict adherence to a standard, limited work schedule.</li>
+                      <li><strong>Overtime Pay:</strong> Guaranteed extra compensation for any hours worked beyond the daily limit.</li>
+                      <li><strong>Health & Well-being:</strong> Access to basic medical benefits and a safe working environment.</li>
+                      <li><strong>Accommodation Support:</strong> Housing allowance or safe, provided accommodation where applicable.</li>
+                      <li><strong>Job Security:</strong> Protection against unfair firing without valid cause or proper notice.</li>
+                      <li><strong>Merit-Based Growth:</strong> Guaranteed salary raises or promotions upon successfully achieving predefined work targets.</li>
+                    </ul>
+                  </div>
+
+                  <div style={{ borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '12px' }}>
+                    <h5 style={{ color: 'var(--secondary)', fontSize: '13px', fontWeight: 700, marginBottom: '8px' }}>
+                      🤝 Worker Duties (Employee Commitments)
+                    </h5>
+                    <ul style={{ paddingLeft: '16px', color: 'var(--text-secondary)', fontSize: '12px', display: 'flex', flexDirection: 'column', gap: '8px', margin: 0 }}>
+                      <li><strong>Punctuality:</strong> Consistently arriving on time and respecting the work schedule.</li>
+                      <li><strong>Prompt Communication:</strong> Timely and professional responses to all work-related messages or requests.</li>
+                      <li><strong>Responsibility:</strong> Taking full ownership of assigned tasks and performing them diligently.</li>
+                      <li><strong>Absolute Integrity:</strong> Honesty in reporting hours, tasks, and issues.</li>
+                      <li><strong>Professional Conduct:</strong> Respectful behavior towards coworkers and clients.</li>
+                    </ul>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Sticky Bottom actions container */}
+            <div style={{ padding: '16px 24px', background: '#0B0E14', borderTop: '1px solid rgba(255,255,255,0.08)', flexShrink: 0, display: 'flex', gap: '12px' }}>
+              {applications.some(app => app.jobId === selectedJob.id && app.candidateId === 'cand-1') ? (
+                <div style={{ display: 'flex', gap: '12px', width: '100%' }}>
+                  <button className="btn btn-outline" style={{ flex: 1, padding: '12px', borderRadius: '12px' }} disabled>
+                    Applied ✓
+                  </button>
+                  {selectedJob.fairWorkPact && (
+                    <button 
+                      onClick={() => {
+                        const matchingApp = applications.find(app => app.jobId === selectedJob.id && app.candidateId === 'cand-1');
+                        if (matchingApp) {
+                          setContractApp(matchingApp);
+                          setShowContractModal(true);
+                        }
+                      }}
+                      className="btn btn-primary animate-glow" 
+                      style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', padding: '12px', borderRadius: '12px' }}
+                    >
+                      🛡️ View Pact Deed
+                    </button>
+                  )}
+                </div>
+              ) : (
+                <button 
+                  onClick={() => {
+                    if (selectedJob.fairWorkPact) {
+                      setPactChecked(false);
+                      setTypedSignature('');
+                      setShowApplyPactModal(true);
+                    } else {
+                      handleApply(selectedJob.id);
+                    }
+                  }} 
+                  className="btn animate-glow" 
+                  style={{ 
+                    flex: 1, 
+                    background: 'var(--tech-orange)', 
+                    color: '#fff',
+                    fontWeight: 700,
+                    padding: '12px',
+                    borderRadius: '12px',
+                    border: 'none',
+                    boxShadow: '0 4px 15px -3px rgba(242, 153, 74, 0.4)',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Apply Now
+                </button>
+              )}
+            </div>
           </div>
+        </div>
       )}
 
       {/* Standalone full-page overlay details view for Government Jobs rendered outside .container to bypass Android WebView transform rendering context bugs */}
       {activeTab === 'govt' && selectedGovtJob && (
         <div className={`job-detail-panel job-detail-open ${isClosingGovt ? 'job-detail-closing' : ''}`}>
-          <div className="glass-panel" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px', background: '#0B0E14', color: '#fff', border: '1px solid rgba(255,255,255,0.08)' }}>
-            {/* Header */}
-            <div>
+          <div className="glass-panel" style={{ padding: '0', display: 'flex', flexDirection: 'column', height: '100%', background: '#0B0E14', color: '#fff', border: '1px solid rgba(255,255,255,0.08)' }}>
+            {/* Header: Sticky at Top */}
+            <div style={{ padding: '24px 24px 16px 24px', flexShrink: 0, borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
               <button
                 onClick={handleCloseGovtJobDetails}
                 style={{
@@ -2333,12 +2340,12 @@ export const CandidateDashboard: React.FC = () => {
               >
                 <ArrowLeft size={16} /> Back to Listings
               </button>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '16px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
                 <div>
                   <span className="badge badge-primary" style={{ marginBottom: '8px', background: 'rgba(26, 62, 98, 0.15)', color: 'var(--corporate-blue)', border: '1px solid rgba(26, 62, 98, 0.3)' }}>
                     {selectedGovtJob.recruitmentBoard}
                   </span>
-                  <h3 style={{ color: '#fff', fontSize: '20px', fontWeight: 800, marginBottom: '4px', lineHeight: '1.4' }}>{selectedGovtJob.title}</h3>
+                  <h3 style={{ color: '#fff', fontSize: '20px', fontWeight: 800, marginBottom: '4px', lineHeight: '1.4', margin: 0 }}>{selectedGovtJob.title}</h3>
                 </div>
                 <div className="avatar" style={{
                   width: '50px',
@@ -2350,7 +2357,10 @@ export const CandidateDashboard: React.FC = () => {
                   Govt
                 </div>
               </div>
+            </div>
 
+            {/* Scrollable Body Content */}
+            <div style={{ flex: 1, overflowY: 'auto', padding: '20px 24px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', background: 'rgba(255,255,255,0.02)', padding: '12px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: 'var(--text-secondary)' }}>
                   <MapPin size={14} color="var(--text-muted)" /> State/Region: {selectedGovtJob.state ? selectedGovtJob.state.toUpperCase() : 'All India'}
@@ -2363,56 +2373,56 @@ export const CandidateDashboard: React.FC = () => {
                   ⌛ Last Date to Apply: {selectedGovtJob.lastDate || '—'}
                 </div>
               </div>
-            </div>
 
-            {/* Tabs */}
-            <div style={{ display: 'flex', borderBottom: '1px solid var(--border-color)', gap: '16px', marginBottom: '8px' }}>
-              <button
-                className="tab-btn active"
-                style={{
-                  background: 'transparent',
-                  border: 'none',
-                  color: '#fff',
-                  fontWeight: 700,
-                  fontSize: '14px',
-                  paddingBottom: '8px',
-                  borderBottom: '2px solid var(--tech-orange)',
-                  cursor: 'pointer'
-                }}
-              >
-                Official Notification & Info
-              </button>
-            </div>
+              {/* Tabs */}
+              <div style={{ display: 'flex', borderBottom: '1px solid var(--border-color)', gap: '16px', marginBottom: '8px' }}>
+                <button
+                  className="tab-btn active"
+                  style={{
+                    background: 'transparent',
+                    border: 'none',
+                    color: '#fff',
+                    fontWeight: 700,
+                    fontSize: '14px',
+                    paddingBottom: '8px',
+                    borderBottom: '2px solid var(--tech-orange)',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Official Notification & Info
+                </button>
+              </div>
 
-            {/* Details Content */}
-            {govtJobDetailsLoading ? (
-              <div style={{ padding: '40px 20px', textAlign: 'center', color: 'var(--text-secondary)', fontWeight: 600 }}>
-                <div className="animate-pulse">
-                  ⏳ Loading official job notifications, fee details & vacancy tables...
+              {/* Details Content */}
+              {govtJobDetailsLoading ? (
+                <div style={{ padding: '40px 20px', textAlign: 'center', color: 'var(--text-secondary)', fontWeight: 600 }}>
+                  <div className="animate-pulse">
+                    ⏳ Loading official job notifications, fee details & vacancy tables...
+                  </div>
                 </div>
-              </div>
-            ) : selectedGovtJobDetails ? (
-              <div 
-                className="govt-details-content"
-                dangerouslySetInnerHTML={{ __html: selectedGovtJobDetails }} 
-                style={{ 
-                  padding: '16px', 
-                  background: 'rgba(255,255,255,0.03)', 
-                  borderRadius: '12px', 
-                  border: '1px solid rgba(255,255,255,0.08)',
-                  fontSize: '13px',
-                  lineHeight: '1.6',
-                  color: '#e2e8f0'
-                }} 
-              />
-            ) : (
-              <div style={{ padding: '24px', textAlign: 'center', color: 'var(--text-secondary)' }}>
-                No notification details available.
-              </div>
-            )}
+              ) : selectedGovtJobDetails ? (
+                <div 
+                  className="govt-details-content"
+                  dangerouslySetInnerHTML={{ __html: selectedGovtJobDetails }} 
+                  style={{ 
+                    padding: '16px', 
+                    background: 'rgba(255,255,255,0.03)', 
+                    borderRadius: '12px', 
+                    border: '1px solid rgba(255,255,255,0.08)',
+                    fontSize: '13px',
+                    lineHeight: '1.6',
+                    color: '#e2e8f0'
+                  }} 
+                />
+              ) : (
+                <div style={{ padding: '24px', textAlign: 'center', color: 'var(--text-secondary)' }}>
+                  No notification details available.
+                </div>
+              )}
+            </div>
 
-            {/* Bottom Actions */}
-            <div style={{ marginTop: 'auto', paddingTop: '16px', borderTop: '1px solid var(--border-color)', display: 'flex', gap: '12px' }} className="mobile-fixed-bottom-actions">
+            {/* Sticky Bottom Actions */}
+            <div style={{ padding: '16px 24px', background: '#0B0E14', borderTop: '1px solid var(--border-color)', display: 'flex', gap: '12px', flexShrink: 0 }}>
               <button 
                 type="button"
                 onClick={() => handleToggleSaveGovtJob(selectedGovtJob)}
