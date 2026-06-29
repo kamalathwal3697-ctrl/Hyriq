@@ -5,7 +5,7 @@ import { LandingPage } from './components/LandingPage';
 import { CandidateDashboard } from './components/CandidateDashboard';
 import { RecruiterDashboard } from './components/RecruiterDashboard';
 import { AuthPage } from './components/AuthPage';
-import { Menu, X, Search, Briefcase, Download, LogOut, ArrowLeft } from 'lucide-react';
+import { Menu, X, Download, LogOut, ArrowLeft } from 'lucide-react';
 import './App.css';
 
 const AppContent: React.FC = () => {
@@ -286,49 +286,98 @@ const AppContent: React.FC = () => {
                 })}
               </div>
             </div>
-
-            {/* Navigation Links */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '8px' }}>
-              <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Actions</span>
-              
-              <a 
-                onClick={() => {
-                  setPerspective('candidate');
-                  setIsMobileMenuOpen(false);
-                }}
-                style={{ display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '14px', fontWeight: 500, padding: '8px 0', cursor: 'pointer' }}
-              >
-                <Search size={16} /> Find a Job
-              </a>
-
-              {token && perspective === 'candidate' && (
+            {/* Perspective-Specific Quick Actions */}
+            {token && perspective === 'candidate' && (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '16px' }}>
+                <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Quick Actions</span>
                 <a 
                   onClick={() => {
                     setCandidateTab('profile');
                     setIsMobileMenuOpen(false);
                   }}
-                  style={{ display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--tech-orange)', textDecoration: 'none', fontSize: '14px', fontWeight: 600, padding: '8px 0', cursor: 'pointer' }}
+                  style={{ display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '13.5px', fontWeight: 600, padding: '6px 0', cursor: 'pointer', transition: 'color 0.2s' }}
+                  onMouseEnter={(e) => e.currentTarget.style.color = '#fff'}
+                  onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-secondary)'}
                 >
                   👤 My Profile
                 </a>
-              )}
-              
-              <a 
-                onClick={() => {
-                  setPerspective('recruiter');
-                  setIsMobileMenuOpen(false);
-                }}
-                style={{ display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '14px', fontWeight: 500, padding: '8px 0', cursor: 'pointer' }}
-              >
-                <Briefcase size={16} /> Post a Job
-              </a>
+                <a 
+                  onClick={() => {
+                    setCandidateTab('applications');
+                    setIsMobileMenuOpen(false);
+                  }}
+                  style={{ display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '13.5px', fontWeight: 600, padding: '6px 0', cursor: 'pointer', transition: 'color 0.2s' }}
+                  onMouseEnter={(e) => e.currentTarget.style.color = '#fff'}
+                  onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-secondary)'}
+                >
+                  💼 My Applications
+                </a>
+              </div>
+            )}
 
+            {token && perspective === 'recruiter' && (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '16px' }}>
+                <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Quick Actions</span>
+                <a 
+                  onClick={() => {
+                    setRecruiterTab('post-job');
+                    setIsMobileMenuOpen(false);
+                  }}
+                  style={{ display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '13.5px', fontWeight: 600, padding: '6px 0', cursor: 'pointer', transition: 'color 0.2s' }}
+                  onMouseEnter={(e) => e.currentTarget.style.color = '#fff'}
+                  onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-secondary)'}
+                >
+                  ➕ Post a Job
+                </a>
+                <a 
+                  onClick={() => {
+                    setRecruiterTab('settings');
+                    setIsMobileMenuOpen(false);
+                  }}
+                  style={{ display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '13.5px', fontWeight: 600, padding: '6px 0', cursor: 'pointer', transition: 'color 0.2s' }}
+                  onMouseEnter={(e) => e.currentTarget.style.color = '#fff'}
+                  onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-secondary)'}
+                >
+                  ⚙️ Board Settings
+                </a>
+              </div>
+            )}
+
+            {/* Mobile Companion Download Card */}
+            <div style={{
+              background: 'linear-gradient(135deg, rgba(242, 153, 74, 0.08) 0%, rgba(26, 62, 98, 0.08) 100%)',
+              border: '1px solid rgba(242, 153, 74, 0.15)',
+              padding: '16px',
+              borderRadius: '16px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '8px',
+              marginTop: '20px',
+              boxShadow: '0 4px 15px rgba(0,0,0,0.15)'
+            }}>
+              <span style={{ fontSize: '9px', fontWeight: 800, color: 'var(--tech-orange)', letterSpacing: '0.5px' }}>MOBILE COMPANION</span>
+              <span style={{ fontSize: '12px', color: '#fff', fontWeight: 700 }}>Get the Hyriq Android App</span>
               <a 
-                href="/hyriq.apk"
+                href="/hyriq.apk" 
                 download="hyriq.apk"
-                style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#f97316', textDecoration: 'none', fontSize: '14px', fontWeight: 600, padding: '8px 0' }}
+                className="btn btn-primary"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '6px',
+                  padding: '10px',
+                  borderRadius: '10px',
+                  fontSize: '12px',
+                  fontWeight: 700,
+                  background: 'var(--corporate-blue)',
+                  color: '#fff',
+                  textDecoration: 'none',
+                  textAlign: 'center',
+                  cursor: 'pointer'
+                }}
               >
-                <Download size={16} /> Download APK (Android)
+                <Download size={14} /> Download APK
               </a>
             </div>
 
