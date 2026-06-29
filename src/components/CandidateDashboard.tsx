@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Search, MapPin, IndianRupee, Briefcase, Filter, UserCheck, MessageCircle, FileText, Plus, X, Sparkles, ArrowLeft, Settings } from 'lucide-react';
 import { useAppState } from '../context/AppContext';
 import type { Job, Application } from '../context/AppContext';
@@ -236,28 +236,85 @@ export const CandidateDashboard: React.FC = () => {
     setDetailsTab('info');
   }, [selectedJob]);
 
+  // Ref tracking to allow mount-once event listeners to always access latest state
+  const isClosingExploreRef = useRef(isClosingExplore);
+  const isClosingGovtRef = useRef(isClosingGovt);
+  const selectedJobRef = useRef(selectedJob);
+  const selectedGovtJobRef = useRef(selectedGovtJob);
+
+  useEffect(() => { isClosingExploreRef.current = isClosingExplore; }, [isClosingExplore]);
+  useEffect(() => { isClosingGovtRef.current = isClosingGovt; }, [isClosingGovt]);
+  useEffect(() => { selectedJobRef.current = selectedJob; }, [selectedJob]);
+  useEffect(() => { selectedGovtJobRef.current = selectedGovtJob; }, [selectedGovtJob]);
+
+  // Support Android gesture swiping & hardware back key to close details modal overlays
+  useEffect(() => {
+    const handlePopState = () => {
+      // If closing animation is already in progress from a UI click, ignore the event
+      if (isClosingExploreRef.current || isClosingGovtRef.current) {
+        return;
+      }
+
+      if (selectedJobRef.current) {
+        setIsClosingExplore(true);
+        setTimeout(() => {
+          setSelectedJob(null);
+          setIsClosingExplore(false);
+        }, 280);
+      }
+      if (selectedGovtJobRef.current) {
+        setIsClosingGovt(true);
+        setTimeout(() => {
+          setSelectedGovtJob(null);
+          setIsClosingGovt(false);
+        }, 280);
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, []);
+
   const handleSelectJob = (job: Job) => {
     setSelectedJob(job);
+    if (window.innerWidth <= 1024) {
+      window.history.pushState({ jobDetailOpen: true }, '');
+    }
   };
 
   const handleCloseJobDetails = () => {
+    if (isClosingExplore) return; // Prevent double clicks
     setIsClosingExplore(true);
     setTimeout(() => {
       setSelectedJob(null);
       setIsClosingExplore(false);
     }, 280);
+    // Safely pop history state to keep browser back stack in sync
+    if (window.innerWidth <= 1024 && window.history.state?.jobDetailOpen) {
+      window.history.back();
+    }
   };
 
   const handleSelectGovtJob = (job: any) => {
     setSelectedGovtJob(job);
+    if (window.innerWidth <= 1024) {
+      window.history.pushState({ govtJobDetailOpen: true }, '');
+    }
   };
 
   const handleCloseGovtJobDetails = () => {
+    if (isClosingGovt) return; // Prevent double clicks
     setIsClosingGovt(true);
     setTimeout(() => {
       setSelectedGovtJob(null);
       setIsClosingGovt(false);
     }, 280);
+    // Safely pop history state to keep browser back stack in sync
+    if (window.innerWidth <= 1024 && window.history.state?.govtJobDetailOpen) {
+      window.history.back();
+    }
   };
 
   // Keep selected application updated with latest chat from global state
