@@ -395,17 +395,18 @@ export const CandidateDashboard: React.FC = () => {
   const isLightMode = activeTab === 'explore' || activeTab === 'govt';
 
   return (
-    <div 
-      className="container animate-fade-in" 
-      style={{ 
-        paddingTop: '32px', 
-        paddingBottom: '60px', 
-        background: isLightMode ? '#F5F7FA' : 'transparent',
-        minHeight: '100vh',
-        color: isLightMode ? 'var(--corporate-blue)' : '#fff',
-        transition: 'all 0.3s ease'
-      }}
-    >
+    <>
+      <div 
+        className="container animate-fade-in" 
+        style={{ 
+          paddingTop: '32px', 
+          paddingBottom: '60px', 
+          background: isLightMode ? '#F5F7FA' : 'transparent',
+          minHeight: '100vh',
+          color: isLightMode ? 'var(--corporate-blue)' : '#fff',
+          transition: 'all 0.3s ease'
+        }}
+      >
       {/* Onboarding Preference Overlay */}
         {candidateProfile.onboardingCompleted === false && (
           <OnboardingModal profile={candidateProfile} onSaveProfile={setCandidateProfile} />
@@ -2213,7 +2214,7 @@ export const CandidateDashboard: React.FC = () => {
         })}
       </div>
       )}
-
+      </div> {/* Close container here to bypass Android WebView coordinate transform bug */}
 
       {/* Standalone full-page overlay details view rendered outside .container to bypass Android WebView transform rendering context bugs */}
       {activeTab === 'explore' && selectedJob && (
@@ -2496,6 +2497,6 @@ export const CandidateDashboard: React.FC = () => {
           onComplete={() => setShowTour(false)}
         />
       )}
-    </div>
+    </>
   );
 };
