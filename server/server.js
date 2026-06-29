@@ -196,7 +196,12 @@ app.get('/api/govt-jobs/details', async (req, res) => {
     const $ = cheerio.load(html);
     
     const htmlBlocks = [];
-    $('.scrollable-table').each((i, el) => {
+    $('table').each((i, el) => {
+      // Ignore widget, sidebar, header, footer, or nav tables
+      if ($(el).hasClass('cj-widget-table') || $(el).closest('header, footer, nav, aside, .sidebar, #sidebar').length) {
+        return;
+      }
+
       // First convert plain text domains separated by / to actual clickable <a> tags
       $(el).find('td').each((tdIdx, td) => {
         if ($(td).find('a').length === 0) {
@@ -263,7 +268,7 @@ app.get('/api/govt-jobs/details', async (req, res) => {
     });
 
     if (htmlBlocks.length === 0) {
-      throw new Error('No detailed info tables matched (.scrollable-table)');
+      throw new Error('No detailed info tables matched.');
     }
 
     let directApplyLink = null;
