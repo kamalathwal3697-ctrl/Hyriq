@@ -214,7 +214,7 @@ export const CandidateDashboard: React.FC = () => {
 
   // Update details panel selection if jobs list changes (only on desktop layout)
   useEffect(() => {
-    const isDesktop = window.innerWidth > 768;
+    const isDesktop = window.innerWidth > 1024;
     if (isDesktop && jobs.length > 0 && !selectedJob) {
       setSelectedJob(jobs[0]);
     }
@@ -239,13 +239,13 @@ export const CandidateDashboard: React.FC = () => {
 
   const handleSelectJob = (job: Job) => {
     setSelectedJob(job);
-    if (window.innerWidth <= 768) {
+    if (window.innerWidth <= 1024) {
       window.history.pushState({ jobDetailOpen: true }, '');
     }
   };
 
   const handleCloseJobDetails = () => {
-    if (window.innerWidth <= 768) {
+    if (window.innerWidth <= 1024) {
       window.history.back();
     } else {
       setSelectedJob(null);

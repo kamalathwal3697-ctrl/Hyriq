@@ -528,7 +528,7 @@ input, textarea {
   display: none !important;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   /* Hide standard scrollbars on mobile */
   ::-webkit-scrollbar {
     display: none !important;
@@ -606,7 +606,7 @@ input, textarea {
 }
 
 /* Job Detail Full-Page Overlay on Mobile */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .job-detail-panel {
     display: none !important;
   }
