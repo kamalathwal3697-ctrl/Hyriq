@@ -137,8 +137,22 @@ export const AppStateProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   const [jobs, setJobs] = useState<Job[]>([]);
   const [applications, setApplications] = useState<Application[]>([]);
-  const [candidateTab, setCandidateTab] = useState<'explore' | 'govt' | 'applications' | 'profile' | 'settings'>('explore');
-  const [recruiterTab, setRecruiterTab] = useState<'overview' | 'post-job' | 'manage' | 'settings'>('overview');
+  const [candidateTab, setCandidateTabState] = useState<'explore' | 'govt' | 'applications' | 'profile' | 'settings'>(() => {
+    return (localStorage.getItem('hyriq_candidate_tab') as any) || 'explore';
+  });
+  const [recruiterTab, setRecruiterTabState] = useState<'overview' | 'post-job' | 'manage' | 'settings'>(() => {
+    return (localStorage.getItem('hyriq_recruiter_tab') as any) || 'overview';
+  });
+
+  const setCandidateTab = (tab: 'explore' | 'govt' | 'applications' | 'profile' | 'settings') => {
+    setCandidateTabState(tab);
+    localStorage.setItem('hyriq_candidate_tab', tab);
+  };
+
+  const setRecruiterTab = (tab: 'overview' | 'post-job' | 'manage' | 'settings') => {
+    setRecruiterTabState(tab);
+    localStorage.setItem('hyriq_recruiter_tab', tab);
+  };
 const [promoSlots, setPromoSlots] = useState<number>(100);
   const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
   const [currentLocation, setCurrentLocationState] = useState<string>(() => {
@@ -476,6 +490,8 @@ const [promoSlots, setPromoSlots] = useState<number>(100);
     setApplications([]);
     localStorage.removeItem('hyriq_token');
     localStorage.removeItem('hyriq_user');
+    localStorage.removeItem('hyriq_candidate_tab');
+    localStorage.removeItem('hyriq_recruiter_tab');
     setPerspective('visitor');
   };
 
