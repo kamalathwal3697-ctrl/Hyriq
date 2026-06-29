@@ -14,7 +14,9 @@ export const CandidateDashboard: React.FC = () => {
     applyForJob,
     sendChatMessage,
     candidateTab: activeTab,
-    setCandidateTab: setActiveTab
+    setCandidateTab: setActiveTab,
+    selectedJobId,
+    setSelectedJobId
   } = useAppState();
   const [detailsTab, setDetailsTab] = useState<'info' | 'pact'>('info');
   const [showApplyPactModal, setShowApplyPactModal] = useState(false);
@@ -133,7 +135,10 @@ export const CandidateDashboard: React.FC = () => {
   };
 
   // Selected details
-  const [selectedJob, setSelectedJob] = useState<Job | null>(null);
+  const selectedJob = jobs.find(j => j.id === selectedJobId) || null;
+  const setSelectedJob = (job: Job | null) => {
+    setSelectedJobId(job ? job.id : null);
+  };
   const [selectedApp, setSelectedApp] = useState<Application | null>(null);
   
   // Profile edit states

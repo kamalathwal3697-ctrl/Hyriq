@@ -18,10 +18,39 @@ const AppContent: React.FC = () => {
     signup, 
     logout,
     candidateProfile,
+    candidateTab,
     setCandidateTab,
-    setRecruiterTab
+    recruiterTab,
+    setRecruiterTab,
+    selectedJobId
   } = useAppState();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const showBackButton = (() => {
+    if (!token) return false;
+    if (perspective === 'visitor') return false;
+    if (perspective === 'candidate') {
+      return candidateTab !== 'explore' || !!selectedJobId;
+    }
+    if (perspective === 'recruiter') {
+      return recruiterTab !== 'overview';
+    }
+    return false;
+  })();
+
+  const handleBack = () => {
+    if (perspective === 'candidate') {
+      if (selectedJobId) {
+        window.history.back();
+      } else {
+        setCandidateTab('explore');
+      }
+    } else if (perspective === 'recruiter') {
+      setRecruiterTab('overview');
+    } else {
+      window.history.back();
+    }
+  };
 
   const renderMainContent = () => {
     if (perspective === 'visitor') {
@@ -64,25 +93,27 @@ const AppContent: React.FC = () => {
         padding: '0 16px'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-          <button
-            onClick={() => window.history.back()}
-            style={{
-              background: 'rgba(255,255,255,0.06)',
-              border: '1px solid rgba(255,255,255,0.1)',
-              borderRadius: '10px',
-              color: '#fff',
-              width: '32px',
-              height: '32px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer',
-              flexShrink: 0
-            }}
-            title="Go Back"
-          >
-            <ArrowLeft size={16} />
-          </button>
+          {showBackButton && (
+            <button
+              onClick={handleBack}
+              style={{
+                background: 'rgba(255,255,255,0.06)',
+                border: '1px solid rgba(255,255,255,0.1)',
+                borderRadius: '10px',
+                color: '#fff',
+                width: '32px',
+                height: '32px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                flexShrink: 0
+              }}
+              title="Go Back"
+            >
+              <ArrowLeft size={16} />
+            </button>
+          )}
           <div 
             onClick={() => setPerspective('visitor')}
             style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}
