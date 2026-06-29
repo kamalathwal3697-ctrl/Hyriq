@@ -70,7 +70,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({ profile: _prof
       bottom: 0,
       backgroundColor: 'rgba(26, 62, 98, 0.55)',
       backdropFilter: 'blur(16px)',
-      zIndex: 1000,
+      zIndex: 2000,
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
