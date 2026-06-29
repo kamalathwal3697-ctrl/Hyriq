@@ -357,6 +357,17 @@ const AppContent: React.FC = () => {
                 >
                   💼 My Applications
                 </a>
+                <a 
+                  onClick={() => {
+                    setCandidateTab('settings');
+                    setIsMobileMenuOpen(false);
+                  }}
+                  style={{ display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '13.5px', fontWeight: 600, padding: '6px 0', cursor: 'pointer', transition: 'color 0.2s' }}
+                  onMouseEnter={(e) => e.currentTarget.style.color = '#fff'}
+                  onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-secondary)'}
+                >
+                  ⚙️ App Settings
+                </a>
               </div>
             )}
 

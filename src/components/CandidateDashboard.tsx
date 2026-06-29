@@ -2078,8 +2078,7 @@ export const CandidateDashboard: React.FC = () => {
             }
           },
           { id: 'applications', icon: <MessageCircle size={20} />, label: 'Apps' },
-          { id: 'profile', icon: <UserCheck size={20} />, label: 'Profile' },
-          { id: 'settings', icon: <Settings size={20} />, label: 'Settings' }
+          { id: 'profile', icon: <UserCheck size={20} />, label: 'Profile' }
         ].map(item => {
           const isActive = activeTab === item.id;
           return (
