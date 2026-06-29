@@ -65,6 +65,45 @@ export const CandidateDashboard: React.FC = () => {
     localStorage.setItem('hyriq_saved_govt_job_objects', JSON.stringify(savedGovtJobs));
   }, [savedGovtJobs]);
 
+  const [applicationsSubTab, setApplicationsSubTab] = useState<'applied' | 'saved'>('applied');
+  const [selectedSavedJob, setSelectedSavedJob] = useState<any | null>(null);
+  const [savedJobDetailsHtml, setSavedJobDetailsHtml] = useState('');
+  const [savedJobDetailsLoading, setSavedJobDetailsLoading] = useState(false);
+  const [savedJobApplyLink, setSavedJobApplyLink] = useState('');
+  const [savedJobResourceLinks, setSavedJobResourceLinks] = useState<{ label: string, url: string }[]>([]);
+  const [showSavedLinksDropdown, setShowSavedLinksDropdown] = useState(false);
+
+  useEffect(() => {
+    if (selectedSavedJob) {
+      setSavedJobDetailsHtml('');
+      setSavedJobApplyLink(selectedSavedJob.applyLink || '');
+      setSavedJobResourceLinks([]);
+      setShowSavedLinksDropdown(false);
+      setSavedJobDetailsLoading(true);
+      fetch(`/api/govt-jobs/details?url=${encodeURIComponent(selectedSavedJob.applyLink)}`)
+        .then(res => {
+          if (!res.ok) throw new Error('Details not found');
+          return res.json();
+        })
+        .then(data => {
+          setSavedJobDetailsHtml(data.html);
+          if (data.directApplyLink) {
+            setSavedJobApplyLink(data.directApplyLink);
+          }
+          if (data.resourceLinks) {
+            setSavedJobResourceLinks(data.resourceLinks);
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          setSavedJobDetailsHtml(`<p>Job Title: <strong>${selectedSavedJob.title}</strong></p><p>Location: ${selectedSavedJob.location || 'N/A'}</p><p>Department: ${selectedSavedJob.companyName || 'Govt Department'}</p>`);
+        })
+        .finally(() => {
+          setSavedJobDetailsLoading(false);
+        });
+    }
+  }, [selectedSavedJob]);
+
   const [currentGovtApplyLink, setCurrentGovtApplyLink] = useState('');
   const [govtResourceLinks, setGovtResourceLinks] = useState<{ label: string, url: string }[]>([]);
   const [showLinksDropdown, setShowLinksDropdown] = useState(false);
@@ -1207,104 +1246,295 @@ export const CandidateDashboard: React.FC = () => {
       {/* APPLICATIONS VIEW */}
       {activeTab === 'applications' && (
         <div style={{ display: 'grid', gridTemplateColumns: '320px 1fr', gap: '24px', alignItems: 'start' }} className="applications-grid">
-          {/* Applications list */}
+          {/* Applications list / Saved jobs toggler */}
           <aside className="glass-panel" style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
             <h3 style={{ fontSize: '16px', fontWeight: 600, color: '#fff', borderBottom: '1px solid var(--border-color)', paddingBottom: '12px' }}>
-              My Applications
+              My Workspace
             </h3>
-            {applications.length === 0 ? (
-              <p style={{ color: 'var(--text-secondary)', fontSize: '13px', textAlign: 'center', padding: '24px 0' }}>
-                You haven't applied to any jobs yet. Check "Explore Jobs"!
-              </p>
-            ) : (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                {applications.map(app => {
-                  const job = jobs.find(j => j.id === app.jobId);
-                  const isSelected = selectedApp?.id === app.id;
-                  if (!job) return null;
 
-                  return (
-                    <div
-                      key={app.id}
-                      onClick={() => setSelectedApp(app)}
-                      className="glass-panel glass-panel-hover"
-                      style={{
-                        padding: '16px',
-                        cursor: 'pointer',
-                        border: isSelected ? '1px solid var(--border-color-active)' : '1px solid var(--border-color)',
-                        background: isSelected ? 'rgba(99, 102, 241, 0.08)' : 'rgba(255, 255, 255, 0.02)'
-                      }}
-                    >
-                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-                        <div>
-                          <h4 style={{ color: '#fff', fontSize: '14px', fontWeight: 600 }}>{job.title}</h4>
-                          <p style={{ color: 'var(--text-secondary)', fontSize: '12px' }}>{job.companyName}</p>
+            {/* Applications sub-tab toggler */}
+            <div style={{
+              display: 'flex',
+              background: 'rgba(0,0,0,0.15)',
+              padding: '4px',
+              borderRadius: '12px',
+              border: '1px solid rgba(255,255,255,0.04)',
+              gap: '4px'
+            }}>
+              <button
+                onClick={() => setApplicationsSubTab('applied')}
+                style={{
+                  flex: 1,
+                  padding: '6px',
+                  borderRadius: '8px',
+                  border: 'none',
+                  fontSize: '11.5px',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  background: applicationsSubTab === 'applied' ? 'var(--corporate-blue)' : 'transparent',
+                  color: applicationsSubTab === 'applied' ? '#fff' : 'var(--text-secondary)',
+                  transition: 'all 0.2s'
+                }}
+              >
+                📩 Applied ({applications.length})
+              </button>
+              <button
+                onClick={() => setApplicationsSubTab('saved')}
+                style={{
+                  flex: 1,
+                  padding: '6px',
+                  borderRadius: '8px',
+                  border: 'none',
+                  fontSize: '11.5px',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  background: applicationsSubTab === 'saved' ? 'var(--corporate-blue)' : 'transparent',
+                  color: applicationsSubTab === 'saved' ? '#fff' : 'var(--text-secondary)',
+                  transition: 'all 0.2s'
+                }}
+              >
+                ❤️ Saved ({savedGovtJobs.length})
+              </button>
+            </div>
+
+            {applicationsSubTab === 'applied' ? (
+              applications.length === 0 ? (
+                <p style={{ color: 'var(--text-secondary)', fontSize: '13px', textAlign: 'center', padding: '24px 0' }}>
+                  You haven't applied to any jobs yet. Check "Explore Jobs"!
+                </p>
+              ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                  {applications.map(app => {
+                    const job = jobs.find(j => j.id === app.jobId);
+                    const isSelected = selectedApp?.id === app.id;
+                    if (!job) return null;
+
+                    return (
+                      <div
+                        key={app.id}
+                        onClick={() => setSelectedApp(app)}
+                        className="glass-panel glass-panel-hover"
+                        style={{
+                          padding: '16px',
+                          cursor: 'pointer',
+                          border: isSelected ? '1px solid var(--border-color-active)' : '1px solid var(--border-color)',
+                          background: isSelected ? 'rgba(99, 102, 241, 0.08)' : 'rgba(255, 255, 255, 0.02)'
+                        }}
+                      >
+                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+                          <div>
+                            <h4 style={{ color: '#fff', fontSize: '14px', fontWeight: 600 }}>{job.title}</h4>
+                            <p style={{ color: 'var(--text-secondary)', fontSize: '12px' }}>{job.companyName}</p>
+                          </div>
+                          {getStatusBadge(app.status)}
                         </div>
-                        {getStatusBadge(app.status)}
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '12px', fontSize: '11px', color: 'var(--text-muted)' }}>
+                          <span>Applied: {app.appliedDate}</span>
+                          {app.chatHistory.length > 0 && (
+                            <span style={{ display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--primary)' }}>
+                              <MessageCircle size={10} /> Active chat
+                            </span>
+                          )}
+                        </div>
                       </div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '12px', fontSize: '11px', color: 'var(--text-muted)' }}>
-                        <span>Applied: {app.appliedDate}</span>
-                        {app.chatHistory.length > 0 && (
-                          <span style={{ display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--primary)' }}>
-                            <MessageCircle size={10} /> Active chat
-                          </span>
-                        )}
+                    );
+                  })}
+                </div>
+              )
+            ) : (
+              savedGovtJobs.length === 0 ? (
+                <p style={{ color: 'var(--text-secondary)', fontSize: '13px', textAlign: 'center', padding: '24px 0' }}>
+                  No saved jobs yet. Heart any listing under explore or govt jobs to save!
+                </p>
+              ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                  {savedGovtJobs.map(job => {
+                    const isSelected = selectedSavedJob?.id === job.id;
+                    return (
+                      <div
+                        key={job.id}
+                        onClick={() => setSelectedSavedJob(job)}
+                        className="glass-panel glass-panel-hover"
+                        style={{
+                          padding: '16px',
+                          cursor: 'pointer',
+                          border: isSelected ? '1px solid var(--border-color-active)' : '1px solid var(--border-color)',
+                          background: isSelected ? 'rgba(99, 102, 241, 0.08)' : 'rgba(255, 255, 255, 0.02)'
+                        }}
+                      >
+                        <h4 style={{ color: '#fff', fontSize: '13.5px', fontWeight: 600 }}>{job.title}</h4>
+                        <p style={{ color: 'var(--text-secondary)', fontSize: '11.5px', marginTop: '4px' }}>{job.companyName || 'Govt Department'}</p>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '12px', fontSize: '11px', color: 'var(--text-muted)' }}>
+                          <span>📍 {job.location || 'India'}</span>
+                          <span style={{ color: 'var(--tech-orange)', fontWeight: 600 }}>Saved</span>
+                        </div>
                       </div>
-                    </div>
-                  );
-                })}
-              </div>
+                    );
+                  })}
+                </div>
+              )
             )}
           </aside>
 
-          {/* Chat Window Panel */}
+          {/* Details / Chat Window Panel */}
           <main>
-            {currentApp ? (
-              <div>
-                {/* Job info header */}
-                <div className="glass-panel" style={{ padding: '16px', marginBottom: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <div>
-                    <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Chatting about</span>
-                    <h4 style={{ color: '#fff', fontSize: '15px', fontWeight: 600 }}>
-                      {jobs.find(j => j.id === currentApp.jobId)?.title} at {jobs.find(j => j.id === currentApp.jobId)?.companyName}
-                    </h4>
+            {applicationsSubTab === 'applied' ? (
+              currentApp ? (
+                <div>
+                  {/* Job info header */}
+                  <div className="glass-panel" style={{ padding: '16px', marginBottom: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div>
+                      <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Chatting about</span>
+                      <h4 style={{ color: '#fff', fontSize: '15px', fontWeight: 600 }}>
+                        {jobs.find(j => j.id === currentApp.jobId)?.title} at {jobs.find(j => j.id === currentApp.jobId)?.companyName}
+                      </h4>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }} className="no-print">
+                      {jobs.find(j => j.id === currentApp.jobId)?.fairWorkPact && (
+                        <button
+                          onClick={() => {
+                            setContractApp(currentApp);
+                            setShowContractModal(true);
+                          }}
+                          className="btn btn-outline"
+                          style={{ padding: '8px 12px', fontSize: '12px', display: 'flex', alignItems: 'center', gap: '6px' }}
+                        >
+                          🛡️ Legal Pact Deed
+                        </button>
+                      )}
+                      {getStatusBadge(currentApp.status)}
+                    </div>
                   </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }} className="no-print">
-                    {jobs.find(j => j.id === currentApp.jobId)?.fairWorkPact && (
-                      <button
-                        onClick={() => {
-                          setContractApp(currentApp);
-                          setShowContractModal(true);
-                        }}
-                        className="btn btn-outline"
-                        style={{ padding: '8px 12px', fontSize: '12px', display: 'flex', alignItems: 'center', gap: '6px' }}
-                      >
-                        🛡️ Legal Pact Deed
-                      </button>
-                    )}
-                    {getStatusBadge(currentApp.status)}
-                  </div>
-                </div>
 
-                <ChatWindow
-                  chatHistory={currentApp.chatHistory}
-                  currentRole="candidate"
-                  onSendMessage={(text) => sendChatMessage(currentApp.id, text, 'candidate')}
-                  title={`Sarah Jenkins (Recruiter)`}
-                  showReciprocalBanner={currentApp.status === 'Shortlisted' || currentApp.status === 'Interview'}
-                  onConfirmProfile={() => {
-                    sendChatMessage(currentApp.id, "[SYSTEM: Candidate confirmed profile and verified mutual interest.]", 'candidate');
-                  }}
-                />
-              </div>
+                  <ChatWindow
+                    chatHistory={currentApp.chatHistory}
+                    currentRole="candidate"
+                    onSendMessage={(text) => sendChatMessage(currentApp.id, text, 'candidate')}
+                    title={`Sarah Jenkins (Recruiter)`}
+                    showReciprocalBanner={currentApp.status === 'Shortlisted' || currentApp.status === 'Interview'}
+                    onConfirmProfile={() => {
+                      sendChatMessage(currentApp.id, "[SYSTEM: Candidate confirmed profile and verified mutual interest.]", 'candidate');
+                    }}
+                  />
+                </div>
+              ) : (
+                <div className="glass-panel" style={{ padding: '80px 40px', textAlign: 'center', color: 'var(--text-secondary)' }}>
+                  <MessageCircle size={40} style={{ color: 'var(--primary)', marginBottom: '16px' }} />
+                  <h3>Employer Direct Chat</h3>
+                  <p style={{ fontSize: '14px', color: 'var(--text-muted)', marginTop: '8px' }}>
+                    Select an application from the sidebar to view status and chat directly with recruiters.
+                  </p>
+                </div>
+              )
             ) : (
-              <div className="glass-panel" style={{ padding: '80px 40px', textAlign: 'center', color: 'var(--text-secondary)' }}>
-                <MessageCircle size={40} style={{ color: 'var(--primary)', marginBottom: '16px' }} />
-                <h3>Employer Direct Chat</h3>
-                <p style={{ fontSize: '14px', color: 'var(--text-muted)', marginTop: '8px' }}>
-                  Select an application from the sidebar to view status and chat directly with recruiters.
-                </p>
-              </div>
+              selectedSavedJob ? (
+                <div className="glass-panel" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', borderBottom: '1px solid var(--border-color)', paddingBottom: '16px' }}>
+                    <div>
+                      <h3 style={{ fontSize: '18px', color: '#fff', fontWeight: 700 }}>{selectedSavedJob.title}</h3>
+                      <p style={{ color: 'var(--text-secondary)', fontSize: '13px', marginTop: '4px' }}>{selectedSavedJob.companyName || 'Government Department'}</p>
+                    </div>
+                    <button
+                      onClick={() => {
+                        setSavedGovtJobs(savedGovtJobs.filter(sj => sj.id !== selectedSavedJob.id));
+                        setSelectedSavedJob(null);
+                      }}
+                      className="btn btn-outline"
+                      style={{ padding: '6px 12px', fontSize: '11px', borderColor: 'rgba(244, 63, 94, 0.3)', color: '#fda4af' }}
+                    >
+                      Remove Save
+                    </button>
+                  </div>
+
+                  {savedJobDetailsLoading ? (
+                    <div style={{ padding: '40px 0', textAlign: 'center', color: 'var(--text-secondary)' }}>Loading detailed specifications...</div>
+                  ) : (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                      <div className="govt-job-html-content" dangerouslySetInnerHTML={{ __html: savedJobDetailsHtml }} style={{ fontSize: '13.5px', color: '#cbd5e1', lineHeight: '1.6' }} />
+                      
+                      {/* Apply button and links dropdown */}
+                      <div style={{ 
+                        marginTop: '24px', 
+                        paddingTop: '20px', 
+                        borderTop: '1px solid rgba(255,255,255,0.06)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'flex-start',
+                        gap: '12px'
+                      }}>
+                        {savedJobResourceLinks.length > 0 ? (
+                          <div style={{ position: 'relative' }}>
+                            <button
+                              onClick={() => setShowSavedLinksDropdown(!showSavedLinksDropdown)}
+                              className="btn btn-primary"
+                              style={{ padding: '10px 20px', fontSize: '13px' }}
+                            >
+                              Apply Online ▾
+                            </button>
+                            {showSavedLinksDropdown && (
+                              <div style={{
+                                position: 'absolute',
+                                bottom: '46px',
+                                left: 0,
+                                background: '#121620',
+                                border: '1px solid rgba(255,255,255,0.15)',
+                                borderRadius: '8px',
+                                boxShadow: '0 8px 30px rgba(0,0,0,0.5)',
+                                width: '220px',
+                                zIndex: 10,
+                                overflow: 'hidden'
+                              }}>
+                                {savedJobResourceLinks.map((link, idx) => (
+                                  <a
+                                    key={idx}
+                                    href={link.url}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    onClick={() => setShowSavedLinksDropdown(false)}
+                                    style={{
+                                      display: 'block',
+                                      padding: '10px 14px',
+                                      color: '#fff',
+                                      textDecoration: 'none',
+                                      fontSize: '12px',
+                                      fontWeight: 500,
+                                      borderBottom: idx < savedJobResourceLinks.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none',
+                                      background: 'transparent',
+                                      transition: 'background 0.2s'
+                                    }}
+                                    onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
+                                    onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
+                                  >
+                                    🔗 {link.label}
+                                  </a>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        ) : (
+                          <a
+                            href={savedJobApplyLink}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="btn btn-primary"
+                            style={{ padding: '10px 20px', fontSize: '13px', textDecoration: 'none' }}
+                          >
+                            Apply Online
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div className="glass-panel" style={{ padding: '80px 40px', textAlign: 'center', color: 'var(--text-secondary)' }}>
+                  <span style={{ fontSize: '40px', display: 'block', marginBottom: '16px' }}>❤️</span>
+                  <h3>Saved Jobs & Listings</h3>
+                  <p style={{ fontSize: '14px', color: 'var(--text-muted)', marginTop: '8px' }}>
+                    Select a saved job from the sidebar to view details, links, and apply.
+                  </p>
+                </div>
+              )
             )}
           </main>
         </div>

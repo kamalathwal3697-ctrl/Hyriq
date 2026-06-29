@@ -42,6 +42,28 @@ export const RecruiterDashboard: React.FC = () => {
   const [selectedJobId, setSelectedJobId] = useState<string>('');
   const [selectedAppId, setSelectedAppId] = useState<string>('');
 
+  // Saved Candidate Profiles
+  const [savedCandidates, setSavedCandidates] = useState<any[]>(() => {
+    try {
+      return JSON.parse(localStorage.getItem('hyriq_recruiter_saved_candidates') || '[]');
+    } catch (e) {
+      return [];
+    }
+  });
+
+  useEffect(() => {
+    localStorage.setItem('hyriq_recruiter_saved_candidates', JSON.stringify(savedCandidates));
+  }, [savedCandidates]);
+
+  const handleSaveCandidate = () => {
+    const exists = savedCandidates.some(c => c.email === candidateProfile.email);
+    if (exists) {
+      setSavedCandidates(savedCandidates.filter(c => c.email !== candidateProfile.email));
+    } else {
+      setSavedCandidates([...savedCandidates, candidateProfile]);
+    }
+  };
+
   // Set default selected job
   useEffect(() => {
     const recruiterJobs = jobs.filter(j => j.recruiterId === 'rec-1');
@@ -263,6 +285,86 @@ export const RecruiterDashboard: React.FC = () => {
                         >
                           Review Applicants
                         </button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
+          {/* Saved Candidate Profiles Section */}
+          <div className="glass-panel" style={{ padding: '24px' }}>
+            <h3 style={{ fontSize: '18px', fontWeight: 600, color: '#fff', marginBottom: '16px' }}>Saved Candidate Profiles</h3>
+            {savedCandidates.length === 0 ? (
+              <div style={{ textAlign: 'center', padding: '24px 0', color: 'var(--text-secondary)' }}>
+                No saved candidate profiles yet. Review applicants to save top talent!
+              </div>
+            ) : (
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px' }}>
+                {savedCandidates.map((cand, idx) => {
+                  return (
+                    <div key={idx} className="glass-panel" style={{ padding: '20px', display: 'flex', gap: '16px', alignItems: 'center' }}>
+                      <div style={{
+                        width: '50px',
+                        height: '50px',
+                        borderRadius: '50%',
+                        background: 'linear-gradient(135deg, var(--tech-orange) 0%, #1A3E62 100%)',
+                        padding: '2px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                      }}>
+                        <div style={{
+                          width: '100%',
+                          height: '100%',
+                          borderRadius: '50%',
+                          background: '#0B0E14',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          fontSize: '14px',
+                          overflow: 'hidden'
+                        }}>
+                          {cand.logoSeed && (cand.logoSeed.startsWith('data:image/') || cand.logoSeed.startsWith('http')) ? (
+                            <img src={cand.logoSeed} alt="DP" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                          ) : (
+                            cand.logoSeed || '🧑‍💻'
+                          )}
+                        </div>
+                      </div>
+                      <div style={{ flex: 1 }}>
+                        <h4 style={{ color: '#fff', fontSize: '14px', fontWeight: 600, margin: 0 }}>{cand.name}</h4>
+                        <span style={{ fontSize: '11px', color: 'var(--text-secondary)', display: 'block', marginTop: '2px' }}>
+                          {cand.experience || 'Entry-level'}
+                        </span>
+                        <div style={{ display: 'flex', gap: '8px', marginTop: '10px' }}>
+                          <button
+                            onClick={() => {
+                              const app = applications.find(appObj => !!appObj.id);
+                              if (app) {
+                                setSelectedJobId(app.jobId);
+                                setSelectedAppId(app.id);
+                                setActiveTab('manage');
+                              } else {
+                                alert("No active applications found for this candidate.");
+                              }
+                            }}
+                            className="btn btn-outline"
+                            style={{ padding: '4px 10px', fontSize: '10px' }}
+                          >
+                            Chat / View
+                          </button>
+                          <button
+                            onClick={() => {
+                              setSavedCandidates(savedCandidates.filter(c => c.email !== cand.email));
+                            }}
+                            className="btn btn-ghost"
+                            style={{ padding: '4px 8px', fontSize: '10px', color: 'var(--danger)' }}
+                          >
+                            Remove
+                          </button>
+                        </div>
                       </div>
                     </div>
                   );
@@ -610,6 +712,28 @@ export const RecruiterDashboard: React.FC = () => {
                         <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', display: 'block', marginTop: '6px', letterSpacing: '1px' }}>
                           {candidateProfile.experience ? `${candidateProfile.experience.toUpperCase()} PROFESSIONAL` : 'JOB SEEKER'}
                         </span>
+                        <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginTop: '12px' }}>
+                          <button
+                            onClick={handleSaveCandidate}
+                            style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '6px',
+                              padding: '6px 12px',
+                              borderRadius: '20px',
+                              border: '1px solid',
+                              borderColor: savedCandidates.some(c => c.email === candidateProfile.email) ? 'var(--tech-orange)' : 'rgba(255,255,255,0.15)',
+                              color: savedCandidates.some(c => c.email === candidateProfile.email) ? 'var(--tech-orange)' : 'var(--text-secondary)',
+                              background: savedCandidates.some(c => c.email === candidateProfile.email) ? 'rgba(242,153,74,0.08)' : 'transparent',
+                              fontSize: '11px',
+                              fontWeight: 700,
+                              cursor: 'pointer',
+                              transition: 'all 0.2s'
+                            }}
+                          >
+                            {savedCandidates.some(c => c.email === candidateProfile.email) ? '❤️ Saved Profile' : '🤍 Save Profile'}
+                          </button>
+                        </div>
                       </div>
                       
                       {/* Highlighted DP Container (circular orange frame) */}
