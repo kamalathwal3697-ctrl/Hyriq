@@ -1804,341 +1804,7 @@ export const CandidateDashboard: React.FC = () => {
         </div>
       )}
 
-      {/* Fair Work Pact Application Intercept Modal */}
-      {showApplyPactModal && selectedJob && (
-        <div style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundColor: 'rgba(5, 3, 10, 0.8)',
-          backdropFilter: 'blur(10px)',
-          zIndex: 2000,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '20px'
-        }}>
-          <div className="glass-panel animate-glow" style={{
-            width: '100%',
-            maxWidth: '500px',
-            padding: '32px',
-            position: 'relative',
-            border: '1px solid rgba(34, 211, 238, 0.25)',
-            boxShadow: '0 0 30px rgba(34, 211, 238, 0.1)'
-          }}>
-            <button 
-              onClick={() => setShowApplyPactModal(false)}
-              style={{
-                position: 'absolute',
-                top: '16px',
-                right: '16px',
-                border: 'none',
-                background: 'transparent',
-                color: 'var(--text-secondary)',
-                cursor: 'pointer',
-                padding: '4px'
-              }}
-            >
-              <X size={20} />
-            </button>
-
-            <div style={{ textAlign: 'center', marginBottom: '24px' }}>
-              <div style={{
-                width: '50px',
-                height: '50px',
-                borderRadius: '12px',
-                background: 'rgba(34, 211, 238, 0.12)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                margin: '0 auto 16px auto',
-                border: '1px solid rgba(34, 211, 238, 0.3)'
-              }}>
-                <Sparkles size={24} color="#22d3ee" style={{ display: 'block', margin: 'auto' }} />
-              </div>
-              <h3 style={{ fontSize: '22px', fontWeight: 800, color: '#fff', fontFamily: 'Outfit' }}>
-                Commit to the Fair Work Pact
-              </h3>
-              <p style={{ color: 'var(--text-muted)', fontSize: '13px', marginTop: '6px' }}>
-                Applying for <strong>{selectedJob.title}</strong> at {selectedJob.companyName}
-              </p>
-            </div>
-
-            <div style={{
-              background: 'rgba(255,255,255,0.02)',
-              border: '1px solid var(--border-color)',
-              padding: '16px',
-              borderRadius: '10px',
-              marginBottom: '24px',
-              maxHeight: '240px',
-              overflowY: 'auto',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '12px'
-            }}>
-              <span style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: 700, letterSpacing: '0.5px' }}>YOUR EMPLOYEE COMMITMENTS</span>
-              
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                <div style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>
-                  <strong style={{ color: '#fff' }}> Punctuality:</strong> Consistently arriving on time and respecting the work schedule.
-                </div>
-                <div style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>
-                  <strong style={{ color: '#fff' }}> Prompt Communication:</strong> Timely and professional responses to all work-related messages or requests.
-                </div>
-                <div style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>
-                  <strong style={{ color: '#fff' }}> Responsibility:</strong> Taking full ownership of assigned tasks and performing them diligently.
-                </div>
-                <div style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>
-                  <strong style={{ color: '#fff' }}> Absolute Integrity:</strong> Honesty in reporting hours, tasks, and issues.
-                </div>
-                <div style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>
-                  <strong style={{ color: '#fff' }}> Professional Conduct:</strong> Respectful behavior towards coworkers and clients.
-                </div>
-              </div>
-            </div>
-
-            <label style={{
-              display: 'flex',
-              gap: '12px',
-              alignItems: 'flex-start',
-              cursor: 'pointer',
-              padding: '12px',
-              borderRadius: '8px',
-              background: pactChecked ? 'rgba(34, 211, 238, 0.05)' : 'transparent',
-              border: pactChecked ? '1px solid rgba(34, 211, 238, 0.2)' : '1px solid transparent',
-              marginBottom: '16px',
-              transition: 'all 0.2s ease'
-            }}>
-              <input
-                type="checkbox"
-                checked={pactChecked}
-                onChange={(e) => setPactChecked(e.target.checked)}
-                style={{
-                  accentColor: 'var(--secondary)',
-                  width: '18px',
-                  height: '18px',
-                  marginTop: '2px'
-                }}
-              />
-              <span style={{ fontSize: '13px', color: '#fff', lineHeight: 1.4 }}>
-                I commit to the Worker Duties (Punctuality, Integrity, Responsibility) as defined in the Fair Work Pact
-              </span>
-            </label>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '24px' }}>
-              <label style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-secondary)' }}>
-                Type your full legal name to digitally sign
-              </label>
-              <input
-                type="text"
-                value={typedSignature}
-                onChange={(e) => setTypedSignature(e.target.value)}
-                placeholder="e.g. Amanpreet Singh"
-                className="glass-input"
-                style={{ width: '100%', padding: '10px 14px', borderRadius: '8px', fontSize: '14px' }}
-                required
-              />
-            </div>
-
-            <div style={{ display: 'flex', gap: '12px' }}>
-              <button 
-                onClick={() => setShowApplyPactModal(false)}
-                className="btn btn-outline"
-                style={{ flex: 1, padding: '12px' }}
-              >
-                Cancel
-              </button>
-              <button 
-                disabled={!pactChecked || !typedSignature.trim()}
-                onClick={() => {
-                  setShowApplyPactModal(false);
-                  handleApply(selectedJob.id, typedSignature.trim());
-                  setTypedSignature('');
-                }}
-                className="btn btn-primary"
-                style={{
-                  flex: 1,
-                  padding: '12px',
-                  background: (pactChecked && typedSignature.trim()) ? 'var(--secondary-gradient)' : 'var(--border-color)',
-                  borderColor: (pactChecked && typedSignature.trim()) ? 'transparent' : 'var(--border-color)',
-                  opacity: (pactChecked && typedSignature.trim()) ? 1 : 0.6
-                }}
-              >
-                Submit Application
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Fair Work Pact Legal Document Modal */}
-      {showContractModal && contractApp && (
-        <div style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundColor: 'rgba(5, 3, 10, 0.85)',
-          backdropFilter: 'blur(12px)',
-          zIndex: 2000,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '20px'
-        }} className="contract-modal-overlay">
-          <div className="glass-panel contract-printable-area animate-glow" style={{
-            width: '100%',
-            maxWidth: '700px',
-            background: '#0d0a15',
-            padding: '40px',
-            position: 'relative',
-            border: '2px solid rgba(16, 185, 129, 0.3)',
-            boxShadow: '0 0 40px rgba(16, 185, 129, 0.1)',
-            maxHeight: '90vh',
-            overflowY: 'auto'
-          }}>
-            {/* Close / Action Buttons */}
-            <div style={{
-              position: 'absolute',
-              top: '20px',
-              right: '20px',
-              display: 'flex',
-              gap: '12px'
-            }} className="no-print">
-              <button
-                onClick={() => window.print()}
-                className="btn btn-outline"
-                style={{ padding: '6px 14px', fontSize: '12px', borderColor: 'var(--success)', color: '#6ee7b7' }}
-              >
-                🖨️ Print / PDF
-              </button>
-              <button 
-                onClick={() => {
-                  setShowContractModal(false);
-                  setContractApp(null);
-                }}
-                style={{
-                  border: 'none',
-                  background: 'transparent',
-                  color: 'var(--text-secondary)',
-                  cursor: 'pointer',
-                  padding: '4px'
-                }}
-              >
-                <X size={20} />
-              </button>
-            </div>
-
-            {/* Document Header */}
-            <div style={{ textAlign: 'center', borderBottom: '2px double rgba(255,255,255,0.1)', paddingBottom: '20px', marginBottom: '24px' }}>
-              <span style={{ fontSize: '12px', color: 'var(--success)', fontWeight: 700, letterSpacing: '2px', display: 'block', marginBottom: '6px' }}>
-                MUTUAL COVENANT AGREEMENT
-              </span>
-              <h2 style={{ fontFamily: 'Outfit', fontSize: '28px', fontWeight: 800, color: '#fff', margin: 0 }}>
-                THE FAIR WORK PACT
-              </h2>
-              <p style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '4px' }}>
-                DIGITALLY SIGNED AND EXECUTED VIA HYRIQ TRUST NETWORK • ID: Pact-{contractApp.id}
-              </p>
-            </div>
-
-            {/* Parties */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', marginBottom: '24px', background: 'rgba(255,255,255,0.02)', padding: '16px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
-              <div>
-                <span style={{ fontSize: '10px', color: 'var(--text-muted)', display: 'block', fontWeight: 700 }}>FIRST PARTY (EMPLOYER)</span>
-                <strong style={{ fontSize: '15px', color: '#fff', display: 'block', marginTop: '4px' }}>
-                  {jobs.find(j => j.id === contractApp.jobId)?.companyName}
-                </strong>
-                <span style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>
-                  Authorized Signatory: {contractApp.recruiterSignature || 'Company Representative'}
-                </span>
-              </div>
-              <div style={{ borderLeft: '1px solid rgba(255,255,255,0.05)', paddingLeft: '24px' }}>
-                <span style={{ fontSize: '10px', color: 'var(--text-muted)', display: 'block', fontWeight: 700 }}>SECOND PARTY (WORKER)</span>
-                <strong style={{ fontSize: '15px', color: '#fff', display: 'block', marginTop: '4px' }}>
-                  {candidateProfile.name}
-                </strong>
-                <span style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>
-                  Signatory Name: {contractApp.candidateSignature || candidateProfile.name}
-                </span>
-              </div>
-            </div>
-
-            {/* Covenant Terms */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', fontSize: '13px', lineHeight: 1.6, color: 'var(--text-secondary)', marginBottom: '32px' }}>
-              <p style={{ margin: 0, fontStyle: 'italic', color: 'var(--text-muted)', textAlign: 'center' }}>
-                "This document records the mutual covenants entered into by the First Party and the Second Party to ensure respect, safety, and accountability in the workplace."
-              </p>
-
-              <div>
-                <strong style={{ color: '#fff', display: 'block', marginBottom: '8px', borderBottom: '1px solid rgba(255,255,255,0.05)', paddingBottom: '4px' }}>
-                  SECTION 1: WORKER RIGHTS (Employer Commitments)
-                </strong>
-                <ul style={{ paddingLeft: '16px', display: 'flex', flexDirection: 'column', gap: '6px', margin: 0 }}>
-                  <li><strong>Fair Working Hours:</strong> Strict adherence to a standard, limited work schedule.</li>
-                  <li><strong>Overtime Pay:</strong> Guaranteed extra compensation for any hours worked beyond the daily limit.</li>
-                  <li><strong>Health & Well-being:</strong> Access to basic medical benefits and a safe working environment.</li>
-                  <li><strong>Accommodation Support:</strong> Housing allowance or safe, provided accommodation where applicable.</li>
-                  <li><strong>Job Security:</strong> Protection against unfair firing without valid cause or proper notice.</li>
-                  <li><strong>Merit-Based Growth:</strong> Guaranteed salary raises or promotions upon successfully achieving predefined work targets.</li>
-                </ul>
-              </div>
-
-              <div>
-                <strong style={{ color: '#fff', display: 'block', marginBottom: '8px', borderBottom: '1px solid rgba(255,255,255,0.05)', paddingBottom: '4px' }}>
-                  SECTION 2: WORKER DUTIES (Employee Commitments)
-                </strong>
-                <ul style={{ paddingLeft: '16px', display: 'flex', flexDirection: 'column', gap: '6px', margin: 0 }}>
-                  <li><strong>Punctuality:</strong> Consistently arriving on time and respecting the work schedule.</li>
-                  <li><strong>Prompt Communication:</strong> Timely and professional responses to all work-related messages or requests.</li>
-                  <li><strong>Responsibility:</strong> Taking full ownership of assigned tasks and performing them diligently.</li>
-                  <li><strong>Absolute Integrity:</strong> Honesty in reporting hours, tasks, and issues.</li>
-                  <li><strong>Professional Conduct:</strong> Respectful behavior towards coworkers and clients.</li>
-                </ul>
-              </div>
-            </div>
-
-            {/* Execution / Signatures */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '40px', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '24px' }}>
-              <div style={{ textAlign: 'center' }}>
-                <span style={{ fontSize: '11px', color: 'var(--text-muted)', display: 'block', marginBottom: '8px' }}>First Party Signature</span>
-                <span style={{ fontFamily: 'Dancing Script, cursive, Georgia', fontSize: '22px', color: '#6366f1', display: 'block', padding: '10px 0', borderBottom: '1px dashed rgba(255,255,255,0.1)', fontStyle: 'italic' }}>
-                  {contractApp.recruiterSignature || 'Gaurav Gupta'}
-                </span>
-                <span style={{ fontSize: '11px', color: 'var(--text-secondary)', display: 'block', marginTop: '6px' }}>
-                  Signed: {contractApp.recruiterSignedAt ? new Date(contractApp.recruiterSignedAt).toLocaleString() : 'Executed upon posting'}
-                </span>
-              </div>
-              <div style={{ textAlign: 'center' }}>
-                <span style={{ fontSize: '11px', color: 'var(--text-muted)', display: 'block', marginBottom: '8px' }}>Second Party Signature</span>
-                <span style={{ fontFamily: 'Dancing Script, cursive, Georgia', fontSize: '22px', color: '#22d3ee', display: 'block', padding: '10px 0', borderBottom: '1px dashed rgba(255,255,255,0.1)', fontStyle: 'italic' }}>
-                  {contractApp.candidateSignature || 'Amanpreet Singh'}
-                </span>
-                <span style={{ fontSize: '11px', color: 'var(--text-secondary)', display: 'block', marginTop: '6px' }}>
-                  Signed: {contractApp.candidateSignedAt ? new Date(contractApp.candidateSignedAt).toLocaleString() : 'Executed upon applying'}
-                </span>
-              </div>
-            </div>
-
-            {/* Digital Seal */}
-            <div style={{ textAlign: 'center', marginTop: '40px' }}>
-              <span className="badge badge-success" style={{
-                background: 'rgba(16, 185, 129, 0.1)',
-                border: '1px solid rgba(16, 185, 129, 0.3)',
-                padding: '8px 16px',
-                fontSize: '11px',
-                color: '#10b981',
-                borderRadius: '8px'
-              }}>
-                🛡️ SECURED & VALID CONTRACT RECORDED
-              </span>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Fair Work Pact Modals have been moved to the bottom of the component (outside the container) to bypass Android WebView transform rendering bugs */}
       {/* Mobile Bottom Navigation Bar – Icon Only */}
       {!selectedJob && (
         <div className="mobile-bottom-nav" style={{
@@ -2488,6 +2154,342 @@ export const CandidateDashboard: React.FC = () => {
               </div>
             </div>
           </div>
+      )}
+
+      {/* Standalone Fair Work Pact Application Intercept Modal rendered outside .container to bypass Android WebView transform rendering context bugs */}
+      {showApplyPactModal && selectedJob && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(5, 3, 10, 0.8)',
+          backdropFilter: 'blur(10px)',
+          zIndex: 2000,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '20px'
+        }}>
+          <div className="glass-panel animate-glow" style={{
+            width: '100%',
+            maxWidth: '500px',
+            padding: '32px',
+            position: 'relative',
+            border: '1px solid rgba(34, 211, 238, 0.25)',
+            boxShadow: '0 0 30px rgba(34, 211, 238, 0.1)'
+          }}>
+            <button 
+              onClick={() => setShowApplyPactModal(false)}
+              style={{
+                position: 'absolute',
+                top: '16px',
+                right: '16px',
+                border: 'none',
+                background: 'transparent',
+                color: 'var(--text-secondary)',
+                cursor: 'pointer',
+                padding: '4px'
+              }}
+            >
+              <X size={20} />
+            </button>
+
+            <div style={{ textAlign: 'center', marginBottom: '24px' }}>
+              <div style={{
+                width: '50px',
+                height: '50px',
+                borderRadius: '12px',
+                background: 'rgba(34, 211, 238, 0.12)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '0 auto 16px auto',
+                border: '1px solid rgba(34, 211, 238, 0.3)'
+              }}>
+                <Sparkles size={24} color="#22d3ee" style={{ display: 'block', margin: 'auto' }} />
+              </div>
+              <h3 style={{ fontSize: '22px', fontWeight: 800, color: '#fff', fontFamily: 'Outfit' }}>
+                Commit to the Fair Work Pact
+              </h3>
+              <p style={{ color: 'var(--text-muted)', fontSize: '13px', marginTop: '6px' }}>
+                Applying for <strong>{selectedJob.title}</strong> at {selectedJob.companyName}
+              </p>
+            </div>
+
+            <div style={{
+              background: 'rgba(255,255,255,0.02)',
+              border: '1px solid var(--border-color)',
+              padding: '16px',
+              borderRadius: '10px',
+              marginBottom: '24px',
+              maxHeight: '240px',
+              overflowY: 'auto',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '12px'
+            }}>
+              <span style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: 700, letterSpacing: '0.5px' }}>YOUR EMPLOYEE COMMITMENTS</span>
+              
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                <div style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>
+                  <strong style={{ color: '#fff' }}> Punctuality:</strong> Consistently arriving on time and respecting the work schedule.
+                </div>
+                <div style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>
+                  <strong style={{ color: '#fff' }}> Prompt Communication:</strong> Timely and professional responses to all work-related messages or requests.
+                </div>
+                <div style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>
+                  <strong style={{ color: '#fff' }}> Responsibility:</strong> Taking full ownership of assigned tasks and performing them diligently.
+                </div>
+                <div style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>
+                  <strong style={{ color: '#fff' }}> Absolute Integrity:</strong> Honesty in reporting hours, tasks, and issues.
+                </div>
+                <div style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>
+                  <strong style={{ color: '#fff' }}> Professional Conduct:</strong> Respectful behavior towards coworkers and clients.
+                </div>
+              </div>
+            </div>
+
+            <label style={{
+              display: 'flex',
+              gap: '12px',
+              alignItems: 'flex-start',
+              cursor: 'pointer',
+              padding: '12px',
+              borderRadius: '8px',
+              background: pactChecked ? 'rgba(34, 211, 238, 0.05)' : 'transparent',
+              border: pactChecked ? '1px solid rgba(34, 211, 238, 0.2)' : '1px solid transparent',
+              marginBottom: '16px',
+              transition: 'all 0.2s ease'
+            }}>
+              <input
+                type="checkbox"
+                checked={pactChecked}
+                onChange={(e) => setPactChecked(e.target.checked)}
+                style={{
+                  accentColor: 'var(--secondary)',
+                  width: '18px',
+                  height: '18px',
+                  marginTop: '2px'
+                }}
+              />
+              <span style={{ fontSize: '13px', color: '#fff', lineHeight: 1.4 }}>
+                I commit to the Worker Duties (Punctuality, Integrity, Responsibility) as defined in the Fair Work Pact
+              </span>
+            </label>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '24px' }}>
+              <label style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-secondary)' }}>
+                Type your full legal name to digitally sign
+              </label>
+              <input
+                type="text"
+                value={typedSignature}
+                onChange={(e) => setTypedSignature(e.target.value)}
+                placeholder="e.g. Amanpreet Singh"
+                className="glass-input"
+                style={{ width: '100%', padding: '10px 14px', borderRadius: '8px', fontSize: '14px' }}
+                required
+              />
+            </div>
+
+            <div style={{ display: 'flex', gap: '12px' }}>
+              <button 
+                onClick={() => setShowApplyPactModal(false)}
+                className="btn btn-outline"
+                style={{ flex: 1, padding: '12px' }}
+              >
+                Cancel
+              </button>
+              <button 
+                disabled={!pactChecked || !typedSignature.trim()}
+                onClick={() => {
+                  setShowApplyPactModal(false);
+                  handleApply(selectedJob.id, typedSignature.trim());
+                  setTypedSignature('');
+                }}
+                className="btn btn-primary"
+                style={{
+                  flex: 1,
+                  padding: '12px',
+                  background: (pactChecked && typedSignature.trim()) ? 'var(--secondary-gradient)' : 'var(--border-color)',
+                  borderColor: (pactChecked && typedSignature.trim()) ? 'transparent' : 'var(--border-color)',
+                  opacity: (pactChecked && typedSignature.trim()) ? 1 : 0.6
+                }}
+              >
+                Submit Application
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Standalone Fair Work Pact Legal Document Modal rendered outside .container to bypass Android WebView transform rendering context bugs */}
+      {showContractModal && contractApp && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(5, 3, 10, 0.85)',
+          backdropFilter: 'blur(12px)',
+          zIndex: 2000,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '20px'
+        }} className="contract-modal-overlay">
+          <div className="glass-panel contract-printable-area animate-glow" style={{
+            width: '100%',
+            maxWidth: '700px',
+            background: '#0d0a15',
+            padding: '40px',
+            position: 'relative',
+            border: '2px solid rgba(16, 185, 129, 0.3)',
+            boxShadow: '0 0 40px rgba(16, 185, 129, 0.1)',
+            maxHeight: '90vh',
+            overflowY: 'auto'
+          }}>
+            {/* Close / Action Buttons */}
+            <div style={{
+              position: 'absolute',
+              top: '20px',
+              right: '20px',
+              display: 'flex',
+              gap: '12px'
+            }} className="no-print">
+              <button
+                onClick={() => window.print()}
+                className="btn btn-outline"
+                style={{ padding: '6px 14px', fontSize: '12px', borderColor: 'var(--success)', color: '#6ee7b7' }}
+              >
+                🖨️ Print / PDF
+              </button>
+              <button 
+                onClick={() => {
+                  setShowContractModal(false);
+                  setContractApp(null);
+                }}
+                style={{
+                  border: 'none',
+                  background: 'transparent',
+                  color: 'var(--text-secondary)',
+                  cursor: 'pointer',
+                  padding: '4px'
+                }}
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            {/* Document Header */}
+            <div style={{ textAlign: 'center', borderBottom: '2px double rgba(255,255,255,0.1)', paddingBottom: '20px', marginBottom: '24px' }}>
+              <span style={{ fontSize: '12px', color: 'var(--success)', fontWeight: 700, letterSpacing: '2px', display: 'block', marginBottom: '6px' }}>
+                MUTUAL COVENANT AGREEMENT
+              </span>
+              <h2 style={{ fontFamily: 'Outfit', fontSize: '28px', fontWeight: 800, color: '#fff', margin: 0 }}>
+                THE FAIR WORK PACT
+              </h2>
+              <p style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '4px' }}>
+                DIGITALLY SIGNED AND EXECUTED VIA HYRIQ TRUST NETWORK • ID: Pact-{contractApp.id}
+              </p>
+            </div>
+
+            {/* Parties */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', marginBottom: '24px', background: 'rgba(255,255,255,0.02)', padding: '16px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
+              <div>
+                <span style={{ fontSize: '10px', color: 'var(--text-muted)', display: 'block', fontWeight: 700 }}>FIRST PARTY (EMPLOYER)</span>
+                <strong style={{ fontSize: '15px', color: '#fff', display: 'block', marginTop: '4px' }}>
+                  {jobs.find(j => j.id === contractApp.jobId)?.companyName}
+                </strong>
+                <span style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>
+                  Authorized Signatory: {contractApp.recruiterSignature || 'Company Representative'}
+                </span>
+              </div>
+              <div style={{ borderLeft: '1px solid rgba(255,255,255,0.05)', paddingLeft: '24px' }}>
+                <span style={{ fontSize: '10px', color: 'var(--text-muted)', display: 'block', fontWeight: 700 }}>SECOND PARTY (WORKER)</span>
+                <strong style={{ fontSize: '15px', color: '#fff', display: 'block', marginTop: '4px' }}>
+                  {candidateProfile.name}
+                </strong>
+                <span style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>
+                  Signatory Name: {contractApp.candidateSignature || candidateProfile.name}
+                </span>
+              </div>
+            </div>
+
+            {/* Covenant Terms */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', fontSize: '13px', lineHeight: 1.6, color: 'var(--text-secondary)', marginBottom: '32px' }}>
+              <p style={{ margin: 0, fontStyle: 'italic', color: 'var(--text-muted)', textAlign: 'center' }}>
+                "This document records the mutual covenants entered into by the First Party and the Second Party to ensure respect, safety, and accountability in the workplace."
+              </p>
+
+              <div>
+                <strong style={{ color: '#fff', display: 'block', marginBottom: '8px', borderBottom: '1px solid rgba(255,255,255,0.05)', paddingBottom: '4px' }}>
+                  SECTION 1: WORKER RIGHTS (Employer Commitments)
+                </strong>
+                <ul style={{ paddingLeft: '16px', display: 'flex', flexDirection: 'column', gap: '6px', margin: 0 }}>
+                  <li><strong>Fair Working Hours:</strong> Strict adherence to a standard, limited work schedule.</li>
+                  <li><strong>Overtime Pay:</strong> Guaranteed extra compensation for any hours worked beyond the daily limit.</li>
+                  <li><strong>Health & Well-being:</strong> Access to basic medical benefits and a safe working environment.</li>
+                  <li><strong>Accommodation Support:</strong> Housing allowance or safe, provided accommodation where applicable.</li>
+                  <li><strong>Job Security:</strong> Protection against unfair firing without valid cause or proper notice.</li>
+                  <li><strong>Merit-Based Growth:</strong> Guaranteed salary raises or promotions upon successfully achieving predefined work targets.</li>
+                </ul>
+              </div>
+
+              <div>
+                <strong style={{ color: '#fff', display: 'block', marginBottom: '8px', borderBottom: '1px solid rgba(255,255,255,0.05)', paddingBottom: '4px' }}>
+                  SECTION 2: WORKER DUTIES (Employee Commitments)
+                </strong>
+                <ul style={{ paddingLeft: '16px', display: 'flex', flexDirection: 'column', gap: '6px', margin: 0 }}>
+                  <li><strong>Punctuality:</strong> Consistently arriving on time and respecting the work schedule.</li>
+                  <li><strong>Prompt Communication:</strong> Timely and professional responses to all work-related messages or requests.</li>
+                  <li><strong>Responsibility:</strong> Taking full ownership of assigned tasks and performing them diligently.</li>
+                  <li><strong>Absolute Integrity:</strong> Honesty in reporting hours, tasks, and issues.</li>
+                  <li><strong>Professional Conduct:</strong> Respectful behavior towards coworkers and clients.</li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Execution / Signatures */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '40px', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '24px' }}>
+              <div style={{ textAlign: 'center' }}>
+                <span style={{ fontSize: '11px', color: 'var(--text-muted)', display: 'block', marginBottom: '8px' }}>First Party Signature</span>
+                <span style={{ fontFamily: 'Dancing Script, cursive, Georgia', fontSize: '22px', color: '#6366f1', display: 'block', padding: '10px 0', borderBottom: '1px dashed rgba(255,255,255,0.1)', fontStyle: 'italic' }}>
+                  {contractApp.recruiterSignature || 'Gaurav Gupta'}
+                </span>
+                <span style={{ fontSize: '11px', color: 'var(--text-secondary)', display: 'block', marginTop: '6px' }}>
+                  Signed: {contractApp.recruiterSignedAt ? new Date(contractApp.recruiterSignedAt).toLocaleString() : 'Executed upon posting'}
+                </span>
+              </div>
+              <div style={{ textAlign: 'center' }}>
+                <span style={{ fontSize: '11px', color: 'var(--text-muted)', display: 'block', marginBottom: '8px' }}>Second Party Signature</span>
+                <span style={{ fontFamily: 'Dancing Script, cursive, Georgia', fontSize: '22px', color: '#22d3ee', display: 'block', padding: '10px 0', borderBottom: '1px dashed rgba(255,255,255,0.1)', fontStyle: 'italic' }}>
+                  {contractApp.candidateSignature || 'Amanpreet Singh'}
+                </span>
+                <span style={{ fontSize: '11px', color: 'var(--text-secondary)', display: 'block', marginTop: '6px' }}>
+                  Signed: {contractApp.candidateSignedAt ? new Date(contractApp.candidateSignedAt).toLocaleString() : 'Executed upon applying'}
+                </span>
+              </div>
+            </div>
+
+            {/* Digital Seal */}
+            <div style={{ textAlign: 'center', marginTop: '40px' }}>
+              <span className="badge badge-success" style={{
+                background: 'rgba(16, 185, 129, 0.1)',
+                border: '1px solid rgba(16, 185, 129, 0.3)',
+                padding: '8px 16px',
+                fontSize: '11px',
+                color: '#10b981',
+                borderRadius: '8px'
+              }}>
+                🛡️ SECURED & VALID CONTRACT RECORDED
+              </span>
+            </div>
+          </div>
+        </div>
       )}
 
       {showTour && (
