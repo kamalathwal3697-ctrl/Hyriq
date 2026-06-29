@@ -4,6 +4,7 @@ import { useAppState } from '../context/AppContext';
 import type { Job, Application } from '../context/AppContext';
 import { ChatWindow } from './ChatWindow';
 import { OnboardingModal } from './OnboardingModal';
+import { AppTour } from './AppTour';
 
 export const CandidateDashboard: React.FC = () => {
   const {
@@ -24,6 +25,14 @@ export const CandidateDashboard: React.FC = () => {
   const [typedSignature, setTypedSignature] = useState('');
   const [showContractModal, setShowContractModal] = useState(false);
   const [contractApp, setContractApp] = useState<Application | null>(null);
+  const [showTour, setShowTour] = useState(false);
+
+  useEffect(() => {
+    const tourCompleted = localStorage.getItem('hyriq_tour_completed');
+    if (!tourCompleted) {
+      setShowTour(true);
+    }
+  }, []);
 
   // Government Jobs States
   const [govtJobs, setGovtJobs] = useState<any[]>([]);
@@ -2475,6 +2484,14 @@ export const CandidateDashboard: React.FC = () => {
           );
         })}
       </div>
+      )}
+
+      {showTour && (
+        <AppTour
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          onComplete={() => setShowTour(false)}
+        />
       )}
     </div>
   );
