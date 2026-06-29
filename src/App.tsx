@@ -119,8 +119,53 @@ const AppContent: React.FC = () => {
             style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}
           >
             <img src="/logo.png" alt="Hyriq Logo" style={{ width: '30px', height: '30px', borderRadius: '6px', objectFit: 'cover' }} />
-            <span style={{ fontSize: '18px', fontWeight: 800, color: '#fff', fontFamily: 'Outfit' }}>Hyriq</span>
+            <span className="mobile-header-logo-text" style={{ fontSize: '18px', fontWeight: 800, color: '#fff', fontFamily: 'Outfit' }}>Hyriq</span>
           </div>
+        </div>
+
+        {/* Top Header Segmented Workspace Switcher */}
+        <div style={{
+          display: 'flex',
+          background: 'rgba(255, 255, 255, 0.03)',
+          border: '1px solid rgba(255, 255, 255, 0.08)',
+          padding: '2px',
+          borderRadius: '24px',
+          gap: '2px'
+        }}>
+          {[
+            { id: 'visitor', icon: '🌍', label: 'Visitor' },
+            { id: 'candidate', icon: '👤', label: 'Seeker' },
+            { id: 'recruiter', icon: '💼', label: 'Board' }
+          ].map(roleItem => {
+            const isActive = perspective === roleItem.id;
+            return (
+              <button
+                key={roleItem.id}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setPerspective(roleItem.id as any);
+                }}
+                style={{
+                  background: isActive ? (roleItem.id === 'visitor' ? 'rgba(255,255,255,0.08)' : (roleItem.id === 'candidate' ? 'var(--primary)' : 'var(--secondary)')) : 'transparent',
+                  color: isActive ? '#fff' : 'rgba(255,255,255,0.4)',
+                  border: 'none',
+                  borderRadius: '20px',
+                  padding: '5px 9px',
+                  fontSize: '11px',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                  transition: 'all 0.2s',
+                  boxShadow: isActive && roleItem.id !== 'visitor' ? (roleItem.id === 'candidate' ? '0 2px 6px rgba(99,102,241,0.3)' : '0 2px 6px rgba(6,182,212,0.3)') : 'none'
+                }}
+              >
+                <span>{roleItem.icon}</span>
+                <span className="mobile-header-switcher-label">{roleItem.label}</span>
+              </button>
+            );
+          })}
         </div>
 
         {/* Hamburger Menu Toggle */}
