@@ -197,6 +197,30 @@ app.get('/api/govt-jobs/details', async (req, res) => {
     
     const htmlBlocks = [];
     $('.scrollable-table').each((i, el) => {
+      // First convert plain text domains separated by / to actual clickable <a> tags
+      $(el).find('td').each((tdIdx, td) => {
+        if ($(td).find('a').length === 0) {
+          const text = $(td).text().trim();
+          if (text.includes('.') && text.length > 4) {
+            if (text.includes('/')) {
+              const parts = text.split('/');
+              const linkHtmls = parts.map(part => {
+                const cleaned = part.trim();
+                if (cleaned.includes('.') && cleaned.length > 4 && !cleaned.includes(' ') && !cleaned.includes('@')) {
+                  const url = cleaned.startsWith('http') ? cleaned : `https://${cleaned}`;
+                  return `<a href="${url}">${cleaned}</a>`;
+                }
+                return cleaned;
+              });
+              $(td).html(linkHtmls.join(' / '));
+            } else if (!text.includes(' ') && !text.includes('@')) {
+              const url = text.startsWith('http') ? text : `https://${text}`;
+              $(td).html(`<a href="${url}">${text}</a>`);
+            }
+          }
+        }
+      });
+
       // Decode and clean all links inside tables, removing any freejobalert.com pages
       $(el).find('a').each((idx, a) => {
         let href = $(a).attr('href');
@@ -249,23 +273,36 @@ app.get('/api/govt-jobs/details', async (req, res) => {
     $('tr').each((i, el) => {
       const cells = $(el).find('td');
       if (cells.length >= 2) {
-        const anchor = $(el).find('a');
-        if (anchor.length > 0) {
-          const href = anchor.attr('href');
-          let label = $(cells[0]).text().trim();
-          if (!label) {
-            label = anchor.text().trim();
-          }
-          label = label.replace(/\s+/g, ' ');
+        const anchors = $(el).find('a');
+        if (anchors.length > 0) {
+          anchors.each((anchorIdx, a) => {
+            const href = $(a).attr('href');
+            let label = $(cells[0]).text().trim();
+            if (!label) {
+              label = $(a).text().trim();
+            }
+            label = label.replace(/\s+/g, ' ');
 
-          if (href && !href.includes('freejobalert.com') && !href.includes('javascript:') && href.startsWith('http')) {
-            if (!resourceLinks.some(rl => rl.url === href)) {
-              resourceLinks.push({ label, url: href });
+            if (anchors.length > 1) {
+              const anchorText = $(a).text().trim();
+              if (anchorText && anchorText.length < 30) {
+                label = `${label} (${anchorText})`;
+              } else {
+                label = `${label} (${anchorIdx + 1})`;
+              }
             }
-            if (label.toLowerCase().includes('apply online') || label.toLowerCase() === 'apply' || label.toLowerCase().includes('registration')) {
-              directApplyLink = href;
+
+            if (href && !href.includes('freejobalert.com') && !href.includes('javascript:') && href.startsWith('http')) {
+              if (!resourceLinks.push && !resourceLinks.some(rl => rl.url === href)) {
+                resourceLinks.push({ label, url: href });
+              } else if (!resourceLinks.some(rl => rl.url === href)) {
+                resourceLinks.push({ label, url: href });
+              }
+              if (label.toLowerCase().includes('apply online') || label.toLowerCase() === 'apply' || label.toLowerCase().includes('registration')) {
+                directApplyLink = href;
+              }
             }
-          }
+          });
         }
       }
     });
