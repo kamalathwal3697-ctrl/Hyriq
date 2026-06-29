@@ -197,15 +197,38 @@ app.get('/api/govt-jobs/details', async (req, res) => {
     
     const htmlBlocks = [];
     $('.scrollable-table').each((i, el) => {
-      // Make all links absolute and target="_blank"
+      // Decode and clean all links inside tables, removing any freejobalert.com pages
       $(el).find('a').each((idx, a) => {
         let href = $(a).attr('href');
-        if (href && href.startsWith('/')) {
-          href = 'https://www.freejobalert.com' + href;
+        if (href) {
+          if (href.startsWith('/')) {
+            href = 'https://www.freejobalert.com' + href;
+          }
+
+          let cleanHref = href;
+          try {
+            const urlObj = new URL(href);
+            const redirectUrl = urlObj.searchParams.get('url');
+            if (redirectUrl) {
+              cleanHref = decodeURIComponent(redirectUrl);
+            }
+          } catch (e) {
+            const match = href.match(/[?&]url=([^&]+)/);
+            if (match && match[1]) {
+              cleanHref = decodeURIComponent(match[1]);
+            }
+          }
+
+          if (cleanHref.includes('freejobalert.com') || cleanHref.includes('javascript:')) {
+            // Convert to plain text so it's not clickable and doesn't point to freejobalert
+            const text = $(a).text().trim() || 'Link';
+            $(a).replaceWith(`<span style="color: var(--text-muted); font-weight: 500;">${text}</span>`);
+          } else {
+            $(a).attr('href', cleanHref);
+            $(a).attr('target', '_blank');
+            $(a).attr('rel', 'noopener noreferrer');
+          }
         }
-        $(a).attr('href', href);
-        $(a).attr('target', '_blank');
-        $(a).attr('rel', 'noopener noreferrer');
       });
       
       // Clean HTML contents
