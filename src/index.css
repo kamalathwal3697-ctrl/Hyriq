@@ -611,6 +611,10 @@ input, textarea {
     display: none !important;
   }
 
+  .govt-sidebar {
+    display: none !important;
+  }
+
   .job-detail-panel.job-detail-open {
     display: block !important;
     position: fixed !important;

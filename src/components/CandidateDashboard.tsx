@@ -239,12 +239,15 @@ export const CandidateDashboard: React.FC = () => {
       if (selectedJob) {
         setSelectedJob(null);
       }
+      if (selectedGovtJob) {
+        setSelectedGovtJob(null);
+      }
     };
     window.addEventListener('popstate', handlePopState);
     return () => {
       window.removeEventListener('popstate', handlePopState);
     };
-  }, [selectedJob]);
+  }, [selectedJob, selectedGovtJob]);
 
   const handleSelectJob = (job: Job) => {
     setSelectedJob(job);
@@ -258,6 +261,21 @@ export const CandidateDashboard: React.FC = () => {
       window.history.back();
     } else {
       setSelectedJob(null);
+    }
+  };
+
+  const handleSelectGovtJob = (job: any) => {
+    setSelectedGovtJob(job);
+    if (window.innerWidth <= 1024) {
+      window.history.pushState({ govtJobDetailOpen: true }, '');
+    }
+  };
+
+  const handleCloseGovtJobDetails = () => {
+    if (window.innerWidth <= 1024) {
+      window.history.back();
+    } else {
+      setSelectedGovtJob(null);
     }
   };
 
@@ -848,49 +866,73 @@ export const CandidateDashboard: React.FC = () => {
             )}
 
             {!govtJobsLoading && !govtJobsError && govtJobs.length > 0 && (
-              <div style={{ overflowX: 'auto', background: '#fff', borderRadius: '12px', border: '1px solid rgba(26, 62, 98, 0.12)', boxShadow: '0 4px 12px rgba(0,0,0,0.015)' }}>
-                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px', textAlign: 'left' }}>
-                  <thead>
-                    <tr style={{ background: 'rgba(26, 62, 98, 0.05)', borderBottom: '2px solid rgba(26, 62, 98, 0.1)' }}>
-                      <th style={{ padding: '12px 16px', fontWeight: 600, color: 'var(--corporate-blue)', width: '90px' }}>Post Date</th>
-                      <th style={{ padding: '12px 16px', fontWeight: 600, color: 'var(--corporate-blue)', width: '130px' }}>Recruitment Board</th>
-                      <th style={{ padding: '12px 16px', fontWeight: 600, color: 'var(--corporate-blue)' }}>Post Name / Exam</th>
-                      <th style={{ padding: '12px 16px', fontWeight: 600, color: 'var(--corporate-blue)', width: '150px' }}>Qualification</th>
-                      <th style={{ padding: '12px 16px', fontWeight: 600, color: 'var(--corporate-blue)', width: '100px' }}>Last Date</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {govtJobs.map((job) => {
-                      const isSelected = selectedGovtJob?.id === job.id;
-                      return (
-                        <tr
-                          key={job.id}
-                          onClick={() => setSelectedGovtJob(job)}
-                          style={{
-                            borderBottom: '1px solid rgba(26, 62, 98, 0.08)',
-                            background: isSelected ? 'rgba(242, 153, 74, 0.08)' : 'transparent',
-                            cursor: 'pointer',
-                            transition: 'all 0.15s ease',
-                            fontWeight: isSelected ? 600 : 400
-                          }}
-                          className="govt-table-row"
-                        >
-                          <td style={{ padding: '12px 16px', color: '#64748b' }}>{job.postDate}</td>
-                          <td style={{ padding: '12px 16px', color: 'var(--corporate-blue)', fontWeight: 600 }}>{job.recruitmentBoard}</td>
-                          <td style={{ padding: '12px 16px', color: '#1e293b', lineHeight: '1.4' }}>{job.title}</td>
-                          <td style={{ padding: '12px 16px', color: '#475569' }}>{job.qualification}</td>
-                          <td style={{ padding: '12px 16px', color: isSelected ? 'var(--tech-orange)' : '#ef4444', fontWeight: 600 }}>{job.lastDate || '—'}</td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                {govtJobs.map((job) => {
+                  const isSelected = selectedGovtJob?.id === job.id;
+                  return (
+                    <div 
+                      key={job.id}
+                      onClick={() => handleSelectGovtJob(job)}
+                      className="seeker-light-card animate-glow"
+                      style={{
+                        padding: '20px',
+                        cursor: 'pointer',
+                        border: isSelected ? '2px solid var(--tech-orange)' : '1px solid #E2E8F0',
+                        background: isSelected ? 'rgba(242, 153, 74, 0.05)' : '#ffffff',
+                        transition: 'all 0.15s ease',
+                        transform: isSelected ? 'translateY(-2px)' : 'none',
+                        borderRadius: '12px',
+                        textAlign: 'left'
+                      }}
+                    >
+                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px', alignItems: 'start' }}>
+                        <div>
+                          <span className="badge badge-primary" style={{ marginBottom: '8px', background: 'rgba(26, 62, 98, 0.08)', color: 'var(--corporate-blue)', fontWeight: 700, padding: '4px 8px', borderRadius: '6px', fontSize: '11px' }}>
+                            🏛️ {job.recruitmentBoard}
+                          </span>
+                          <h4 style={{ color: 'var(--corporate-blue)', fontSize: '15px', fontWeight: 800, marginTop: '8px', marginBottom: '2px', lineHeight: '1.4' }}>
+                            {job.title}
+                          </h4>
+                        </div>
+                        <div className="avatar" style={{
+                          background: 'linear-gradient(135deg, #1A3E62 0%, #F2994A 100%)',
+                          color: '#fff',
+                          fontSize: '11px',
+                          fontWeight: 700,
+                          width: '42px',
+                          height: '42px',
+                          borderRadius: '8px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          flexShrink: 0
+                        }}>
+                          Govt
+                        </div>
+                      </div>
+
+                      <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '12px' }}>
+                        <span className="badge seeker-tag-blue" style={{ fontSize: '11px', padding: '3px 8px' }}>📅 Posted: {job.postDate}</span>
+                        <span className="badge seeker-tag-blue" style={{ fontSize: '11px', padding: '3px 8px' }}>🎓 Req: {job.qualification}</span>
+                        <span className="badge" style={{ background: 'rgba(239, 68, 68, 0.08)', border: '1px solid rgba(239, 68, 68, 0.2)', color: '#ef4444', fontWeight: 700, fontSize: '11px', padding: '3px 8px' }}>
+                          ⌛ Last Date: {job.lastDate || '—'}
+                        </span>
+                      </div>
+
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '11px', color: 'var(--text-secondary)', borderTop: '1px solid rgba(26,62,98,0.06)', paddingTop: '10px' }}>
+                        <span>📍 State: {job.state ? job.state.toUpperCase() : 'National'}</span>
+                        <span style={{ color: 'rgba(0,0,0,0.15)' }}>•</span>
+                        <span>Category: {job.category ? job.category.toUpperCase() : 'General'}</span>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             )}
           </main>
 
           {/* Right Column: Sticky Detail Panel */}
-          <aside style={{ position: 'sticky', top: '24px' }}>
+          <aside className="govt-sidebar" style={{ position: 'sticky', top: '24px' }}>
             {selectedGovtJob ? (
               <div className="seeker-light-card" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px', border: '1px solid rgba(26, 62, 98, 0.1)' }}>
                 <div>
@@ -2165,6 +2207,134 @@ export const CandidateDashboard: React.FC = () => {
               </div>
             </div>
           </div>
+      )}
+
+      {/* Standalone full-page overlay details view for Government Jobs rendered outside .container to bypass Android WebView transform rendering context bugs */}
+      {activeTab === 'govt' && selectedGovtJob && (
+        <div className="job-detail-panel job-detail-open">
+          <div className="glass-panel" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px', background: '#0B0E14', color: '#fff', border: '1px solid rgba(255,255,255,0.08)' }}>
+            {/* Header */}
+            <div>
+              <button
+                onClick={handleCloseGovtJobDetails}
+                style={{
+                  background: 'transparent',
+                  border: 'none',
+                  color: 'var(--text-secondary)',
+                  fontSize: '14px',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  marginBottom: '16px',
+                  padding: '4px 0'
+                }}
+                className="mobile-back-btn"
+              >
+                <ArrowLeft size={16} /> Back to Listings
+              </button>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '16px' }}>
+                <div>
+                  <span className="badge badge-primary" style={{ marginBottom: '8px', background: 'rgba(26, 62, 98, 0.15)', color: 'var(--corporate-blue)', border: '1px solid rgba(26, 62, 98, 0.3)' }}>
+                    {selectedGovtJob.recruitmentBoard}
+                  </span>
+                  <h3 style={{ color: '#fff', fontSize: '20px', fontWeight: 800, marginBottom: '4px', lineHeight: '1.4' }}>{selectedGovtJob.title}</h3>
+                </div>
+                <div className="avatar" style={{
+                  width: '50px',
+                  height: '50px',
+                  fontSize: '14px',
+                  fontWeight: 700,
+                  background: `linear-gradient(135deg, #1A3E62 0%, #F2994A 100%)`
+                }}>
+                  Govt
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', background: 'rgba(255,255,255,0.02)', padding: '12px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: 'var(--text-secondary)' }}>
+                  <MapPin size={14} color="var(--text-muted)" /> State/Region: {selectedGovtJob.state ? selectedGovtJob.state.toUpperCase() : 'All India'}
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: 'var(--text-secondary)' }}>
+                  <Briefcase size={14} color="var(--text-muted)" /> Qualification Required: {selectedGovtJob.qualification}
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: '#ef4444', fontWeight: 600 }}>
+                  <span style={{ display: 'inline-block', width: '8px', height: '8px', borderRadius: '50%', background: '#ef4444' }}></span>
+                  ⌛ Last Date to Apply: {selectedGovtJob.lastDate || '—'}
+                </div>
+              </div>
+            </div>
+
+            {/* Tabs */}
+            <div style={{ display: 'flex', borderBottom: '1px solid var(--border-color)', gap: '16px', marginBottom: '8px' }}>
+              <button
+                className="tab-btn active"
+                style={{
+                  background: 'transparent',
+                  border: 'none',
+                  color: '#fff',
+                  fontWeight: 700,
+                  fontSize: '14px',
+                  paddingBottom: '8px',
+                  borderBottom: '2px solid var(--tech-orange)',
+                  cursor: 'pointer'
+                }}
+              >
+                Official Notification & Info
+              </button>
+            </div>
+
+            {/* Details Content */}
+            {govtJobDetailsLoading ? (
+              <div style={{ padding: '40px 20px', textAlign: 'center', color: 'var(--text-secondary)', fontWeight: 600 }}>
+                <div className="animate-pulse">
+                  ⏳ Loading official job notifications, fee details & vacancy tables...
+                </div>
+              </div>
+            ) : selectedGovtJobDetails ? (
+              <div 
+                className="govt-details-content"
+                dangerouslySetInnerHTML={{ __html: selectedGovtJobDetails }} 
+                style={{ 
+                  maxHeight: '400px', 
+                  overflowY: 'auto', 
+                  padding: '16px', 
+                  background: 'rgba(255,255,255,0.03)', 
+                  borderRadius: '12px', 
+                  border: '1px solid rgba(255,255,255,0.08)',
+                  fontSize: '13px',
+                  lineHeight: '1.6',
+                  color: '#e2e8f0'
+                }} 
+              />
+            ) : (
+              <div style={{ padding: '24px', textAlign: 'center', color: 'var(--text-secondary)' }}>
+                No notification details available.
+              </div>
+            )}
+
+            {/* Bottom Actions */}
+            <div style={{ marginTop: 'auto', paddingTop: '16px', borderTop: '1px solid var(--border-color)', display: 'flex', gap: '12px' }} className="mobile-fixed-bottom-actions">
+              <button 
+                className="btn btn-outline" 
+                onClick={handleCloseGovtJobDetails}
+                style={{ flex: 1, padding: '12px', borderRadius: '12px', fontSize: '13px' }}
+              >
+                Close Details
+              </button>
+              <a 
+                href={selectedGovtJob.applyLink} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="btn btn-primary"
+                style={{ flex: 2, padding: '12px', borderRadius: '12px', fontSize: '13px', textAlign: 'center', textDecoration: 'none', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+              >
+                Apply Online 🏛️
+              </a>
+            </div>
+          </div>
+        </div>
       )}
 
       {/* Standalone Fair Work Pact Application Intercept Modal rendered outside .container to bypass Android WebView transform rendering context bugs */}
