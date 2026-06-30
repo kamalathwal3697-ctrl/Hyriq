@@ -117,7 +117,8 @@ export const CandidateExplorer: React.FC = () => {
   return (
     <div style={{ minHeight: 'calc(100vh - 80px)' }}>
       {/* Dynamic Visitor Sub-Header Selector for Mobile App */}
-      <div className="visitor-role-header" style={{
+      {!(user && user.role === 'recruiter') && (
+        <div className="visitor-role-header" style={{
         display: 'flex',
         justifyContent: 'center',
         padding: '12px 16px',
@@ -158,6 +159,7 @@ export const CandidateExplorer: React.FC = () => {
           💼 Search Candidates (Option 2)
         </button>
       </div>
+      )}
 
       <div className="container" style={{ padding: '24px 16px' }}>
       {/* Header Info */}

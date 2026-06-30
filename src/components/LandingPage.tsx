@@ -128,7 +128,8 @@ export const LandingPage: React.FC = () => {
   ];
 
   const isCandidateUser = user && user.role === 'candidate';
-  if (visitorRole === null && !isCandidateUser) {
+  const isRecruiterUser = user && user.role === 'recruiter';
+  if (visitorRole === null && !isCandidateUser && !isRecruiterUser) {
     return (
       <div className="animate-fade-in" style={{
         minHeight: 'calc(100vh - 80px)',
@@ -249,14 +250,14 @@ export const LandingPage: React.FC = () => {
     );
   }
 
-  if (visitorRole === 'recruiter' && !isCandidateUser) {
+  if ((visitorRole === 'recruiter' || isRecruiterUser) && !isCandidateUser) {
     return <CandidateExplorer />;
   }
 
   return (
     <div className="animate-fade-in" style={{ paddingBottom: '80px', position: 'relative' }}>
       {/* Dynamic Visitor Sub-Header Selector for Mobile App */}
-      {!isCandidateUser && (
+      {!isCandidateUser && !isRecruiterUser && (
         <div className="visitor-role-header" style={{
           display: 'flex',
           justifyContent: 'center',
