@@ -8,7 +8,7 @@ const isMobileLayout = () => {
 };
 
 export const CandidateExplorer: React.FC = () => {
-  const { token, user, setPerspective } = useAppState();
+  const { token, user, setPerspective, setVisitorRole } = useAppState();
   const [candidates, setCandidates] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   
@@ -110,7 +110,51 @@ export const CandidateExplorer: React.FC = () => {
   };
 
   return (
-    <div className="container" style={{ padding: '24px 16px', minHeight: 'calc(100vh - 80px)' }}>
+    <div style={{ minHeight: 'calc(100vh - 80px)' }}>
+      {/* Dynamic Visitor Sub-Header Selector for Mobile App */}
+      <div className="visitor-role-header" style={{
+        display: 'flex',
+        justifyContent: 'center',
+        padding: '12px 16px',
+        background: 'rgba(255, 255, 255, 0.02)',
+        borderBottom: '1px solid rgba(255, 255, 255, 0.06)',
+        gap: '12px'
+      }}>
+        <button 
+          onClick={() => setVisitorRole('seeker')}
+          style={{
+            padding: '8px 16px',
+            borderRadius: '20px',
+            fontSize: '12px',
+            fontWeight: 700,
+            background: 'rgba(255,255,255,0.03)',
+            color: '#fff',
+            border: 'none',
+            cursor: 'pointer',
+            boxShadow: 'none'
+          }}
+        >
+          🔍 Find a Job (Option 1)
+        </button>
+        <button 
+          onClick={() => setVisitorRole('recruiter')}
+          style={{
+            padding: '8px 16px',
+            borderRadius: '20px',
+            fontSize: '12px',
+            fontWeight: 700,
+            background: 'var(--tech-orange)',
+            color: '#fff',
+            border: 'none',
+            cursor: 'pointer',
+            boxShadow: '0 2px 8px rgba(242, 153, 74, 0.3)'
+          }}
+        >
+          💼 Search Candidates (Option 2)
+        </button>
+      </div>
+
+      <div className="container" style={{ padding: '24px 16px' }}>
       {/* Header Info */}
       <div style={{ marginBottom: '24px', textAlign: 'left' }}>
         <h2 style={{ fontSize: '24px', fontWeight: 800, color: '#fff', margin: 0, fontFamily: 'Outfit' }}>
@@ -574,5 +618,6 @@ export const CandidateExplorer: React.FC = () => {
         </div>
       )}
     </div>
+  </div>
   );
 };
