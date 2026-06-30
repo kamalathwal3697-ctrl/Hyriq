@@ -591,6 +591,10 @@ input, textarea {
   .mobile-header-bar {
     display: flex !important;
   }
+
+  .main-content-wrapper {
+    padding-top: 56px !important;
+  }
 }
 
 /* Hide back button on desktop */

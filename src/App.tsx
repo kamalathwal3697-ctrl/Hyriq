@@ -23,7 +23,8 @@ const AppContent: React.FC = () => {
     recruiterTab,
     setRecruiterTab,
     selectedJobId,
-    visitorRole
+    visitorRole,
+    setVisitorRole
   } = useAppState();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -173,8 +174,10 @@ const AppContent: React.FC = () => {
       
       {/* Mobile Top Branding Bar */}
       <div className="mobile-header-bar" style={{
-        position: 'sticky',
+        position: 'fixed',
         top: 0,
+        left: 0,
+        right: 0,
         height: '56px',
         background: 'rgba(9, 11, 16, 0.85)',
         backdropFilter: 'blur(16px)',
@@ -208,65 +211,15 @@ const AppContent: React.FC = () => {
             </button>
           )}
           <div 
-            onClick={() => setPerspective('visitor')}
+            onClick={() => {
+              setPerspective('visitor');
+              setVisitorRole(null);
+            }}
             style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}
           >
             <img src="/logo.png" alt="Hyriq Logo" style={{ width: '30px', height: '30px', borderRadius: '6px', objectFit: 'cover' }} />
             <span className="mobile-header-logo-text" style={{ fontSize: '18px', fontWeight: 800, color: '#fff', fontFamily: 'Outfit' }}>Hyriq</span>
           </div>
-        </div>
-
-        {/* Top Header Segmented Workspace Switcher */}
-        <div style={{
-          display: 'flex',
-          background: 'rgba(255, 255, 255, 0.03)',
-          border: '1px solid rgba(255, 255, 255, 0.08)',
-          padding: '2px',
-          borderRadius: '24px',
-          gap: '2px'
-        }}>
-          {[
-            { id: 'visitor', icon: '🌍', label: 'Visitor' },
-            { id: 'candidate', icon: '👤', label: 'Seeker' },
-            { id: 'recruiter', icon: '💼', label: 'Board' }
-          ].filter(roleItem => {
-            const isSeekerOnly = (user && user.role === 'candidate') || visitorRole === 'seeker';
-            if (isSeekerOnly && roleItem.id === 'recruiter') return false;
-            
-            const isRecruiterOnly = (user && user.role === 'recruiter') || visitorRole === 'recruiter';
-            if (isRecruiterOnly && roleItem.id === 'candidate') return false;
-            
-            return true;
-          }).map(roleItem => {
-            const isActive = perspective === roleItem.id;
-            return (
-              <button
-                key={roleItem.id}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setPerspective(roleItem.id as any);
-                }}
-                style={{
-                  background: isActive ? (roleItem.id === 'visitor' ? 'rgba(255,255,255,0.08)' : (roleItem.id === 'candidate' ? 'var(--primary)' : 'var(--secondary)')) : 'transparent',
-                  color: isActive ? '#fff' : 'rgba(255,255,255,0.4)',
-                  border: 'none',
-                  borderRadius: '20px',
-                  padding: '5px 9px',
-                  fontSize: '11px',
-                  fontWeight: 700,
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '4px',
-                  transition: 'all 0.2s',
-                  boxShadow: isActive && roleItem.id !== 'visitor' ? (roleItem.id === 'candidate' ? '0 2px 6px rgba(99,102,241,0.3)' : '0 2px 6px rgba(6,182,212,0.3)') : 'none'
-                }}
-              >
-                <span>{roleItem.icon}</span>
-                <span className="mobile-header-switcher-label">{roleItem.label}</span>
-              </button>
-            );
-          })}
         </div>
 
         {/* Hamburger Menu Toggle */}
@@ -602,7 +555,7 @@ const AppContent: React.FC = () => {
         </div>
       )}
 
-      <main style={{ flex: 1 }}>
+      <main className="main-content-wrapper" style={{ flex: 1 }}>
         {renderMainContent()}
       </main>
 
