@@ -22,7 +22,8 @@ const AppContent: React.FC = () => {
     setCandidateTab,
     recruiterTab,
     setRecruiterTab,
-    selectedJobId
+    selectedJobId,
+    visitorRole
   } = useAppState();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -228,7 +229,11 @@ const AppContent: React.FC = () => {
             { id: 'visitor', icon: '🌍', label: 'Visitor' },
             { id: 'candidate', icon: '👤', label: 'Seeker' },
             { id: 'recruiter', icon: '💼', label: 'Board' }
-          ].map(roleItem => {
+          ].filter(roleItem => {
+            const isSeekerOnly = (user && user.role === 'candidate') || visitorRole === 'seeker';
+            if (isSeekerOnly && roleItem.id === 'recruiter') return false;
+            return true;
+          }).map(roleItem => {
             const isActive = perspective === roleItem.id;
             return (
               <button
@@ -391,7 +396,11 @@ const AppContent: React.FC = () => {
                   { id: 'visitor', label: 'Visitor Space', icon: '🌍' },
                   { id: 'candidate', label: 'Job Seeker', icon: '👤' },
                   { id: 'recruiter', label: 'Recruiter Board', icon: '💼' }
-                ].map(roleItem => {
+                ].filter(roleItem => {
+                  const isSeekerOnly = (user && user.role === 'candidate') || visitorRole === 'seeker';
+                  if (isSeekerOnly && roleItem.id === 'recruiter') return false;
+                  return true;
+                }).map(roleItem => {
                   const isActive = perspective === roleItem.id;
                   return (
                     <button
