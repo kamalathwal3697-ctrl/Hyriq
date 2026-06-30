@@ -24,7 +24,7 @@ dist-ssr
 *.sw?
 
 # Local Databases
-db.json
+# db.json
 server/db.json
 
 # Environment secrets

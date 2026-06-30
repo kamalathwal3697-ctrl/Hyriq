@@ -1,0 +1,3828 @@
+{
+  "users": [
+    {
+      "id": "user-candidate-1",
+      "email": "alex@hyriq.co",
+      "passwordHash": "$2a$10$3ui4tWcwV21EBYbU8iC.t.rRxaXlh6ThVlF9VBM5/kkjPAoqXYJdi",
+      "role": "candidate",
+      "name": "Amanpreet Singh",
+      "phone": "+91 98765-43210",
+      "bio": "B.Tech graduate from GZSCCET (MRSPTU) Bathinda. Aspiring frontend developer looking for software roles in Bathinda or hybrid setups. Eager to build verified local careers.",
+      "skills": [
+        "React",
+        "TypeScript",
+        "CSS/CSS Grid",
+        "JavaScript",
+        "Figma"
+      ],
+      "experience": "Entry-level",
+      "resumeName": "Amanpreet_Singh_CV.pdf",
+      "onboardingCompleted": true,
+      "subscriptionExpiry": "2027-06-27T12:49:48.077Z",
+      "preferences": {
+        "type": [
+          "Full-time",
+          "Internship"
+        ],
+        "mode": [
+          "Remote",
+          "Hybrid",
+          "On-site"
+        ],
+        "minSalary": 15000,
+        "experience": "Entry-level"
+      }
+    },
+    {
+      "id": "user-recruiter-1",
+      "email": "sarah@vercel.com",
+      "passwordHash": "$2a$10$3ui4tWcwV21EBYbU8iC.t.rRxaXlh6ThVlF9VBM5/kkjPAoqXYJdi",
+      "role": "recruiter",
+      "name": "Gaurav Gupta",
+      "phone": "+91 98123-45678",
+      "bio": "HR Coordinator at Malwa Tech Solutions, Bathinda. We hire local engineering graduates and connect them to national projects.",
+      "companyName": "Malwa Tech Solutions",
+      "companyBio": "We are Bathinda's leading software agency, empowering Malwa talent with global opportunities."
+    },
+    {
+      "id": "user-admin-raj",
+      "email": "raj_athwal",
+      "passwordHash": "$2a$10$3ui4tWcwV21EBYbU8iC.t.SRXkNXX9kpDOIswtbHLHUS/U7.diFqa",
+      "role": "recruiter",
+      "name": "Raj Athwal"
+    }
+  ],
+  "jobs": [
+    {
+      "id": "job-1",
+      "title": "React Developer",
+      "companyName": "Malwa Tech Solutions",
+      "logoSeed": "MT",
+      "location": "Bathinda, Punjab",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹25,000 - ₹35,000 / mo",
+      "experience": "Mid-level",
+      "skills": [
+        "React",
+        "TypeScript",
+        "JavaScript",
+        "HTML",
+        "CSS",
+        "REST APIs"
+      ],
+      "description": "Malwa Tech Solutions is hiring a React Developer to work on our local outsourcing contracts. You will be building user interfaces, integrating secure client portals, and working directly with senior developers.",
+      "requirements": [
+        "1+ years of experience with React.",
+        "Strong understanding of HTML5, CSS3, and JavaScript ES6+.",
+        "Familiarity with Git and package managers (npm/yarn).",
+        "Based in or willing to relocate to Bathinda, Punjab."
+      ],
+      "benefits": [
+        "Provident Fund (PF) and Medical Insurance.",
+        "Modern workspace with high-speed internet.",
+        "Performance-based annual bonuses.",
+        "Flexible weekend schedules."
+      ],
+      "postedDate": "2 days ago",
+      "recruiterId": "user-admin-raj",
+      "fairWorkPact": true
+    },
+    {
+      "id": "job-2",
+      "title": "Retail Store Manager",
+      "companyName": "Mittal City Mall Store",
+      "logoSeed": "MM",
+      "location": "Mittal Mall, Bathinda",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹20,000 - ₹25,000 / mo",
+      "experience": "Mid-level",
+      "skills": [
+        "Store Operations",
+        "Inventory Management",
+        "Customer Service",
+        "Sales Reporting"
+      ],
+      "description": "We are seeking an energetic Store Manager to oversee operations at our Mittal City Mall brand showroom. You will manage a team of 4 sales executives, optimize customer interactions, and report weekly sales tallies.",
+      "requirements": [
+        "Graduation degree in any field.",
+        "Previous store management or retail sales experience.",
+        "Basic mathematical and retail billing software skills.",
+        "Excellent verbal communication in Punjabi, Hindi, and basic English."
+      ],
+      "benefits": [
+        "Performance incentives based on sales targets.",
+        "Provided mall meals allowance.",
+        "Standard festival bonuses.",
+        "Complimentary brand apparel."
+      ],
+      "postedDate": "1 day ago",
+      "recruiterId": "user-admin-raj",
+      "fairWorkPact": true
+    },
+    {
+      "id": "job-3",
+      "title": "TGT Science Teacher",
+      "companyName": "DAV Public School Bathinda",
+      "logoSeed": "DV",
+      "location": "Bathinda, Punjab",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹28,000 - ₹38,000 / mo",
+      "experience": "Mid-level",
+      "skills": [
+        "Science Teaching",
+        "Classroom Management",
+        "Communication",
+        "Lesson Planning"
+      ],
+      "description": "DAV Public School is looking for a TGT Science Teacher to conduct science classes for grade 6th to 8th. You will prepare lesson blueprints, conduct science lab experiments, and coordinate parent-teacher syncs.",
+      "requirements": [
+        "B.Sc. and B.Ed. degree qualifications are mandatory.",
+        "Excellent command over physics, chemistry, and biology fundamentals.",
+        "Strong interpersonal and teaching skills.",
+        "Previous teaching experience in a recognized school."
+      ],
+      "benefits": [
+        "Provident Fund (PF) and Pension schemes.",
+        "Provided summer and winter vacation leave payouts.",
+        "Medical facilities support.",
+        "Free education stipend for children of staff."
+      ],
+      "postedDate": "3 days ago",
+      "recruiterId": "user-admin-raj",
+      "fairWorkPact": true
+    },
+    {
+      "id": "job-4",
+      "title": "Digital Marketing Intern",
+      "companyName": "Malwa Media Agency",
+      "logoSeed": "MM",
+      "location": "Bathinda, Punjab",
+      "type": "Internship",
+      "mode": "Hybrid",
+      "salary": "₹8,000 - ₹12,000 / mo",
+      "experience": "Entry-level",
+      "skills": [
+        "Social Media",
+        "SEO",
+        "Graphic Design",
+        "Content Creation",
+        "Canva"
+      ],
+      "description": "Malwa Media Agency is looking for a marketing enthusiast to handle social media campaigns, publish graphics, write copy, and optimize search engine listings for our local retail clients.",
+      "requirements": [
+        "Currently enrolled in or recently graduated with a degree in Marketing, Business, or Communications.",
+        "Basic familiarity with Canva, Instagram layouts, and Facebook Ads dashboard.",
+        "Creative writing and editing skills.",
+        "Access to a laptop and reliable internet connection for hybrid days."
+      ],
+      "benefits": [
+        "Practical training under experienced marketers.",
+        "Certificate of Internship completion.",
+        "Opportunity to convert to full-time roles.",
+        "Casual dress code and weekly tea offsites."
+      ],
+      "postedDate": "5 hours ago",
+      "recruiterId": "user-admin-raj",
+      "fairWorkPact": true
+    },
+    {
+      "id": "job-5",
+      "title": "Trainee Engineer",
+      "companyName": "HMEL Refinery Contractors",
+      "logoSeed": "HR",
+      "location": "Raman Mandi, Bathinda",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹22,000 - ₹28,000 / mo",
+      "experience": "Entry-level",
+      "skills": [
+        "Site Inspection",
+        "Industrial Safety",
+        "CAD Drafting",
+        "Project Coordination"
+      ],
+      "description": "HMEL Refinery contracting firm is hiring a Trainee Engineer. You will perform daily site supervisor reviews, verify safety gear protocols, draft technical layout drafts, and report operational logs to project managers.",
+      "requirements": [
+        "Diploma or B.Tech degree in Civil, Mechanical, or Electrical engineering.",
+        "Familiarity with AutoCAD and industrial safety protocols.",
+        "Strong physical fitness for site supervision duties.",
+        "Willingness to commute to the Raman Mandi refinery site."
+      ],
+      "benefits": [
+        "Provided safe daily shuttle transport from Bathinda city to the site.",
+        "On-site canteen meals support.",
+        "Accident cover insurance.",
+        "Annual safety training certification."
+      ],
+      "postedDate": "5 days ago",
+      "recruiterId": "user-admin-raj",
+      "fairWorkPact": true
+    },
+    {
+      "id": "job-6",
+      "title": "Software Engineer III, Infrastructure",
+      "companyName": "Google",
+      "logoSeed": "G",
+      "location": "Bengaluru, Karnataka (Remote / Hybrid)",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "salary": "₹2,50,000 - ₹3,50,000 / mo",
+      "experience": "Mid-level",
+      "skills": [
+        "C++",
+        "Go",
+        "Python",
+        "Distributed Systems",
+        "System Design"
+      ],
+      "description": "Google is hiring a Software Engineer III for our Cloud Infrastructure team. You will work on massive-scale distributed databases, improve TPU AI supercomputer network layers, and coordinate with engineering teams globally.",
+      "requirements": [
+        "Bachelor’s degree in Computer Science, a related technical field, or equivalent practical experience.",
+        "3 years of software development experience in C++, Go, or Python.",
+        "Experience designing, building, and optimizing distributed databases or storage engines."
+      ],
+      "benefits": [
+        "Premium health, dental, and vision cover.",
+        "Free on-campus meals and micro-kitchen access.",
+        "Generous equity grant (GSUs).",
+        "Work-from-home setup support."
+      ],
+      "postedDate": "Just now",
+      "recruiterId": "user-admin-raj",
+      "fairWorkPact": true
+    },
+    {
+      "id": "job-7",
+      "title": "UX Designer, Workspace",
+      "companyName": "Google",
+      "logoSeed": "G",
+      "location": "Hyderabad, Telangana (Hybrid)",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "salary": "₹1,80,000 - ₹2,60,000 / mo",
+      "experience": "Mid-level",
+      "skills": [
+        "Figma",
+        "UX Research",
+        "Interaction Design",
+        "Prototyping"
+      ],
+      "description": "Google is hiring a UX Designer for our Workspace team (Google Docs & Drive). You will design next-generation collaborative UI layouts, perform usability reviews, and translate complex user problems into sleek interactive layouts.",
+      "requirements": [
+        "Portfolio demonstrating interaction design, visual design, and product thinking.",
+        "Experience designing for consumer or enterprise web platforms.",
+        "Proficiency in Figma and interactive prototyping tools."
+      ],
+      "benefits": [
+        "Comprehensive wellness programs and dental care.",
+        "Generous learning budget and conference attendance.",
+        "Shuttle transportation support.",
+        "Recreation rooms and gym access."
+      ],
+      "postedDate": "1 day ago",
+      "recruiterId": "user-admin-raj",
+      "fairWorkPact": true
+    },
+    {
+      "id": "job-8",
+      "title": "Assistant Professor, Computer Science",
+      "companyName": "Guru Kashi University",
+      "logoSeed": "GK",
+      "location": "Talwandi Sabo, Bathinda",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹45,000 - ₹60,000 / mo",
+      "experience": "Mid-level",
+      "skills": [
+        "Teaching",
+        "Computer Science",
+        "Python",
+        "Machine Learning",
+        "Academic Research"
+      ],
+      "description": "Guru Kashi University is hiring an Assistant Professor in the Department of Computer Science & Engineering. You will conduct lectures for B.Tech/M.Tech students, supervise lab coursework, design syllabi, and participate in academic research.",
+      "requirements": [
+        "M.Tech or Ph.D. in Computer Science and Engineering.",
+        "Strong understanding of algorithms, data structures, and system architectures.",
+        "Prior teaching or industry experience is preferred."
+      ],
+      "benefits": [
+        "On-campus accommodation support.",
+        "Research funding and travel allowance for conferences.",
+        "Standard university health benefits.",
+        "Paid summer and winter vacations."
+      ],
+      "postedDate": "Just now",
+      "recruiterId": "user-admin-raj",
+      "fairWorkPact": true
+    },
+    {
+      "id": "job-9",
+      "title": "Branch Sales Manager",
+      "companyName": "Asian Paints",
+      "logoSeed": "AP",
+      "location": "Bathinda, Punjab",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹35,000 - ₹50,000 / mo",
+      "experience": "Mid-level",
+      "skills": [
+        "B2B Sales",
+        "Channel Management",
+        "Client Relationships",
+        "Lead Generation"
+      ],
+      "description": "Asian Paints is seeking a Branch Sales Manager to drive commercial relationships, oversee dealer networks, execute paint contractor loyalty campaigns, and expand our market presence in the Malwa region.",
+      "requirements": [
+        "MBA or Graduate degree in Marketing/Business.",
+        "2+ years of sales experience in paints, building materials, or FMCG.",
+        "Comfortable traveling across Bathinda and nearby Malwa territories.",
+        "Fluent in Punjabi and Hindi."
+      ],
+      "benefits": [
+        "Attractive performance-based sales incentives.",
+        "Travel allowance and fuel reimbursement.",
+        "Comprehensive corporate medical coverage.",
+        "Annual performance bonuses."
+      ],
+      "postedDate": "2 days ago",
+      "recruiterId": "user-admin-raj",
+      "fairWorkPact": true
+    },
+    {
+      "id": "job-10",
+      "title": "Sales Consultant",
+      "companyName": "Singhal Autohaus (Jawa Yezdi Motorcycles)",
+      "logoSeed": "JY",
+      "location": "Ganesha Nagar, Bathinda",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹15,000 - ₹20,000 / mo",
+      "experience": "Entry-level",
+      "skills": [
+        "Customer Relationship Management",
+        "Showroom Operations",
+        "Product Promotion",
+        "Automotive Sales"
+      ],
+      "description": "Singhal Autohaus, the authorized showroom for Jawa Yezdi Motorcycles in Bathinda, is hiring a Sales Consultant. You will welcome walk-in customers, showcase motorcycle features, schedule test rides, and facilitate financing options.",
+      "requirements": [
+        "Graduate or equivalent qualification.",
+        "Passionate about motorcycles and automotive retail.",
+        "Fluency in Punjabi and Hindi is required.",
+        "Prior showroom or direct customer handling experience is preferred."
+      ],
+      "benefits": [
+        "Attractive performance incentives per vehicle sold.",
+        "Regular product training from national experts.",
+        "Standard festival bonuses.",
+        "Employee discounts on motorcycle service and parts."
+      ],
+      "postedDate": "1 day ago",
+      "recruiterId": "user-admin-raj",
+      "fairWorkPact": true
+    },
+    {
+      "id": "job-11",
+      "title": "Medical Receptionist & GDA",
+      "companyName": "Sukhmani Diagnocare",
+      "logoSeed": "SD",
+      "location": "Bathinda, Punjab",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹12,000 - ₹16,000 / mo",
+      "experience": "Entry-level",
+      "skills": [
+        "Hospital Reception",
+        "Customer Service",
+        "Medical Records",
+        "Basic Excel"
+      ],
+      "description": "Sukhmani Diagnocare is seeking a General Duty Assistant / Medical Receptionist. Responsibilities include welcoming patients, managing diagnostic test registrations, issuing billing receipts, and answering patient phone queries.",
+      "requirements": [
+        "12th pass or Graduate with basic computer literacy.",
+        "Polite communication and empathy towards patients.",
+        "Fluent in Punjabi and Hindi.",
+        "Previous experience in a hospital or diagnostic lab is a plus."
+      ],
+      "benefits": [
+        "Free annual health check-up benefits for family members.",
+        "Standard overtime compensation package.",
+        "Merit-based annual salary increments.",
+        "Safe and sanitized work environment."
+      ],
+      "postedDate": "3 days ago",
+      "recruiterId": "user-admin-raj",
+      "fairWorkPact": true
+    },
+    {
+      "id": "job-12",
+      "title": "Front Desk Executive cum Telecaller",
+      "companyName": "Mittal Job Consultancy",
+      "logoSeed": "MC",
+      "location": "Ajit Road, Bathinda",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹10,000 - ₹14,000 / mo",
+      "experience": "Entry-level",
+      "skills": [
+        "Telecalling",
+        "Front Office",
+        "Customer Support",
+        "Data Entry"
+      ],
+      "description": "Mittal Job Consultancy is seeking a Front Desk Executive cum Telecaller. You will manage incoming inquiries from job aspirants, maintain database records of candidates, and schedule interview lineups for local companies.",
+      "requirements": [
+        "Good communication skills in Punjabi and Hindi.",
+        "Basic knowledge of MS Office (Word/Excel).",
+        "Pleasant phone manner and phone etiquette.",
+        "Willingness to handle high volumes of calls."
+      ],
+      "benefits": [
+        "Performance incentives based on candidate joining targets.",
+        "Paid sick leave allowances.",
+        "Casual, supportive team workspace.",
+        "Annual salary reviews."
+      ],
+      "postedDate": "Just now",
+      "recruiterId": "user-admin-raj",
+      "fairWorkPact": true
+    },
+    {
+      "id": "job-bathinda-1",
+      "title": "Sales Officer",
+      "companyName": "HDFC Bank Bathinda Branch",
+      "logoSeed": "HB",
+      "location": "Bathinda, Punjab",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹22,000 - ₹30,000 / mo",
+      "experience": "Entry-level",
+      "skills": [
+        "Customer Relations",
+        "Communication",
+        "Financial Products",
+        "Sales Pitching"
+      ],
+      "description": "HDFC Bank is hiring a Sales Officer for our local Bathinda branch. You will be responsible for acquiring new customers, promoting financial services (accounts, loans, insurance), and maintaining healthy client relations.",
+      "requirements": [
+        "Any graduate degree (B.Com, BBA preferred).",
+        "Good communication skills in Punjabi, Hindi, and basic English.",
+        "Own two-wheeler with a valid driving license.",
+        "Prior sales experience is a plus but freshers are welcome."
+      ],
+      "benefits": [
+        "Travel allowance (petrol reimbursement).",
+        "Performance incentives and monthly bonuses.",
+        "Health insurance coverage.",
+        "Clear career progression pathway inside the bank."
+      ],
+      "postedDate": "Just now",
+      "recruiterId": "user-admin-raj",
+      "fairWorkPact": true
+    },
+    {
+      "id": "job-bathinda-2",
+      "title": "Academic Counselor",
+      "companyName": "Golden Horizon IELTS Institute",
+      "logoSeed": "GH",
+      "location": "Ajit Road, Bathinda",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹18,000 - ₹25,000 / mo",
+      "experience": "Entry-level",
+      "skills": [
+        "Counseling",
+        "IELTS awareness",
+        "English proficiency",
+        "Public Speaking"
+      ],
+      "description": "We are seeking a friendly Academic Counselor for our premier IELTS and study-visa coaching center on Ajit Road. You will guide students on study options abroad, explain IELTS course structures, and handle walk-in inquiries.",
+      "requirements": [
+        "Graduation in any stream.",
+        "Excellent conversational skills in English and Punjabi.",
+        "Basic understanding of study visa documentation is preferred.",
+        "Comfortable working with Microsoft Excel and Google Sheets."
+      ],
+      "benefits": [
+        "Monthly conversion incentives.",
+        "Paid sick leaves and casual leaves.",
+        "Professional work environment."
+      ],
+      "postedDate": "Just now",
+      "recruiterId": "user-admin-raj",
+      "fairWorkPact": true
+    },
+    {
+      "id": "job-bathinda-3",
+      "title": "Billing Executive",
+      "companyName": "Easyday Club Bathinda",
+      "logoSeed": "ED",
+      "location": "Bathinda, Punjab",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹12,000 - ₹16,000 / mo",
+      "experience": "Entry-level",
+      "skills": [
+        "POS Systems",
+        "Cash Handling",
+        "Basic Math",
+        "Customer Service"
+      ],
+      "description": "Easyday Club is hiring Billing Executives to manage daily billing operations, scan grocery items, collect cash or digital payments, and assist customers during checkouts.",
+      "requirements": [
+        "12th pass (Higher Secondary) or equivalent.",
+        "Quick mental math skills and computer literacy.",
+        "Willingness to work in shifts (morning/evening).",
+        "Honest and punctual."
+      ],
+      "benefits": [
+        "Overtime pay.",
+        "Store employee discounts.",
+        "Provident Fund (PF) options."
+      ],
+      "postedDate": "Just now",
+      "recruiterId": "user-admin-raj",
+      "fairWorkPact": true
+    },
+    {
+      "id": "job-bathinda-4",
+      "title": "High School English Teacher",
+      "companyName": "Silver Oaks School",
+      "logoSeed": "SO",
+      "location": "Bathinda, Punjab",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹25,000 - ₹35,000 / mo",
+      "experience": "Mid-level",
+      "skills": [
+        "Curriculum Planning",
+        "Classroom Management",
+        "English Literature",
+        "Creative Writing"
+      ],
+      "description": "Silver Oaks School is looking for an experienced High School English Teacher. The ideal candidate will develop lesson plans, teach English literature and grammar to CBSE classes 9 to 12, and lead extracurricular debate clubs.",
+      "requirements": [
+        "M.A. in English and B.Ed. degree (Mandatory).",
+        "Minimum 2 years of teaching experience in a CBSE affiliated school.",
+        "Fluency in spoken and written English."
+      ],
+      "benefits": [
+        "Provident Fund (PF) and Gratuity.",
+        "Free transport facility for staff.",
+        "Subsidized education for employee children."
+      ],
+      "postedDate": "Just now",
+      "recruiterId": "user-admin-raj",
+      "fairWorkPact": true
+    },
+    {
+      "id": "job-bathinda-5",
+      "title": "Technical Support Executive",
+      "companyName": "Malwa IT Solutions",
+      "logoSeed": "MI",
+      "location": "Bathinda, Punjab",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "salary": "₹15,000 - ₹22,000 / mo",
+      "experience": "Entry-level",
+      "skills": [
+        "Networking basics",
+        "Operating Systems",
+        "Troubleshooting",
+        "Customer Queries"
+      ],
+      "description": "Join our remote support desk at Malwa IT Solutions. You will assist corporate clients in resolving internet connectivity issues, email setups, software installations, and hardware diagnostics via call and chat.",
+      "requirements": [
+        "B.Tech (CSE/IT), BCA, or Diploma in Hardware & Networking.",
+        "Good command over English (both written and verbal).",
+        "Familiarity with Remote Desktop tools (AnyDesk, TeamViewer).",
+        "Stable home internet connection (broadband)."
+      ],
+      "benefits": [
+        "Work from Home flexibility (Hybrid structure).",
+        "Broadband internet reimbursement.",
+        "Night shift allowances."
+      ],
+      "postedDate": "Just now",
+      "recruiterId": "user-admin-raj",
+      "fairWorkPact": true
+    },
+    {
+      "id": "job-bathinda-6",
+      "title": "Staff Nurse",
+      "companyName": "Max Super Speciality Hospital",
+      "logoSeed": "MX",
+      "location": "Bathinda, Punjab",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹28,000 - ₹38,000 / mo",
+      "experience": "Mid-level",
+      "skills": [
+        "Patient Care",
+        "ICU Operations",
+        "Emergency Meds",
+        "Vital Monitoring"
+      ],
+      "description": "Max Hospital Bathinda is hiring Staff Nurses for Critical Care Units (ICU) and Emergency wards. You will monitor vitals, administer medications as directed by doctors, maintain patient logs, and assist in clinical operations.",
+      "requirements": [
+        "B.Sc Nursing or GNM (General Nursing and Midwifery).",
+        "Valid registration with the Punjab Nurses Registration Council (PNRC).",
+        "Minimum 1 year of clinical experience in a multi-speciality hospital."
+      ],
+      "benefits": [
+        "Free duty meals.",
+        "Health insurance for family.",
+        "Hostel accommodation support if required."
+      ],
+      "postedDate": "Just now",
+      "recruiterId": "user-admin-raj",
+      "fairWorkPact": true
+    },
+    {
+      "id": "job-bathinda-7",
+      "title": "Delivery Executive",
+      "companyName": "Zomato Bathinda Office",
+      "logoSeed": "ZO",
+      "location": "Bathinda, Punjab",
+      "type": "Part-time",
+      "mode": "On-site",
+      "salary": "₹15,000 - ₹25,000 / mo",
+      "experience": "Entry-level",
+      "skills": [
+        "Map Navigation",
+        "Safe Driving",
+        "Punctuality",
+        "Mobile Apps"
+      ],
+      "description": "Earn flexible income by joining the Zomato delivery network in Bathinda. Deliver food orders from local restaurants to customers. Choose your own shifts (full-time, part-time, or weekend peak hours).",
+      "requirements": [
+        "Own smartphone (Android or iOS) with active internet.",
+        "Own motorcycle/scooter with RC and Insurance.",
+        "Valid Driving License and Aadhaar Card."
+      ],
+      "benefits": [
+        "Instant daily payouts.",
+        "Accidental insurance coverage of ₹10 Lakhs.",
+        "Attractive rain and festival bonuses."
+      ],
+      "postedDate": "Just now",
+      "recruiterId": "user-admin-raj",
+      "fairWorkPact": true
+    },
+    {
+      "id": "job-bathinda-8",
+      "title": "Site Engineer (Civil)",
+      "companyName": "HMEL Bathinda Refinery Project",
+      "logoSeed": "HM",
+      "location": "Raman Mandi, Bathinda",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹35,000 - ₹45,000 / mo",
+      "experience": "Mid-level",
+      "skills": [
+        "Site Supervision",
+        "Concrete Testing",
+        "AutoCAD",
+        "Safety Norms"
+      ],
+      "description": "We are seeking a Site Engineer to oversee sub-contracted civil work at the HMEL Bathinda Refinery expansion project. Duties include inspecting materials, checking column layouts, managing labor teams, and reporting daily progress.",
+      "requirements": [
+        "B.Tech / B.E. in Civil Engineering.",
+        "2+ years of experience in industrial site construction.",
+        "Ability to read structural blueprints and draft reports in AutoCAD."
+      ],
+      "benefits": [
+        "Company transport from Bathinda city to Refinery site.",
+        "Free site accommodation and meals.",
+        "Personal Protective Equipment (PPE) provided."
+      ],
+      "postedDate": "Just now",
+      "recruiterId": "user-admin-raj",
+      "fairWorkPact": true
+    },
+    {
+      "id": "job-imported-seeder-1782717836234-0",
+      "title": "Tech Lead, Web Core Product & Chrome Extension",
+      "companyName": "Speechify",
+      "logoSeed": "🚀",
+      "location": "Bathinda, Punjab",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "salary": "₹6,00,000 - ₹9,50,000 / year",
+      "experience": "Entry-level",
+      "skills": [
+        "Engineering",
+        "Software",
+        "React"
+      ],
+      "description": "The mission of Speechify is to make sure that reading is never a barrier to learning.\nOver 50 million people use Speechify's text-to-speech products to turn whatever they're reading – PDFs, books, Google Docs, news articles, websites – into audio, so they can read faster, read more, and remember mor...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-29T07:23:56.234Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836235-1",
+      "title": "Tech Lead, Web Core Product & Chrome Extension",
+      "companyName": "Speechify",
+      "logoSeed": "💻",
+      "location": "Chandigarh, UT",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹8,50,000 - ₹12,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Engineering",
+        "Software",
+        "React"
+      ],
+      "description": "The mission of Speechify is to make sure that reading is never a barrier to learning.\nOver 50 million people use Speechify's text-to-speech products to turn whatever they're reading – PDFs, books, Google Docs, news articles, websites – into audio, so they can read faster, read more, and remember mor...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-29T05:23:56.235Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836235-2",
+      "title": "Tech Lead, Web Core Product & Chrome Extension",
+      "companyName": "Speechify",
+      "logoSeed": "💡",
+      "location": "Mohali, Punjab",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "salary": "₹12,00,000 - ₹18,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Engineering",
+        "Software",
+        "React"
+      ],
+      "description": "The mission of Speechify is to make sure that reading is never a barrier to learning.\nOver 50 million people use Speechify's text-to-speech products to turn whatever they're reading – PDFs, books, Google Docs, news articles, websites – into audio, so they can read faster, read more, and remember mor...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-29T03:23:56.235Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836235-3",
+      "title": "Tech Lead, Android Core Product",
+      "companyName": "Speechify",
+      "logoSeed": "🔥",
+      "location": "Patiala, Punjab",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹15,00,000 - ₹24,00,000 / year",
+      "experience": "Senior-level",
+      "skills": [
+        "Engineering",
+        "Software",
+        "React"
+      ],
+      "description": "The mission of Speechify is to make sure that reading is never a barrier to learning.\nOver 50 million people use Speechify's text-to-speech products to turn whatever they're reading – PDFs, books, Google Docs, news articles, websites – into audio, so they can read faster, read more, and remember mor...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-29T01:23:56.235Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836235-4",
+      "title": "Tech Lead, Android Core Product",
+      "companyName": "Speechify",
+      "logoSeed": "🛡️",
+      "location": "Ludhiana, Punjab",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "salary": "₹6,00,000 - ₹9,50,000 / year",
+      "experience": "Entry-level",
+      "skills": [
+        "Engineering",
+        "Software",
+        "React"
+      ],
+      "description": "The mission of Speechify is to make sure that reading is never a barrier to learning.\nOver 50 million people use Speechify's text-to-speech products to turn whatever they're reading – PDFs, books, Google Docs, news articles, websites – into audio, so they can read faster, read more, and remember mor...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-28T23:23:56.235Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836235-5",
+      "title": "Tech Lead, Android Core Product",
+      "companyName": "Speechify",
+      "logoSeed": "⚡",
+      "location": "Amritsar, Punjab",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹8,50,000 - ₹12,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Engineering",
+        "Software",
+        "React"
+      ],
+      "description": "The mission of Speechify is to make sure that reading is never a barrier to learning.\nOver 50 million people use Speechify's text-to-speech products to turn whatever they're reading – PDFs, books, Google Docs, news articles, websites – into audio, so they can read faster, read more, and remember mor...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-28T21:23:56.235Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836235-6",
+      "title": "Software Engineer, Data Infrastructure & Acquisition",
+      "companyName": "Speechify",
+      "logoSeed": "🤖",
+      "location": "Jalandhar, Punjab",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "salary": "₹12,00,000 - ₹18,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Engineering",
+        "Software",
+        "React"
+      ],
+      "description": "The mission of Speechify is to make sure that reading is never a barrier to learning.\nOver 50 million people use Speechify's text-to-speech products to turn whatever they're reading – PDFs, books, Google Docs, news articles, websites – into audio, so they can read faster, read more, and remember mor...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-28T19:23:56.235Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836235-7",
+      "title": "Senior Software Engineer, Windows/Desktop Applications",
+      "companyName": "Speechify",
+      "logoSeed": "👾",
+      "location": "Delhi, NCR",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹15,00,000 - ₹24,00,000 / year",
+      "experience": "Senior-level",
+      "skills": [
+        "Engineering",
+        "Software",
+        "React"
+      ],
+      "description": "Mission\n\nThe mission of Speechify is to make sure that reading is never a barrier to learning.\nOver 50 million people use Speechify's text-to-speech products to turn whatever they're reading – PDFs, books, Google Docs, news articles, websites – into audio, so they can read faster, read more, and rem...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-28T17:23:56.235Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836235-8",
+      "title": "Senior Software Engineer, Windows/Desktop Applications",
+      "companyName": "Speechify",
+      "logoSeed": "🚀",
+      "location": "Mumbai, Maharashtra",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "salary": "₹6,00,000 - ₹9,50,000 / year",
+      "experience": "Entry-level",
+      "skills": [
+        "Engineering",
+        "Software",
+        "React"
+      ],
+      "description": "Mission\n\nThe mission of Speechify is to make sure that reading is never a barrier to learning.\nOver 50 million people use Speechify's text-to-speech products to turn whatever they're reading – PDFs, books, Google Docs, news articles, websites – into audio, so they can read faster, read more, and rem...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-28T15:23:56.235Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836235-9",
+      "title": "Senior Software Engineer, Core Experiences",
+      "companyName": "Speechify",
+      "logoSeed": "💻",
+      "location": "Bengaluru, Karnataka",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹8,50,000 - ₹12,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Engineering",
+        "Software",
+        "React"
+      ],
+      "description": "Mission\nSpeechify is the easiest way to listen to the world's information. Articles on the web, documents in the cloud, books on your phone. We absorb it all and let you listen to it at your desk, on the go, at your own speed, and with tools that make learning easier, deeper, and faster.\nWhat stream...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-28T13:23:56.235Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836235-10",
+      "title": "Software Engineer, Platform",
+      "companyName": "Speechify",
+      "logoSeed": "💡",
+      "location": "Hyderabad, Telangana",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "salary": "₹12,00,000 - ₹18,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Engineering",
+        "Software",
+        "React"
+      ],
+      "description": "The mission of Speechify is to make sure that reading is never a barrier to learning.\nOver 50 million people use Speechify's text-to-speech products to turn whatever they're reading – PDFs, books, Google Docs, news articles, websites – into audio, so they can read faster, read more, and remember mor...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-28T11:23:56.235Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836235-11",
+      "title": "Bilanzbuchhalter (m/w/d) Home Office",
+      "companyName": "PRIME HR Agentur®",
+      "logoSeed": "🔥",
+      "location": "Kolkata, West Bengal",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹15,00,000 - ₹24,00,000 / year",
+      "experience": "Senior-level",
+      "skills": [
+        "Finance"
+      ],
+      "description": "Im Rahmen unserer vertrauensvollen, langfristigen Zusammenarbeit mit einer erfolgreichen, renommierten Unternehmensgruppe suchen wir für diesen zuverlässigen Partner in unbefristeter, sicherer Festanstellung einen erfahrenen, kompetenten Bilanzbuchhalter (m/w/d) mit einem breitgefächerten und abwech...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-28T09:23:56.235Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836235-12",
+      "title": "Fullstack Software Entwickler Java, Angular (m/w/d)",
+      "companyName": "isento GmbH",
+      "logoSeed": "🛡️",
+      "location": "Chennai, Tamil Nadu",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "salary": "₹6,00,000 - ₹9,50,000 / year",
+      "experience": "Entry-level",
+      "skills": [
+        "Software Development"
+      ],
+      "description": "“Any fool can write code that a computer can understand. Good programmers write code that humans can understand.” – Martin Fowler\nUnser Erfolg? Teamsache!\nWir sind isento (portugiesisch: „frei“) und realisieren IT-Projekte in Nürnberg von der Konzeption bis zum Rollout. Für eines unserer Teams suche...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-28T07:23:56.235Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836235-13",
+      "title": "Software Developer (m/w/d)- Schwerpunkt Angular",
+      "companyName": "isento GmbH",
+      "logoSeed": "⚡",
+      "location": "Pune, Maharashtra",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹8,50,000 - ₹12,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Software Development"
+      ],
+      "description": "“Any fool can write code that a computer can understand. Good programmers write code that humans can understand.” – Martin Fowler\nUnser Erfolg? Teamsache!\nWir sind isento (portugiesisch: „frei“) und realisieren IT-Projekte in Nürnberg von der Konzeption bis zum Rollout. Als Software Developer brings...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-28T05:23:56.235Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836235-14",
+      "title": "Senior Software Developer (m/w/d)",
+      "companyName": "isento GmbH",
+      "logoSeed": "🤖",
+      "location": "Bathinda, Punjab",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "salary": "₹12,00,000 - ₹18,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Software Development"
+      ],
+      "description": "“Experience is the name everyone gives to their mistakes.” – Oscar Wilde\nUnser Erfolg? Teamsache!\nWir sind isento (portugiesisch: „frei“) und realisieren IT-Projekte in Nürnberg von der Konzeption bis zum Rollout. Als Software Developer bringst Du Dich bei der Entwicklung maßgeschneiderter Lösungen ...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-28T03:23:56.235Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836235-15",
+      "title": "Steuerberater (m/w/d) in Zörbig, auf Wunsch mit Partnerperspektive, gesucht",
+      "companyName": "Taxtalente.de",
+      "logoSeed": "👾",
+      "location": "Chandigarh, UT",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹15,00,000 - ₹24,00,000 / year",
+      "experience": "Senior-level",
+      "skills": [
+        "Directors",
+        "Chief Executives"
+      ],
+      "description": "TaxTalente ist die Nr. 1 Job-Matching Plattform für Jobsuchende in der Steuerberatung.\nSie suchen eine positive berufliche Veränderung? Sie möchten den nächsten Schritt in Ihrer Karriere gehen und streben möglicherweise sogar eine Partnerschaft in einer zukunftsorientierten Kanzlei an? Sie möchten e...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-28T01:23:56.235Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836235-16",
+      "title": "Steuerberater (m/w/d) in Zwönitz, auf Wunsch mit Partnerperspektive, gesucht",
+      "companyName": "Taxtalente.de",
+      "logoSeed": "🚀",
+      "location": "Mohali, Punjab",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "salary": "₹6,00,000 - ₹9,50,000 / year",
+      "experience": "Entry-level",
+      "skills": [
+        "Directors",
+        "Chief Executives"
+      ],
+      "description": "TaxTalente ist die Nr. 1 Job-Matching Plattform für Jobsuchende in der Steuerberatung.\nSie suchen eine positive berufliche Veränderung? Sie möchten den nächsten Schritt in Ihrer Karriere gehen und streben möglicherweise sogar eine Partnerschaft in einer zukunftsorientierten Kanzlei an? Sie möchten e...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-27T23:23:56.235Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836235-17",
+      "title": "Steuerberater (m/w/d) in Hartenholm, auf Wunsch mit Partnerperspektive, gesucht",
+      "companyName": "Taxtalente.de",
+      "logoSeed": "💻",
+      "location": "Patiala, Punjab",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹8,50,000 - ₹12,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Directors",
+        "Chief Executives"
+      ],
+      "description": "TaxTalente ist die Nr. 1 Job-Matching Plattform für Jobsuchende in der Steuerberatung.\nSie suchen eine positive berufliche Veränderung? Sie möchten den nächsten Schritt in Ihrer Karriere gehen und streben möglicherweise sogar eine Partnerschaft in einer zukunftsorientierten Kanzlei an? Sie möchten e...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-27T21:23:56.235Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836235-18",
+      "title": "Steuerberater (m/w/d) in Geratal, auf Wunsch mit Partnerperspektive, gesucht",
+      "companyName": "Taxtalente.de",
+      "logoSeed": "💡",
+      "location": "Ludhiana, Punjab",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "salary": "₹12,00,000 - ₹18,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Directors",
+        "Chief Executives"
+      ],
+      "description": "TaxTalente ist die Nr. 1 Job-Matching Plattform für Jobsuchende in der Steuerberatung.\nSie suchen eine positive berufliche Veränderung? Sie möchten den nächsten Schritt in Ihrer Karriere gehen und streben möglicherweise sogar eine Partnerschaft in einer zukunftsorientierten Kanzlei an? Sie möchten e...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-27T19:23:56.235Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836235-19",
+      "title": "Steuerberater (m/w/d) in Brechen, auf Wunsch mit Partnerperspektive, gesucht",
+      "companyName": "Taxtalente.de",
+      "logoSeed": "🔥",
+      "location": "Amritsar, Punjab",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹15,00,000 - ₹24,00,000 / year",
+      "experience": "Senior-level",
+      "skills": [
+        "Directors",
+        "Chief Executives"
+      ],
+      "description": "TaxTalente ist die Nr. 1 Job-Matching Plattform für Jobsuchende in der Steuerberatung.\nSie suchen eine positive berufliche Veränderung? Sie möchten den nächsten Schritt in Ihrer Karriere gehen und streben möglicherweise sogar eine Partnerschaft in einer zukunftsorientierten Kanzlei an? Sie möchten e...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-27T17:23:56.235Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836235-20",
+      "title": "Steuerberater (m/w/d) in Aholming, auf Wunsch mit Partnerperspektive, gesucht",
+      "companyName": "Taxtalente.de",
+      "logoSeed": "🛡️",
+      "location": "Jalandhar, Punjab",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "salary": "₹6,00,000 - ₹9,50,000 / year",
+      "experience": "Entry-level",
+      "skills": [
+        "Directors",
+        "Chief Executives"
+      ],
+      "description": "TaxTalente ist die Nr. 1 Job-Matching Plattform für Jobsuchende in der Steuerberatung.\nSie suchen eine positive berufliche Veränderung? Sie möchten den nächsten Schritt in Ihrer Karriere gehen und streben möglicherweise sogar eine Partnerschaft in einer zukunftsorientierten Kanzlei an? Sie möchten e...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-27T15:23:56.235Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836235-21",
+      "title": "Steuerberater (m/w/d) in Homberg, auf Wunsch mit Partnerperspektive, gesucht",
+      "companyName": "Taxtalente.de",
+      "logoSeed": "⚡",
+      "location": "Delhi, NCR",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹8,50,000 - ₹12,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Directors",
+        "Chief Executives"
+      ],
+      "description": "TaxTalente ist die Nr. 1 Job-Matching Plattform für Jobsuchende in der Steuerberatung.\nSie suchen eine positive berufliche Veränderung? Sie möchten den nächsten Schritt in Ihrer Karriere gehen und streben möglicherweise sogar eine Partnerschaft in einer zukunftsorientierten Kanzlei an? Sie möchten e...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-27T13:23:56.235Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836235-22",
+      "title": "Steuerberater (m/w/d) in Augsburg, auf Wunsch mit Partnerperspektive, gesucht",
+      "companyName": "Taxtalente.de",
+      "logoSeed": "🤖",
+      "location": "Mumbai, Maharashtra",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "salary": "₹12,00,000 - ₹18,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Directors",
+        "Chief Executives"
+      ],
+      "description": "TaxTalente ist die Nr. 1 Job-Matching Plattform für Jobsuchende in der Steuerberatung.\nSie suchen eine positive berufliche Veränderung? Sie möchten den nächsten Schritt in Ihrer Karriere gehen und streben möglicherweise sogar eine Partnerschaft in einer zukunftsorientierten Kanzlei an? Sie möchten e...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-27T11:23:56.235Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836235-23",
+      "title": "Werkstudent (gn) Hochbau Schwerpunkt Kalkulation & Arbeitsvorbereitung",
+      "companyName": "OST BAU; Osterburger Straßen-,Tief- und Hochbau GmbH",
+      "logoSeed": "👾",
+      "location": "Bengaluru, Karnataka",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹15,00,000 - ₹24,00,000 / year",
+      "experience": "Senior-level",
+      "skills": [
+        "Building",
+        "Supply",
+        "Safety Services Engineering"
+      ],
+      "description": "Was wir Dir bieten:\n\nEinblicke und Aufgaben in verschiedenen Projekten im Bereich Hochbau\nEinen zentralen Arbeitsplatz und ein dynamisches Team an unserem Standort Magdeburg\nFlexible Arbeitszeitgestaltung passend zu deinem Studium\nBerufliche Perspektive für den Berufseinstieg als Kalkulator/in oder ...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-27T09:23:56.235Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836235-24",
+      "title": "Junior Ailance Ailance Application Support Specialist (m/w/d)",
+      "companyName": "2B Advice GmbH",
+      "logoSeed": "🚀",
+      "location": "Hyderabad, Telangana",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "salary": "₹6,00,000 - ₹9,50,000 / year",
+      "experience": "Entry-level",
+      "skills": [
+        "Helpdesk"
+      ],
+      "description": "2B Advice entwickelt mit Ailance eine moderne SaaS-Plattform für Datenschutz, Governance, Risk und Compliance. Unsere Kunden nutzen Ailance, um komplexe Prozesse, Daten, Workflows, Nachweise und Berichte im Alltag steuerbar zu machen.\nFür unser Team in Bonn suchen wir eine strukturierte, kommunikati...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-27T07:23:56.235Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-25",
+      "title": "AI Product Engineer",
+      "companyName": "Lyto Brands Group",
+      "logoSeed": "💻",
+      "location": "Kolkata, West Bengal",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹8,50,000 - ₹12,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Software Development"
+      ],
+      "description": "Baue KI-gestützte Tools und Automationen, die unsere Marketing-, Creative-, Operations- und Engineering-Teams 10x schneller und besser machen. Dabei setzt du auf unserer proprietären Plattform Lyto.OS auf und entwickelst diese gemeinsam mit unserem Tech Team kontinuerlich weiter.\nAufgaben\n\nDu findes...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-27T05:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-26",
+      "title": "Online Marketing Manager (m/w/d) mit Facebook / Instagram / Meta Ads Erfahrung",
+      "companyName": "Hommel Hired",
+      "logoSeed": "💡",
+      "location": "Chennai, Tamil Nadu",
+      "type": "Full-time",
+      "mode": "Remote",
+      "salary": "₹12,00,000 - ₹18,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Remote",
+        "Marketing and Communication"
+      ],
+      "description": "VOGGSMEDIA ist eine Performance-Marketing-Agentur mit Familien-DNA und Remote-First-Setup. 2017 von Sebastian, Lisa und Matthias Vogg gegründet, arbeitet heute ein eingespieltes Team aus Media Buyern, Creative Strategists, Designern und Content-Produzenten verteilt im gesamten DACH-Raum zusammen.\nDe...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-27T03:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-27",
+      "title": "(Senior) Paid Social Media Manager (all genders)",
+      "companyName": "mammaly",
+      "logoSeed": "🔥",
+      "location": "Pune, Maharashtra",
+      "type": "Full-time",
+      "mode": "Remote",
+      "salary": "₹15,00,000 - ₹24,00,000 / year",
+      "experience": "Senior-level",
+      "skills": [
+        "Remote",
+        "Online Marketing"
+      ],
+      "description": "About mammaly\nWe are mammaly! - und unsere Mission sind gesunde und glückliche Hunde! Deshalb entwickeln wir Premium Supplements für Hunde, die ein langes und gutes Leben ermöglichen.\nGegründet in 2020, ist mammaly bereits jetzt das führende Pet Supplement Startup in Deutschland. Darauf ruhen wir un...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-27T01:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-28",
+      "title": "Founders Associate (m/w/d)",
+      "companyName": "BarBrain GmbH",
+      "logoSeed": "🛡️",
+      "location": "Bathinda, Punjab",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "salary": "₹6,00,000 - ₹9,50,000 / year",
+      "experience": "Entry-level",
+      "skills": [
+        "Management",
+        "Team Leader"
+      ],
+      "description": "BarBrain ist eines der am schnellsten wachsenden SaaS-Startups für die Gastronomie. Unser Tool digitalisiert Inventurprozesse in Restaurants, Bars und Hotels – effizient, benutzerfreundlich und datengetrieben. Mit einer wachsenden Zahl qualifizierter Leads, einem skalierbaren Produkt und starken Ref...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-26T23:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-29",
+      "title": "Praktikant Venture Development (m/w/d)",
+      "companyName": "CKM Group",
+      "logoSeed": "⚡",
+      "location": "Chandigarh, UT",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹8,50,000 - ₹12,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Business Development"
+      ],
+      "description": "Intro\nZur  gehören eine Vielzahl von Unternehmen sowie eine Klinik, die alle dazu beitragen, unserer Vision von einer gesünderen Welt näher zu kommen.\nUnser Ziel ist es, durch präventive Dienstleistungsmedizin, eHealth und Public Health eine führende und wegweisende Rolle im Gesundheitssystem von mo...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-26T21:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-30",
+      "title": "Teilzeit Buchhaltung 20h (m/w/d)",
+      "companyName": "Eneto GmbH",
+      "logoSeed": "🤖",
+      "location": "Mohali, Punjab",
+      "type": "Full-time",
+      "mode": "Remote",
+      "salary": "₹12,00,000 - ₹18,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Remote",
+        "Finance"
+      ],
+      "description": "Der Markt für moderne Klimatechnik und Heizlösungen ist oft geprägt von Intransparenz, langen Wartezeiten und bürokratischen Hürden. Wir bei Eneto treten an, um das zu ändern. Unsere Mission ist es, den Zugang zu nachhaltiger Gebäudetechnik – von hocheffizienten Klimaanlagen bis hin zu modernen Heiz...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-26T19:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-31",
+      "title": "Social Media Creatorin für Family Brand (Teilzeit oder Freelance, 100% remote und flexibel)",
+      "companyName": "12minutes GmbH",
+      "logoSeed": "👾",
+      "location": "Patiala, Punjab",
+      "type": "Full-time",
+      "mode": "Remote",
+      "salary": "₹15,00,000 - ₹24,00,000 / year",
+      "experience": "Senior-level",
+      "skills": [
+        "Remote",
+        "Marketing and Communication"
+      ],
+      "description": "Wir suchen eine kreative, schnelle und social-native Person (m/w(d), die Lust hat, unsere trendy Erste-Hilfe-Sets für Familien ouchie und unseren Erste-Hilfe-Kurs 12minutes auf Instagram, TikTok &#x26; Co. sichtbar zu machen.\nDie Stelle ist 100% remote, komplett flexibel in der Zeiteinteilung.\nDu li...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-26T17:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-32",
+      "title": "Bilanzbuchhalter / Senior Accountant (m/w/d)",
+      "companyName": "Jobbusters® GmbH",
+      "logoSeed": "🚀",
+      "location": "Ludhiana, Punjab",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "salary": "₹6,00,000 - ₹9,50,000 / year",
+      "experience": "Entry-level",
+      "skills": [
+        "Finance"
+      ],
+      "description": "Die Jobbusters vermittelt im Rahmen der Direktvermittlung an ein erfolgreiches, familiengeführtes Produktionsunternehmen mit langjähriger Tradition und internationaler Ausrichtung. Unser Mandant entwickelt und produziert hochwertige Spezialprodukte für anspruchsvolle Industriekunden und steht für Qu...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-26T15:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-33",
+      "title": "Bilanzbuchhalter (m/w/d)",
+      "companyName": "Jobbusters® GmbH",
+      "logoSeed": "💻",
+      "location": "Amritsar, Punjab",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹8,50,000 - ₹12,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Finance"
+      ],
+      "description": "Die Jobbusters vermitteln im Rahmen der Direktvermittlung für den Standort München an einen Exportweltmeister (50 Länder) und internationaler Ausrichtung aus dem technischen Bereich.\nUnser Mandant entwickelt und produziert hochwertige Spezialprodukte für anspruchsvolle Industriekunden und steht für ...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-26T13:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-34",
+      "title": "Finanzbuchhalter (m/w/d)",
+      "companyName": "Jobbusters® GmbH",
+      "logoSeed": "💡",
+      "location": "Jalandhar, Punjab",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "salary": "₹12,00,000 - ₹18,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Finance"
+      ],
+      "description": "Zahlenjäger/in in der Buchhaltung gesucht!\n📍 Standort: Nürnberg\n🕰️ Eintritt: so schnell wie dein Taschenrechner rechnet\n📄 Beschäftigungsart: Vollzeit\nDu spürst es genau – da spukt noch etwas im Zahlenwerk. Ein offener Posten hier, ein Buchungsdifferenzchen dort. Du lässt dich nicht so leicht ersc...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-26T11:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-35",
+      "title": "Personalsachbearbeiter (m/w/d) Personalwesen & Lohnabrechnung",
+      "companyName": "careful-service GmbH",
+      "logoSeed": "🔥",
+      "location": "Delhi, NCR",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹15,00,000 - ₹24,00,000 / year",
+      "experience": "Senior-level",
+      "skills": [
+        "HR"
+      ],
+      "description": "Verstärken Sie unser Team!\nDie careful-service GmbH ist seit über 11 Jahren auf die bundesweite Organisation und Koordination der häuslichen 24-Stunden-Betreuung spezialisiert. Zur Verstärkung unseres Teams in Recklinghausen suchen wir zum nächstmöglichen Zeitpunkt eine langjährig erfahrene Personal...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-26T09:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-36",
+      "title": "Steuerberater (m/w/d) in Woltersdorf, auf Wunsch mit Partnerperspektive, gesucht",
+      "companyName": "Taxtalente.de",
+      "logoSeed": "🛡️",
+      "location": "Mumbai, Maharashtra",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "salary": "₹6,00,000 - ₹9,50,000 / year",
+      "experience": "Entry-level",
+      "skills": [
+        "Directors",
+        "Chief Executives"
+      ],
+      "description": "TaxTalente ist die Nr. 1 Job-Matching Plattform für Jobsuchende in der Steuerberatung.\nSie suchen eine positive berufliche Veränderung? Sie möchten den nächsten Schritt in Ihrer Karriere gehen und streben möglicherweise sogar eine Partnerschaft in einer zukunftsorientierten Kanzlei an? Sie möchten e...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-26T07:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-37",
+      "title": "Steuerberater (m/w/d) in Bargfeld-Stegen, auf Wunsch mit Partnerperspektive, gesucht",
+      "companyName": "Taxtalente.de",
+      "logoSeed": "⚡",
+      "location": "Bengaluru, Karnataka",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹8,50,000 - ₹12,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Directors",
+        "Chief Executives"
+      ],
+      "description": "TaxTalente ist die Nr. 1 Job-Matching Plattform für Jobsuchende in der Steuerberatung.\nSie suchen eine positive berufliche Veränderung? Sie möchten den nächsten Schritt in Ihrer Karriere gehen und streben möglicherweise sogar eine Partnerschaft in einer zukunftsorientierten Kanzlei an? Sie möchten e...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-26T05:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-38",
+      "title": "Steuerberater (m/w/d) in Gransee, auf Wunsch mit Partnerperspektive, gesucht",
+      "companyName": "Taxtalente.de",
+      "logoSeed": "🤖",
+      "location": "Hyderabad, Telangana",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "salary": "₹12,00,000 - ₹18,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Directors",
+        "Chief Executives"
+      ],
+      "description": "TaxTalente ist die Nr. 1 Job-Matching Plattform für Jobsuchende in der Steuerberatung.\nSie suchen eine positive berufliche Veränderung? Sie möchten den nächsten Schritt in Ihrer Karriere gehen und streben möglicherweise sogar eine Partnerschaft in einer zukunftsorientierten Kanzlei an? Sie möchten e...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-26T03:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-39",
+      "title": "Steuerberater (m/w/d) in Cleebronn, auf Wunsch mit Partnerperspektive, gesucht",
+      "companyName": "Taxtalente.de",
+      "logoSeed": "👾",
+      "location": "Kolkata, West Bengal",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹15,00,000 - ₹24,00,000 / year",
+      "experience": "Senior-level",
+      "skills": [
+        "Directors",
+        "Chief Executives"
+      ],
+      "description": "TaxTalente ist die Nr. 1 Job-Matching Plattform für Jobsuchende in der Steuerberatung.\nSie suchen eine positive berufliche Veränderung? Sie möchten den nächsten Schritt in Ihrer Karriere gehen und streben möglicherweise sogar eine Partnerschaft in einer zukunftsorientierten Kanzlei an? Sie möchten e...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-26T01:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-40",
+      "title": "Steuerberater (m/w/d) in Wallmenroth, auf Wunsch mit Partnerperspektive, gesucht",
+      "companyName": "Taxtalente.de",
+      "logoSeed": "🚀",
+      "location": "Chennai, Tamil Nadu",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "salary": "₹6,00,000 - ₹9,50,000 / year",
+      "experience": "Entry-level",
+      "skills": [
+        "Directors",
+        "Chief Executives"
+      ],
+      "description": "TaxTalente ist die Nr. 1 Job-Matching Plattform für Jobsuchende in der Steuerberatung.\nSie suchen eine positive berufliche Veränderung? Sie möchten den nächsten Schritt in Ihrer Karriere gehen und streben möglicherweise sogar eine Partnerschaft in einer zukunftsorientierten Kanzlei an? Sie möchten e...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-25T23:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-41",
+      "title": "Steuerberater (m/w/d) in Kolkwitz, auf Wunsch mit Partnerperspektive, gesucht",
+      "companyName": "Taxtalente.de",
+      "logoSeed": "💻",
+      "location": "Pune, Maharashtra",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹8,50,000 - ₹12,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Directors",
+        "Chief Executives"
+      ],
+      "description": "TaxTalente ist die Nr. 1 Job-Matching Plattform für Jobsuchende in der Steuerberatung.\nSie suchen eine positive berufliche Veränderung? Sie möchten den nächsten Schritt in Ihrer Karriere gehen und streben möglicherweise sogar eine Partnerschaft in einer zukunftsorientierten Kanzlei an? Sie möchten e...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-25T21:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-42",
+      "title": "Steuerberater (m/w/d) in Bamberg, auf Wunsch mit Partnerperspektive, gesucht",
+      "companyName": "Taxtalente.de",
+      "logoSeed": "💡",
+      "location": "Bathinda, Punjab",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "salary": "₹12,00,000 - ₹18,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Directors",
+        "Chief Executives"
+      ],
+      "description": "TaxTalente ist die Nr. 1 Job-Matching Plattform für Jobsuchende in der Steuerberatung.\nSie suchen eine positive berufliche Veränderung? Sie möchten den nächsten Schritt in Ihrer Karriere gehen und streben möglicherweise sogar eine Partnerschaft in einer zukunftsorientierten Kanzlei an? Sie möchten e...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-25T19:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-43",
+      "title": "Steuerberater (m/w/d) in Buseck, auf Wunsch mit Partnerperspektive, gesucht",
+      "companyName": "Taxtalente.de",
+      "logoSeed": "🔥",
+      "location": "Chandigarh, UT",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹15,00,000 - ₹24,00,000 / year",
+      "experience": "Senior-level",
+      "skills": [
+        "Directors",
+        "Chief Executives"
+      ],
+      "description": "TaxTalente ist die Nr. 1 Job-Matching Plattform für Jobsuchende in der Steuerberatung.\nSie suchen eine positive berufliche Veränderung? Sie möchten den nächsten Schritt in Ihrer Karriere gehen und streben möglicherweise sogar eine Partnerschaft in einer zukunftsorientierten Kanzlei an? Sie möchten e...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-25T17:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-44",
+      "title": "Kosmetikerin / Beauty Expertin (Facials, Lashlift, Maniküre & Pediküre)",
+      "companyName": "Pow korean concept",
+      "logoSeed": "🛡️",
+      "location": "Mohali, Punjab",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "salary": "₹6,00,000 - ₹9,50,000 / year",
+      "experience": "Entry-level",
+      "skills": [
+        "Beauty",
+        "Wellness"
+      ],
+      "description": "POW Korean Concept ist ein modernes Beauty Studio mit Fokus auf hochwertige Hautbehandlungen und koreanische Beauty-Techniken. Unser Schwerpunkt liegt auf professionellen Facials, gesunder Haut und präzisen Beauty Treatments wie russischer Maniküre, Pediküre und Korean Lashlift.\nWir legen großen Wer...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-25T15:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-45",
+      "title": "Senior SEA Manager (m/w/d)",
+      "companyName": "hurra.com",
+      "logoSeed": "⚡",
+      "location": "Patiala, Punjab",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹8,50,000 - ₹12,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Online Marketing"
+      ],
+      "description": "Gestalte mit uns die nächste Generation von Paid Search.\nVon Google Ads und Performance Max bis zu neuen AI-basierten Werbeplattformen wie ChatGPT Ads:\nDu beherrschst komplexe internationale Accounts auf höchstem Niveau, denkst strategisch und erkennst früh, wo Daten, Automatisierung und AI messbare...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-25T13:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-46",
+      "title": "Digital Analytics & Tracking Consultant",
+      "companyName": "hurra.com",
+      "logoSeed": "🤖",
+      "location": "Ludhiana, Punjab",
+      "type": "Full-time",
+      "mode": "Remote",
+      "salary": "₹12,00,000 - ₹18,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Remote",
+        "Marketing and Communication"
+      ],
+      "description": "We are a digital marketing agency looking for a Digital Analytics Consultant to support our team and eCommerce clients, particularly in the following areas:\n\nImplementation and optimisation of GA4 tracking\nClient-side and server-side Google Tag Manager\nConsent Management Platforms (CMPs)\nIdeally, tr...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-25T11:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-47",
+      "title": "WEG / Immobilienbuchhalter",
+      "companyName": "Phoenix Personalvermittlung GmbH",
+      "logoSeed": "👾",
+      "location": "Amritsar, Punjab",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹15,00,000 - ₹24,00,000 / year",
+      "experience": "Senior-level",
+      "skills": [
+        "Finance"
+      ],
+      "description": "Bei Phoenix Personal suchen wir engagierte, zuverlässige und motivierte Personen, die ihre Karriere in einem professionellen Umfeld vorantreiben möchten. Wir bieten individuelle Lösungen, die genau auf Ihre Bedürfnisse abgestimmt sind.\nFür einen attraktiven Arbeitgeber in der Wohnungswirtschaft such...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-25T09:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-48",
+      "title": "Programmmanager militärische Nutzung Weltraum (m/w/x)",
+      "companyName": "K-tronik GmbH",
+      "logoSeed": "🚀",
+      "location": "Jalandhar, Punjab",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "salary": "₹6,00,000 - ₹9,50,000 / year",
+      "experience": "Entry-level",
+      "skills": [
+        "Engineering"
+      ],
+      "description": "Projektbeschreibung:\nTechnologie begeistert Sie? Uns auch! Zur Verstärkung unseres Expertenteams bei unserem Kunden aus dem Bereich Defense &#x26; Security in Ottobrunn suchen wir einen Programmmanager militärische Nutzung Weltraum (m/w/x) in Festanstellung bei K-tronik. Wir freuen uns darauf, Sie p...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-25T07:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-49",
+      "title": "Finanzbuchhalter/in, Bilanzbuchhalter/in, Steuerfachangestellte/r",
+      "companyName": "Phoenix Personalvermittlung GmbH",
+      "logoSeed": "💻",
+      "location": "Delhi, NCR",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹8,50,000 - ₹12,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Finance"
+      ],
+      "description": "Bei Phoenix Personalvermittlung suchen wir engagierte, zuverlässige und motivierte Personen, die ihre Karriere in einem professionellen Umfeld vorantreiben möchten. Wir bieten individuelle HR-Lösungen, die genau auf Ihre Bedürfnisse abgestimmt sind.\nFür ein renommiertes Unternehmen suchen wir erfahr...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-25T05:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-50",
+      "title": "Projektleiter:in",
+      "companyName": "Solartechnik Thiemann",
+      "logoSeed": "💡",
+      "location": "Mumbai, Maharashtra",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "salary": "₹12,00,000 - ₹18,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Project Management"
+      ],
+      "description": "Bist du bereit, die Zukunft der Energie mitzugestalten? Bei Solartechnik Thiemann suchen wir eine:n engagierte:n Projektleiter:in, der:die mit uns zusammen beeindruckende Solaranlagen in Schorndorf und Umgebung realisiert. Mit deinem Drive und deiner Offenheit wirst du Teil eines kleinen, aber dynam...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-25T03:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-51",
+      "title": "Brand Associate (m/w/d)",
+      "companyName": "Nero GmbH",
+      "logoSeed": "🔥",
+      "location": "Bengaluru, Karnataka",
+      "type": "Full-time",
+      "mode": "Remote",
+      "salary": "₹15,00,000 - ₹24,00,000 / year",
+      "experience": "Senior-level",
+      "skills": [
+        "Remote",
+        "Marketing and Communication"
+      ],
+      "description": "Wir sind davon überzeugt, dass Matcha mehr ist als nur ein Trend.\n&#x26; bauen deswegen eine vollkommen neue Kategorie im Getränkemarkt auf: Ready-to-Drink Matcha. Kein Konzern, keine langen Entscheidungswege und keine starren Strukturen. Dafür ein kleines Team, echte Verantwortung, direkte Zusammen...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-25T01:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-52",
+      "title": "50 %: Staatlich geprüfte Kosmetikerin in Teilzeit",
+      "companyName": "Inanna GmbH",
+      "logoSeed": "🛡️",
+      "location": "Hyderabad, Telangana",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "salary": "₹6,00,000 - ₹9,50,000 / year",
+      "experience": "Entry-level",
+      "skills": [
+        "Beauty",
+        "Wellness"
+      ],
+      "description": "Ein Haus, in dem Handwerk Zeit hat\nInanna Wellness ist ein privates Haus für Ästhetik und Wohlbefinden in der Charlottenstraße in Berlin-Mitte. Wir arbeiten leise und präzise, mit feinem Handwerk und sorgfältig gewählten Methoden, im Rhythmus unserer Gäste.\nWer hier arbeitet, gestaltet diese Haltung...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-24T23:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-53",
+      "title": "Social Media Manager",
+      "companyName": "Ipanema UG (haftungsbeschränkt)",
+      "logoSeed": "⚡",
+      "location": "Kolkata, West Bengal",
+      "type": "Full-time",
+      "mode": "Remote",
+      "salary": "₹8,50,000 - ₹12,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Remote",
+        "Social Media Manager"
+      ],
+      "description": "Die Ipanema UG ist ein stark wachsendes Creator- und Social-Media-Management im Lifestyle-, Beauty- und Entertainment-Umfeld. Wir betreuen Talents, entwickeln Kampagnen mit starken Marken und bauen unsere Strukturen aktuell weiter aus. Dafür suchen wir eine kreative, proaktive und gut organisierte P...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-24T21:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-54",
+      "title": "Marketing Spezialist (m/w/d)",
+      "companyName": "Griptech GmbH",
+      "logoSeed": "🤖",
+      "location": "Chennai, Tamil Nadu",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "salary": "₹12,00,000 - ₹18,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Strategic Marketing"
+      ],
+      "description": "Marketing Spezialist (m/w/d)\n📍 Herzogenrath | Vollzeit | ab sofort\nGestalte mit uns die Zukunft unseres Marketings.\nMarketing ist für Dich mehr als Social Media und schöne Bilder?\nDu möchtest kreative Ideen mit technischem Verständnis verbinden und dazu beitragen, innovative Produkte erfolgreich im...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-24T19:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-55",
+      "title": "Junior Projektleiter (m/w/d) Versorgungstechnik / HKLS oder Elektrotechnik",
+      "companyName": "BIMEXPERTS GmbH",
+      "logoSeed": "👾",
+      "location": "Pune, Maharashtra",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹15,00,000 - ₹24,00,000 / year",
+      "experience": "Senior-level",
+      "skills": [
+        "Building",
+        "Supply",
+        "Safety Services Engineering"
+      ],
+      "description": "Starte den nächsten Schritt in deiner technischen Laufbahn Vom präzisen Systemplaner zum weitsichtigen Projektleiter – entwickle dich mit modernen BIM-, KI- und digitalen Planungstools in die nächste Stufe der TGA-Planung. .\nBei BIMEXPERTS in Vohenstrauß entwickelst du dich vom Techniker zum Junior ...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-24T17:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-56",
+      "title": "Senior Software Engineer",
+      "companyName": "1KOMMA5˚",
+      "logoSeed": "🚀",
+      "location": "Bathinda, Punjab",
+      "type": "Full-time",
+      "mode": "Remote",
+      "salary": "₹6,00,000 - ₹9,50,000 / year",
+      "experience": "Entry-level",
+      "skills": [
+        "Remote",
+        "Software Development"
+      ],
+      "description": "1KOMMA5°\nAt 1KOMMA5°, we pursue a clear vision: Living on wind and sunlight forever for free. To make this a reality, we are building the energy system of the future with Heartbeat AI. Want to be part of it?\nWe bring together regional craftsmanship and scalable software: We don't think of solar, bat...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-24T15:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-57",
+      "title": "Projekt / Office",
+      "companyName": "CFMCONsulting Meyer",
+      "logoSeed": "💻",
+      "location": "Chandigarh, UT",
+      "type": "Full-time",
+      "mode": "Remote",
+      "salary": "₹8,50,000 - ₹12,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Remote",
+        "Business Operations"
+      ],
+      "description": "Wir suchen im Auftrag unseres Klienten T. Eilers &#x26; Partner Unterstützung im Bereich\nProjekt / Office - Management und Organisation &#x26; Umsetzung\nDas Unternehmen berät Unternehmer mit dem Ziel, Einnahmen und Ausgaben\nstrategisch zu optimieren. Damit aus Strategien konkrete Ergebnisse werden,\n...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-24T13:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-58",
+      "title": "E-Commerce / eCom Shopify Onlineshop Manager (m/w/d) für 3 Brands",
+      "companyName": "Hommel Hired",
+      "logoSeed": "💡",
+      "location": "Mohali, Punjab",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "salary": "₹12,00,000 - ₹18,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Marketing and Communication"
+      ],
+      "description": "Du liebst eCommerce, hast ein Auge für Qualität und kannst 5 Bälle gleichzeitig jonglieren? Als eCom Manager:in bist du bist für Onlineshop &#x26; Conversion Optimierung für unsere Marken zuständig und arbeitest dabei eng mit unserem COO (Ex-Shopify).\nDu sorgst dafür, dass die Shops des Kunden eine ...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-24T11:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-59",
+      "title": "Staff Backend Engineer (.NET) (f/m/d)",
+      "companyName": "Apaleo",
+      "logoSeed": "🔥",
+      "location": "Patiala, Punjab",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹15,00,000 - ₹24,00,000 / year",
+      "experience": "Senior-level",
+      "skills": [
+        "Engineering",
+        "Software",
+        "React"
+      ],
+      "description": "Join Apaleo and Shape the Future of Hospitality Tech!\nApaleo is the world's most open, API-first property management platform powering the next generation of hospitality operations. Its modular, AI-powered infrastructure enables hoteliers to customise their tech stack, automate routine work, and del...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-24T09:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-60",
+      "title": "Senior Backend Engineer (.NET) (f/m/d)",
+      "companyName": "Apaleo",
+      "logoSeed": "🛡️",
+      "location": "Ludhiana, Punjab",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "salary": "₹6,00,000 - ₹9,50,000 / year",
+      "experience": "Entry-level",
+      "skills": [
+        "Engineering",
+        "Software",
+        "React"
+      ],
+      "description": "Join Apaleo and Shape the Future of Hospitality Tech!\nApaleo is the world's most open, API-first property management platform powering the next generation of hospitality operations. Its modular, AI-powered infrastructure enables hoteliers to customise their tech stack, automate routine work, and del...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-24T07:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-61",
+      "title": "Senior Software Engineer (TypeScript, NestJS/Node.js) (m/f/x)",
+      "companyName": "Atolls",
+      "logoSeed": "⚡",
+      "location": "Amritsar, Punjab",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹8,50,000 - ₹12,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Engineering",
+        "Software",
+        "React"
+      ],
+      "description": "\n\nAtolls is the world's largest community-driven shopping platform, active in 20+ markets.&nbsp;\nWe help millions make smarter spending decisions across discovery, evaluation, and (re-)purchase by connecting people with the right brands and retailers.\nOur 1,000+ team across 10 countries builds produ...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-24T05:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-62",
+      "title": "Steuerberater (m/w/d) in Paunzhausen, auf Wunsch mit Partnerperspektive, gesucht",
+      "companyName": "Taxtalente.de",
+      "logoSeed": "🤖",
+      "location": "Jalandhar, Punjab",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "salary": "₹12,00,000 - ₹18,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Directors",
+        "Chief Executives"
+      ],
+      "description": "TaxTalente ist die Nr. 1 Job-Matching Plattform für Jobsuchende in der Steuerberatung.\nSie suchen eine positive berufliche Veränderung? Sie möchten den nächsten Schritt in Ihrer Karriere gehen und streben möglicherweise sogar eine Partnerschaft in einer zukunftsorientierten Kanzlei an? Sie möchten e...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-24T03:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-63",
+      "title": "Steuerberater (m/w/d) in Raschau-Markersbach, auf Wunsch mit Partnerperspektive, gesucht",
+      "companyName": "Taxtalente.de",
+      "logoSeed": "👾",
+      "location": "Delhi, NCR",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹15,00,000 - ₹24,00,000 / year",
+      "experience": "Senior-level",
+      "skills": [
+        "Directors",
+        "Chief Executives"
+      ],
+      "description": "TaxTalente ist die Nr. 1 Job-Matching Plattform für Jobsuchende in der Steuerberatung.\nSie suchen eine positive berufliche Veränderung? Sie möchten den nächsten Schritt in Ihrer Karriere gehen und streben möglicherweise sogar eine Partnerschaft in einer zukunftsorientierten Kanzlei an? Sie möchten e...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-24T01:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-64",
+      "title": "Steuerberater (m/w/d) in Sulzfeld, auf Wunsch mit Partnerperspektive, gesucht",
+      "companyName": "Taxtalente.de",
+      "logoSeed": "🚀",
+      "location": "Mumbai, Maharashtra",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "salary": "₹6,00,000 - ₹9,50,000 / year",
+      "experience": "Entry-level",
+      "skills": [
+        "Directors",
+        "Chief Executives"
+      ],
+      "description": "TaxTalente ist die Nr. 1 Job-Matching Plattform für Jobsuchende in der Steuerberatung.\nSie suchen eine positive berufliche Veränderung? Sie möchten den nächsten Schritt in Ihrer Karriere gehen und streben möglicherweise sogar eine Partnerschaft in einer zukunftsorientierten Kanzlei an? Sie möchten e...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-23T23:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-65",
+      "title": "Steuerberater (m/w/d) in Norderstedt, auf Wunsch mit Partnerperspektive, gesucht",
+      "companyName": "Taxtalente.de",
+      "logoSeed": "💻",
+      "location": "Bengaluru, Karnataka",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹8,50,000 - ₹12,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Directors",
+        "Chief Executives"
+      ],
+      "description": "TaxTalente ist die Nr. 1 Job-Matching Plattform für Jobsuchende in der Steuerberatung.\nSie suchen eine positive berufliche Veränderung? Sie möchten den nächsten Schritt in Ihrer Karriere gehen und streben möglicherweise sogar eine Partnerschaft in einer zukunftsorientierten Kanzlei an? Sie möchten e...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-23T21:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-66",
+      "title": "Steuerberater (m/w/d) in Kevelaer, auf Wunsch mit Partnerperspektive, gesucht",
+      "companyName": "Taxtalente.de",
+      "logoSeed": "💡",
+      "location": "Hyderabad, Telangana",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "salary": "₹12,00,000 - ₹18,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Directors",
+        "Chief Executives"
+      ],
+      "description": "TaxTalente ist die Nr. 1 Job-Matching Plattform für Jobsuchende in der Steuerberatung.\nSie suchen eine positive berufliche Veränderung? Sie möchten den nächsten Schritt in Ihrer Karriere gehen und streben möglicherweise sogar eine Partnerschaft in einer zukunftsorientierten Kanzlei an? Sie möchten e...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-23T19:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-67",
+      "title": "Steuerberater (m/w/d) in Vilgertshofen, auf Wunsch mit Partnerperspektive, gesucht",
+      "companyName": "Taxtalente.de",
+      "logoSeed": "🔥",
+      "location": "Kolkata, West Bengal",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹15,00,000 - ₹24,00,000 / year",
+      "experience": "Senior-level",
+      "skills": [
+        "Directors",
+        "Chief Executives"
+      ],
+      "description": "TaxTalente ist die Nr. 1 Job-Matching Plattform für Jobsuchende in der Steuerberatung.\nSie suchen eine positive berufliche Veränderung? Sie möchten den nächsten Schritt in Ihrer Karriere gehen und streben möglicherweise sogar eine Partnerschaft in einer zukunftsorientierten Kanzlei an? Sie möchten e...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-23T17:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-68",
+      "title": "Steuerberater (m/w/d) in Frankfurt an der Oder, auf Wunsch mit Partnerperspektive, gesucht",
+      "companyName": "Taxtalente.de",
+      "logoSeed": "🛡️",
+      "location": "Chennai, Tamil Nadu",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "salary": "₹6,00,000 - ₹9,50,000 / year",
+      "experience": "Entry-level",
+      "skills": [
+        "Directors",
+        "Chief Executives"
+      ],
+      "description": "TaxTalente ist die Nr. 1 Job-Matching Plattform für Jobsuchende in der Steuerberatung.\nSie suchen eine positive berufliche Veränderung? Sie möchten den nächsten Schritt in Ihrer Karriere gehen und streben möglicherweise sogar eine Partnerschaft in einer zukunftsorientierten Kanzlei an? Sie möchten e...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-23T15:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-69",
+      "title": "Steuerberater (m/w/d) in Ronneburg, auf Wunsch mit Partnerperspektive, gesucht",
+      "companyName": "Taxtalente.de",
+      "logoSeed": "⚡",
+      "location": "Pune, Maharashtra",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹8,50,000 - ₹12,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Directors",
+        "Chief Executives"
+      ],
+      "description": "TaxTalente ist die Nr. 1 Job-Matching Plattform für Jobsuchende in der Steuerberatung.\nSie suchen eine positive berufliche Veränderung? Sie möchten den nächsten Schritt in Ihrer Karriere gehen und streben möglicherweise sogar eine Partnerschaft in einer zukunftsorientierten Kanzlei an? Sie möchten e...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-23T13:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-70",
+      "title": "Referent COREP-Meldewesen",
+      "companyName": "coni+partner AG",
+      "logoSeed": "🤖",
+      "location": "Bathinda, Punjab",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "salary": "₹12,00,000 - ₹18,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Controlling"
+      ],
+      "description": "coni + partner ist ein seit 1993 bestehendes Beratungshaus mit Sitz in Zürich und Niederlassungen in Düsseldorf und Shanghai. Unsere Stärke ist die passgenaue Besetzung von Positionen entsprechend der Unternehmenskultur, unter genauer Betrachtung fachlicher Kompetenzen, Referenzen und «soft skills» ...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-23T11:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-71",
+      "title": "Bildungsreferent*in für Inhouse-Qualifizierungen (m/w/d)",
+      "companyName": "BBA - Akademie der Immobilienwirtschaft e.V.",
+      "logoSeed": "👾",
+      "location": "Chandigarh, UT",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹15,00,000 - ₹24,00,000 / year",
+      "experience": "Senior-level",
+      "skills": [
+        "Training",
+        "Development"
+      ],
+      "description": "Bildungsreferent*in für Inhouse-Qualifizierungen (m/w/d)\nVollzeit | zum nächstmöglichen Zeitpunkt | Berlin | zunächst befristet als Elternzeitvertretung\nDie BBA begleitet Fach- und Führungskräfte der Wohnungs- und Immobilienwirtschaft seit über 30 Jahren mit praxisnahen Bildungsangeboten. Neben beru...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-23T09:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-72",
+      "title": "Middle Software Engineer (m/f/d)",
+      "companyName": "Flix",
+      "logoSeed": "🚀",
+      "location": "Mohali, Punjab",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "salary": "₹6,00,000 - ₹9,50,000 / year",
+      "experience": "Entry-level",
+      "skills": [
+        "Engineering",
+        "Software",
+        "React"
+      ],
+      "description": "At Flix, we offer a tech-driven environment where innovation meets real-world impact, with competitive pay, strong growth opportunities, and a culture of collaboration and ownership. &nbsp;\nWe're looking for a motivated and skilled Middle Software Engineer&nbsp;to join our&nbsp;Geo Information Syste...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-23T07:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-73",
+      "title": "Senior Product Designer (m/f/d)",
+      "companyName": "Flix",
+      "logoSeed": "💻",
+      "location": "Patiala, Punjab",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹8,50,000 - ₹12,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Engineering",
+        "Software",
+        "React"
+      ],
+      "description": "At Flix, we offer a tech-driven environment where innovation meets real-world impact, with competitive pay, strong growth opportunities, and a culture of collaboration and ownership. &nbsp;\nAs a Senior Product Designer in our Supply Division you will help shape our team, influence the future of our ...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-23T05:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-74",
+      "title": "Senior Backend Engineer",
+      "companyName": "SumUp",
+      "logoSeed": "💡",
+      "location": "Ludhiana, Punjab",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "salary": "₹12,00,000 - ₹18,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Engineering",
+        "Software",
+        "React"
+      ],
+      "description": "About the team:\nYou'll join SumUp's Merchant Intelligence squad within the Engagement Mission — a newly formed team building foundational backend services that create a shared source of truth for product and merchant data across the business.\nThe team is focused on two core services:\n\nProduct Catalo...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-23T03:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-75",
+      "title": "Account Executive",
+      "companyName": "SumUp",
+      "logoSeed": "🔥",
+      "location": "Amritsar, Punjab",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹15,00,000 - ₹24,00,000 / year",
+      "experience": "Senior-level",
+      "skills": [
+        "Engineering",
+        "Software",
+        "React"
+      ],
+      "description": "🚀Account Executive (On-Site – Berlin)\nReady to launch your sales career in one of the world's fastest-growing fintech companies?Join our high-energy team in Berlin and help us bring smarter payment solutions to small businesses across the DACH market and Europe.\nAt SumUp, we're on a mission to empo...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-23T01:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-76",
+      "title": "Praktikant:in Psychologie (m/w/d) in einem KI Start-up für Führungskräfteentwicklung",
+      "companyName": "GrowInTheRole",
+      "logoSeed": "🛡️",
+      "location": "Jalandhar, Punjab",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "salary": "₹6,00,000 - ₹9,50,000 / year",
+      "experience": "Entry-level",
+      "skills": [
+        "Training",
+        "Development"
+      ],
+      "description": "Bei GrowInTheRole bieten wir einen digitalen Lernraum, in dem Führungskräfte herausfordernde Mitarbeitendengespräche mit KI-Charakteren in einem geschützten Rahmen simulieren, differenziertes Feedback erhalten und durch passgenaue Lernimpulse ihre Kommunikations- und Führungskompetenzen weiterentwic...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-22T23:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-77",
+      "title": "Senior Full Stack Developer",
+      "companyName": "Accurids GmbH",
+      "logoSeed": "⚡",
+      "location": "Delhi, NCR",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹8,50,000 - ₹12,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Software Development"
+      ],
+      "description": "Become a Part of ACCURIDS\nJoin us and help shape the future of pharmaceutical data!\nAt ACCURIDS, we’re building the data backbone behind life-science innovation — a system that identifies, links, and standardizes critical enterprise data in compliance with global standards such as ISO IDMP. We help ...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-22T21:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-78",
+      "title": "Werkstudent CRM & HubSpot (w/m/d)",
+      "companyName": "emerve GmbH",
+      "logoSeed": "🤖",
+      "location": "Mumbai, Maharashtra",
+      "type": "Full-time",
+      "mode": "Remote",
+      "salary": "₹12,00,000 - ₹18,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Remote",
+        "Business Consulting"
+      ],
+      "description": "Wir sind emerve – eine spezialisierte HubSpot-Beratung mit Fokus auf CRM, Marketing-Automatisierung und effiziente B2B-Prozesse. Als HubSpot Platinum Partner unterstützen wir Unternehmen dabei, Marketing, Vertrieb und Kundenservice optimal aufeinander abzustimmen und nachhaltige CRM-Strukturen aufzu...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-22T19:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-79",
+      "title": "CRM Manager & HubSpot Consultant (w/m/d)",
+      "companyName": "emerve GmbH",
+      "logoSeed": "👾",
+      "location": "Bengaluru, Karnataka",
+      "type": "Full-time",
+      "mode": "Remote",
+      "salary": "₹15,00,000 - ₹24,00,000 / year",
+      "experience": "Senior-level",
+      "skills": [
+        "Remote",
+        "Business Consulting"
+      ],
+      "description": "Wir sind emerve – eine HubSpot-Beratung mit klarem Fokus auf CRM, Marketing-Automatisierung und saubere Prozesse im B2B-Umfeld. Als HubSpot Platinum Partner unterstützen wir Unternehmen dabei, Marketing, Vertrieb und Kundenservice strukturiert aufzubauen und sinnvoll miteinander zu verzahnen.\nDabei ...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-22T17:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-80",
+      "title": "Haustechniker Gebäudetechnik (m/w/d)",
+      "companyName": "MY Humancapital GmbH",
+      "logoSeed": "🚀",
+      "location": "Hyderabad, Telangana",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "salary": "₹6,00,000 - ₹9,50,000 / year",
+      "experience": "Entry-level",
+      "skills": [
+        "Building",
+        "Supply",
+        "Safety Services Engineering"
+      ],
+      "description": "Haustechniker (m/w/d) gesucht – Vollzeit | München | Unbefristet\nIm Auftrag unseres Partnerunternehmens in München suchen wir Sie zum nächstmöglichen Zeitpunkt als „Haustechniker Gebäudetechnik (m/w/d)“.\nAufgaben\n\nSie betreuen technische Anlagen und Gebäude ganzheitlich und sorgen für einen reibungs...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-22T15:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-81",
+      "title": "Interim Recruiter Talent Acquisition (m/w/d)",
+      "companyName": "MY Humancapital GmbH",
+      "logoSeed": "💻",
+      "location": "Kolkata, West Bengal",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹8,50,000 - ₹12,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "HR"
+      ],
+      "description": "Recruiter Talent Acquisition (m/w/d) gesucht – Interim | Vollzeit | München\nIm Auftrag unseres Partnerunternehmens in München suchen wir Sie zum nächstmöglichen Zeitpunkt als „Interim Recruiter (m/w/d)“.\nAufgaben\n\nAls Recruiter (m/w/d) steuern und koordinieren den gesamten Recruiting-Prozess in enge...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-22T13:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-82",
+      "title": "Testmanager Software und Systemtests (m/w/d)",
+      "companyName": "MY Humancapital GmbH",
+      "logoSeed": "💡",
+      "location": "Chennai, Tamil Nadu",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "salary": "₹12,00,000 - ₹18,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Software Development"
+      ],
+      "description": "Testmanager Software und Systemtests (m/w/d) gesucht – Vollzeit | München\nIm Auftrag unseres Partnerunternehmens in München suchen wir Sie zum nächstmöglichen Zeitpunkt als „Testmanager Software und Systemtests (m/w/d)“.\nAufgaben\n\nSie planen, steuern und überwachen sämtliche Testaktivitäten innerhal...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-22T11:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-83",
+      "title": "Projektmanager Prozessoptimierung (m/w/d)",
+      "companyName": "MY Humancapital GmbH",
+      "logoSeed": "🔥",
+      "location": "Pune, Maharashtra",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹15,00,000 - ₹24,00,000 / year",
+      "experience": "Senior-level",
+      "skills": [
+        "Project Management"
+      ],
+      "description": "Im Auftrag unseres Partnerunternehmens in München suchen wir Sie zum nächstmöglichen Zeitpunkt als „Projektmanager Prozessoptimierung (m/w/d)“.\nAufgaben\n\nAls Projektmanager (m/w/d) analysieren und optimieren Sie bestehende Abläufe und entwickeln einheitliche Prozessstandards weiter\nZudem identifizie...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-22T09:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-84",
+      "title": "Sachbearbeiter Controlling und Finanzen (m/w/d)",
+      "companyName": "MY Humancapital GmbH",
+      "logoSeed": "🛡️",
+      "location": "Bathinda, Punjab",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "salary": "₹6,00,000 - ₹9,50,000 / year",
+      "experience": "Entry-level",
+      "skills": [
+        "Controlling"
+      ],
+      "description": "Sachbearbeiter Controlling und Finanzen (m/w/d) gesucht – Vollzeit | München\nIm Auftrag unseres Partnerunternehmens in München suchen wir Sie zum nächstmöglichen Zeitpunkt als „Sachbearbeiter im Bereich Controlling und Finanzen (m/w/d)“\nAufgaben\n\nSie prüfen, pflegen und bereinigen Stammdaten und ste...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-22T07:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-85",
+      "title": "Projektleiter Technisches Gebäudemanagement (m/w/d) Dresden",
+      "companyName": "MY Humancapital GmbH",
+      "logoSeed": "⚡",
+      "location": "Chandigarh, UT",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹8,50,000 - ₹12,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Engineering"
+      ],
+      "description": "Projektleiter Technisches Gebäudemanagement (m/w/d) gesucht – Vollzeit | Dresden\nIm Auftrag unseres Partnerunternehmens in Dresden suchen wir Sie zum nächstmöglichen Zeitpunkt als „Projektleiter Technisches Gebäudemanagement (m/w/d)“\nAufgaben\n\nSie leiten Umbau- und Modernisierungsprojekte von der Be...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-22T05:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-86",
+      "title": "Berechnungsingenieur Strukturanalyse (m/w/d)",
+      "companyName": "MY Humancapital GmbH",
+      "logoSeed": "🤖",
+      "location": "Mohali, Punjab",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "salary": "₹12,00,000 - ₹18,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Engineering"
+      ],
+      "description": "Im Auftrag unseres Partnerunternehmens suchen wir Sie zum nächstmöglichen Zeitpunkt als „Berechnungsingenieur FEM &#x26; Strukturanalyse (m/w/d)“.\nAufgaben\n\nSie führen strukturmechanische Analysen und FEM-Berechnungen zur Bewertung von Bauteilen, Baugruppen und komplexen technischen Systemen durch\nS...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-22T03:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-87",
+      "title": "Sachbearbeiter Customer Service und Kundenbetreuung (m/w/d)",
+      "companyName": "MY Humancapital GmbH",
+      "logoSeed": "👾",
+      "location": "Patiala, Punjab",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹15,00,000 - ₹24,00,000 / year",
+      "experience": "Senior-level",
+      "skills": [
+        "Customer Service"
+      ],
+      "description": "Im Auftrag unseres Partnerunternehmens suchen wir Sie zum nächstmöglichen Zeitpunkt als „Sachbearbeiter Customer Service &#x26; Kundenbetreuung (m/w/d)“.\nAufgaben\n\nSie betreuen Kunden serviceorientiert zu auftragsbezogenen Fragestellungen in deutscher und englischer Sprache\nSie erfassen Aufträge und...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-22T01:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-88",
+      "title": "Kreditorenbuchhalter SAP (m/w/d)",
+      "companyName": "MY Humancapital GmbH",
+      "logoSeed": "🚀",
+      "location": "Ludhiana, Punjab",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "salary": "₹6,00,000 - ₹9,50,000 / year",
+      "experience": "Entry-level",
+      "skills": [
+        "Finance"
+      ],
+      "description": "Im Auftrag unseres Kunden suchen wir Sie für den Standort München zum nächstmöglichen Zeitpunkt als „Kreditorenbuchhalter SAP (m/w/d)“.\nAufgaben\n\nAls Kreditorenbuchhalter (m/w/d) prüfen, erfassen und verbuchen Eingangsrechnungen in SAP\nSie erstellen Belastungsanzeigen, Weiterberechnungen sowie Zahll...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-21T23:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-89",
+      "title": "Technischer Projektmanager (m/w/d)",
+      "companyName": "MY Humancapital GmbH",
+      "logoSeed": "💻",
+      "location": "Amritsar, Punjab",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹8,50,000 - ₹12,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Project Management"
+      ],
+      "description": "Technischer Projektmanager (m/w/d) gesucht – Vollzeit | München\nIm Auftrag unseres Partnerunternehmens in München suchen wir Sie zum nächstmöglichen Zeitpunkt als „Technischer Projektmanager (m/w/d)“\nAufgaben\n\nSie bearbeiten nationale und internationale Projekte im Bereich technischer Ausbildungs- u...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-21T21:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-90",
+      "title": "Projektassistenz (m/w/d) Heilbronn",
+      "companyName": "MY Humancapital GmbH",
+      "logoSeed": "💡",
+      "location": "Jalandhar, Punjab",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "salary": "₹12,00,000 - ₹18,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Project Management"
+      ],
+      "description": "Projektassistenz (m/w/d) gesucht – Vollzeit | Heilbronn\nIm Auftrag unseres Partnerunternehmens in Heilbronn suchen wir Sie zum nächstmöglichen Zeitpunkt als „Projektassistenz (m/w/d)“.\nAufgaben\n\nAls Projektassistenz (m/w/d) unterstützen organisatorische und administrative Abläufe im Projektmanagemen...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-21T19:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-91",
+      "title": "3D Artist Blender & Realtime-Anwendungen (m/w/d)",
+      "companyName": "MY Humancapital GmbH",
+      "logoSeed": "🔥",
+      "location": "Delhi, NCR",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹15,00,000 - ₹24,00,000 / year",
+      "experience": "Senior-level",
+      "skills": [
+        "Graphic Arts and Communication Design"
+      ],
+      "description": "3D Artist (m/w/d) gesucht – Vollzeit | München\nIm Auftrag unseres Partnerunternehmens in München suchen wir Sie zum nächstmöglichen Zeitpunkt als „3D Grafikdesigner / 3D Artist (m/w/d)“.\nAufgaben\n\nSie erstellen komplexe 3D-Animationen und 3D-Grafiken für digitale Lern- und Trainingsanwendungen mit B...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-21T17:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-92",
+      "title": "Sachbearbeiter Logistik & Materialdisposition (m/w/d)",
+      "companyName": "MY Humancapital GmbH",
+      "logoSeed": "🛡️",
+      "location": "Mumbai, Maharashtra",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "salary": "₹6,00,000 - ₹9,50,000 / year",
+      "experience": "Entry-level",
+      "skills": [
+        "Consulting"
+      ],
+      "description": "Im Auftrag unseres Partnerunternehmens in München suchen wir Sie zum nächstmöglichen Zeitpunkt als „Sachbearbeiter Logistik &#x26; Materialdisposition (m/w/d)“.\nAufgaben\n\nAls Sachbearbeiter (m/w/d) unterstützen Sie bei der Planung und Sicherstellung der Ersatzteilversorgung\nDabei koordinieren Sie al...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-21T15:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-93",
+      "title": "Kreditsachbearbeiter (m/w/d)",
+      "companyName": "MY Humancapital GmbH",
+      "logoSeed": "⚡",
+      "location": "Bengaluru, Karnataka",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹8,50,000 - ₹12,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Credit Analysis"
+      ],
+      "description": "Kreditsachbearbeiter (m/w/d) gesucht – unbefristet | Vollzeit | München\nIm Auftrag unseres Partnerunternehmens in München suchen wir Sie zum nächstmöglichen Zeitpunkt als „Kreditsachbearbeiter (m/w/d)“.\nAufgaben\n\nAls Kreditsachbearbeiter (m/w/d) betreuen Sie das bestehende Kreditengagement und übern...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-21T13:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-94",
+      "title": "IT Business Analyst (m/w/d)",
+      "companyName": "MY Humancapital GmbH",
+      "logoSeed": "🤖",
+      "location": "Hyderabad, Telangana",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "salary": "₹12,00,000 - ₹18,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Information Systems"
+      ],
+      "description": "Im Auftrag unseres Partnerunternehmens in München suchen wir Sie zum nächstmöglichen Zeitpunkt als „IT Businessanalyst (m/w/d)“.\nAufgaben\n\nAls Business Analyst (m/w/d) gestalten Sie die Weiterentwicklung digitaler Anwendungen und Geschäftsprozesse aktiv mit\nSie analysieren fachliche Anforderungen, i...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-21T11:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-95",
+      "title": "Controller (m/w/d) im öffentlichen Dienst",
+      "companyName": "MY Humancapital GmbH",
+      "logoSeed": "👾",
+      "location": "Kolkata, West Bengal",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹15,00,000 - ₹24,00,000 / year",
+      "experience": "Senior-level",
+      "skills": [
+        "Controlling"
+      ],
+      "description": "Im Auftrag unseres Partnerunternehmnes suchen wir Sie zum nächstmöglichen Zeitpunkt als „Controller (m/w/d)\".\nAufgaben\n\nAls Controller (m/w/d) übernehmen Sie die Verantwortung für die Planung, Steuerung und Kontrolle sämtlicher betriebswirtschaftlicher Maßnahmen\nDabei unterstützen sie die Geschäftsf...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-21T09:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-96",
+      "title": "IT Projektmanager Software Implementierung (m/w/d)",
+      "companyName": "MY Humancapital GmbH",
+      "logoSeed": "🚀",
+      "location": "Chennai, Tamil Nadu",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "salary": "₹6,00,000 - ₹9,50,000 / year",
+      "experience": "Entry-level",
+      "skills": [
+        "Project Management"
+      ],
+      "description": "Im Auftrag unser Partnerunternehmen in München suchen wir Sie als „IT Projektmanager Software Implementierung (m/w/d)“.\nAufgaben\n\nAls IT Projektmanager (m/w/d) leiten und steuern Sie internationale Kundenprojekte zur Implementierung von Softwarelösungen im Bereich Instandhaltung und Flottenmanagemen...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-21T07:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-97",
+      "title": "Simulationsingenieur Elektrotechnik (m/w/d)",
+      "companyName": "MY Humancapital GmbH",
+      "logoSeed": "💻",
+      "location": "Pune, Maharashtra",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹8,50,000 - ₹12,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Engineering"
+      ],
+      "description": "Im Auftrag unser Partnerunternehmen in München suchen wir Sie als „Simulationsingenieur Elektrotechnik (m/w/d)“.\nAufgaben\n\nAls Simulationsingenieur (m/w/d) modellieren und simulieren Sie das elektrische Bordnetz mithilfe moderner Simulationssoftware wie Matlab Simulink\nAls Teil der Entwicklungsarbei...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-21T05:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-98",
+      "title": "Projektleiter (m/w/d) Simulationssysteme",
+      "companyName": "MY Humancapital GmbH",
+      "logoSeed": "💡",
+      "location": "Bathinda, Punjab",
+      "type": "Full-time",
+      "mode": "Hybrid",
+      "salary": "₹12,00,000 - ₹18,00,000 / year",
+      "experience": "Mid-level",
+      "skills": [
+        "Project Management"
+      ],
+      "description": "Im Auftrag unseres Partnerunternehmens in München suchen wir Sie zum nächstmöglichen Zeitpunkt als „Projektleiter (m/w/d)“.\nAufgaben\n\nAls Projektleiter (m/w/d) übernehmen Sie die Gesamtverantwortung für nationale und internationale Entwicklungsprojekte hinsichtlich Qualität, Terminen, Budget und Lei...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-21T03:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    },
+    {
+      "id": "job-imported-seeder-1782717836236-99",
+      "title": "Vergabemanager (m/w/d) Öffentliche Ausschreibung",
+      "companyName": "MY Humancapital GmbH",
+      "logoSeed": "🔥",
+      "location": "Chandigarh, UT",
+      "type": "Full-time",
+      "mode": "On-site",
+      "salary": "₹15,00,000 - ₹24,00,000 / year",
+      "experience": "Senior-level",
+      "skills": [
+        "Compliance",
+        "Security"
+      ],
+      "description": "Im Auftrag unseres Partnerunternehmens in München suchen wir Sie zum nächstmöglichen Zeitpunkt als „Vergabemanager (m/w/d) – Öffentliche Ausschreibungen“.\nAufgaben\n\nAls Vergabemanager (m/w/d) steuern Sie nationale und europaweite Ausschreibungs- und Vergabeverfahren unter Einhaltung aktueller vergab...",
+      "requirements": [
+        "Strong fundamentals in web technologies and languages",
+        "Analytical mind with problem-solving attitude",
+        "Good team cooperation and proactive attitude",
+        "Adherence to the Hyriq Fair Work Pact commitments"
+      ],
+      "benefits": [
+        "Flexible working hours & hybrid options",
+        "Comprehensive health insurance plans",
+        "Skill development and training allowances"
+      ],
+      "postedDate": "2026-06-21T01:23:56.236Z",
+      "recruiterId": "recruiter-imported",
+      "fairWorkPact": true,
+      "chatLiveHours": "10:00 AM - 6:00 PM"
+    }
+  ],
+  "applications": [
+    {
+      "id": "app-1",
+      "jobId": "job-1",
+      "candidateId": "user-candidate-1",
+      "appliedDate": "1 day ago",
+      "status": "Interview",
+      "candidateSignature": "Amanpreet Singh",
+      "candidateSignedAt": "2026-06-25T10:00:00.000Z",
+      "recruiterSignature": "Raj Athwal",
+      "recruiterSignedAt": "2026-06-20T10:00:00.000Z"
+    }
+  ],
+  "messages": [
+    {
+      "id": "msg-1",
+      "applicationId": "app-1",
+      "sender": "candidate",
+      "text": "Hi Gaurav! I applied for the React Developer position. I live near Ajit Road and can join immediately.",
+      "timestamp": "1 day ago"
+    },
+    {
+      "id": "msg-2",
+      "applicationId": "app-1",
+      "sender": "recruiter",
+      "text": "Hi Amanpreet! Your coding projects look solid. We would love to schedule a technical interview at our office next Tuesday.",
+      "timestamp": "18 hours ago"
+    },
+    {
+      "id": "msg-3",
+      "applicationId": "app-1",
+      "sender": "candidate",
+      "text": "That sounds great, I will be there at 11 AM. Thank you!",
+      "timestamp": "17 hours ago"
+    }
+  ],
+  "payments": []
+}
