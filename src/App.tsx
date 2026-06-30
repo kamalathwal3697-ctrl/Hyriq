@@ -232,6 +232,10 @@ const AppContent: React.FC = () => {
           ].filter(roleItem => {
             const isSeekerOnly = (user && user.role === 'candidate') || visitorRole === 'seeker';
             if (isSeekerOnly && roleItem.id === 'recruiter') return false;
+            
+            const isRecruiterOnly = (user && user.role === 'recruiter') || visitorRole === 'recruiter';
+            if (isRecruiterOnly && roleItem.id === 'candidate') return false;
+            
             return true;
           }).map(roleItem => {
             const isActive = perspective === roleItem.id;
@@ -399,6 +403,10 @@ const AppContent: React.FC = () => {
                 ].filter(roleItem => {
                   const isSeekerOnly = (user && user.role === 'candidate') || visitorRole === 'seeker';
                   if (isSeekerOnly && roleItem.id === 'recruiter') return false;
+                  
+                  const isRecruiterOnly = (user && user.role === 'recruiter') || visitorRole === 'recruiter';
+                  if (isRecruiterOnly && roleItem.id === 'candidate') return false;
+                  
                   return true;
                 }).map(roleItem => {
                   const isActive = perspective === roleItem.id;

@@ -82,17 +82,19 @@ export const Navbar: React.FC = () => {
 
           {perspective === 'visitor' && (
             <>
-              <a 
-                onClick={() => {
-                  setPerspective('visitor');
-                  setVisitorRole('seeker');
-                }} 
-                style={{ color: visitorRole === 'seeker' ? '#fff' : 'var(--text-secondary)', textDecoration: 'none', fontWeight: visitorRole === 'seeker' ? 700 : 500, fontSize: '14px', cursor: 'pointer', transition: 'color 0.2s' }}
-                onMouseOver={(e) => (e.currentTarget.style.color = '#fff')}
-                onMouseOut={(e) => (e.currentTarget.style.color = visitorRole === 'seeker' ? '#fff' : 'var(--text-secondary)')}
-              >
-                Find a Job
-              </a>
+              {visitorRole !== 'recruiter' && (
+                <a 
+                  onClick={() => {
+                    setPerspective('visitor');
+                    setVisitorRole('seeker');
+                  }} 
+                  style={{ color: visitorRole === 'seeker' ? '#fff' : 'var(--text-secondary)', textDecoration: 'none', fontWeight: visitorRole === 'seeker' ? 700 : 500, fontSize: '14px', cursor: 'pointer', transition: 'color 0.2s' }}
+                  onMouseOver={(e) => (e.currentTarget.style.color = '#fff')}
+                  onMouseOut={(e) => (e.currentTarget.style.color = visitorRole === 'seeker' ? '#fff' : 'var(--text-secondary)')}
+                >
+                  Find a Job
+                </a>
+              )}
               {visitorRole !== 'seeker' && (
                 <a 
                   onClick={() => {
@@ -191,27 +193,29 @@ export const Navbar: React.FC = () => {
               Visitor
             </button>
             
-            <button
-              onClick={() => handleRoleChange('candidate')}
-              style={{
-                padding: '6px 12px',
-                borderRadius: '20px',
-                border: 'none',
-                fontSize: '12px',
-                fontWeight: 600,
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '6px',
-                transition: 'all 0.2s ease',
-                backgroundColor: perspective === 'candidate' ? 'var(--primary)' : 'transparent',
-                color: perspective === 'candidate' ? '#fff' : 'var(--text-secondary)',
-                boxShadow: perspective === 'candidate' ? '0 2px 8px rgba(99, 102, 241, 0.4)' : 'none'
-              }}
-            >
-              <User size={12} />
-              Job Seeker
-            </button>
+            {!((user && user.role === 'recruiter') || visitorRole === 'recruiter') && (
+              <button
+                onClick={() => handleRoleChange('candidate')}
+                style={{
+                  padding: '6px 12px',
+                  borderRadius: '20px',
+                  border: 'none',
+                  fontSize: '12px',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  transition: 'all 0.2s ease',
+                  backgroundColor: perspective === 'candidate' ? 'var(--primary)' : 'transparent',
+                  color: perspective === 'candidate' ? '#fff' : 'var(--text-secondary)',
+                  boxShadow: perspective === 'candidate' ? '0 2px 8px rgba(99, 102, 241, 0.4)' : 'none'
+                }}
+              >
+                <User size={12} />
+                Job Seeker
+              </button>
+            )}
 
             {!((user && user.role === 'candidate') || visitorRole === 'seeker') && (
               <button
