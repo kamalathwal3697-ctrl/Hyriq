@@ -111,10 +111,10 @@ interface AppContextType {
   updateApplicationStatus: (appId: string, status: Application['status']) => Promise<void>;
   sendChatMessage: (appId: string, text: string, sender: 'candidate' | 'recruiter') => Promise<void>;
   deleteJob: (jobId: string) => Promise<void>;
-  candidateTab: 'explore' | 'govt' | 'applications' | 'profile' | 'settings';
-  setCandidateTab: (tab: 'explore' | 'govt' | 'applications' | 'profile' | 'settings') => void;
-  recruiterTab: 'overview' | 'post-job' | 'manage' | 'settings';
-  setRecruiterTab: (tab: 'overview' | 'post-job' | 'manage' | 'settings') => void;
+  candidateTab: 'explore' | 'govt' | 'applications' | 'profile' | 'settings' | 'notifications' | 'workspace' | 'chats';
+  setCandidateTab: (tab: 'explore' | 'govt' | 'applications' | 'profile' | 'settings' | 'notifications' | 'workspace' | 'chats') => void;
+  recruiterTab: 'overview' | 'post-job' | 'manage' | 'settings' | 'notifications' | 'workspace' | 'chats';
+  setRecruiterTab: (tab: 'overview' | 'post-job' | 'manage' | 'settings' | 'notifications' | 'workspace' | 'chats') => void;
   selectedJobId: string | null;
   setSelectedJobId: (id: string | null) => void;
   currentLocation: string;
@@ -154,19 +154,19 @@ export const AppStateProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   const [jobs, setJobs] = useState<Job[]>([]);
   const [applications, setApplications] = useState<Application[]>([]);
-  const [candidateTab, setCandidateTabState] = useState<'explore' | 'govt' | 'applications' | 'profile' | 'settings'>(() => {
+  const [candidateTab, setCandidateTabState] = useState<'explore' | 'govt' | 'applications' | 'profile' | 'settings' | 'notifications' | 'workspace' | 'chats'>(() => {
     return (localStorage.getItem('hyriq_candidate_tab') as any) || 'explore';
   });
-  const [recruiterTab, setRecruiterTabState] = useState<'overview' | 'post-job' | 'manage' | 'settings'>(() => {
+  const [recruiterTab, setRecruiterTabState] = useState<'overview' | 'post-job' | 'manage' | 'settings' | 'notifications' | 'workspace' | 'chats'>(() => {
     return (localStorage.getItem('hyriq_recruiter_tab') as any) || 'overview';
   });
 
-  const setCandidateTab = (tab: 'explore' | 'govt' | 'applications' | 'profile' | 'settings') => {
+  const setCandidateTab = (tab: 'explore' | 'govt' | 'applications' | 'profile' | 'settings' | 'notifications' | 'workspace' | 'chats') => {
     setCandidateTabState(tab);
     localStorage.setItem('hyriq_candidate_tab', tab);
   };
 
-  const setRecruiterTab = (tab: 'overview' | 'post-job' | 'manage' | 'settings') => {
+  const setRecruiterTab = (tab: 'overview' | 'post-job' | 'manage' | 'settings' | 'notifications' | 'workspace' | 'chats') => {
     setRecruiterTabState(tab);
     localStorage.setItem('hyriq_recruiter_tab', tab);
   };
@@ -362,22 +362,49 @@ const [promoSlots, setPromoSlots] = useState<number>(100);
     return () => clearInterval(interval);
   }, [token]);
 
-  // Auto-import external jobs when location changes
+  // Auto-import external jobs when location changes (Arbeitnow + Google)
   useEffect(() => {
     if (currentLocation) {
+      // Import from Arbeitnow
       fetch('/api/jobs/auto-import', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ location: currentLocation })
       })
       .then(res => {
-        if (res.ok) {
-          fetchJobs();
-        }
+        if (res.ok) fetchJobs();
       })
-      .catch(err => console.error('Failed to trigger background auto-import:', err));
+      .catch(err => console.error('Failed to trigger Arbeitnow auto-import:', err));
+
+      // Import from Google Custom Search
+      fetch('/api/jobs/google-import', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ location: currentLocation })
+      })
+      .then(res => {
+        if (res.ok) fetchJobs();
+      })
+      .catch(err => console.error('Failed to trigger Google auto-import:', err));
     }
   }, [currentLocation]);
+
+  // Periodic Google re-import every 5 minutes to keep feed fresh
+  useEffect(() => {
+    if (!token || !currentLocation) return;
+    const interval = setInterval(() => {
+      fetch('/api/jobs/google-import', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ location: currentLocation })
+      })
+      .then(res => {
+        if (res.ok) fetchJobs();
+      })
+      .catch(() => {});
+    }, 300000); // 5 minutes
+    return () => clearInterval(interval);
+  }, [token, currentLocation]);
 
   // Handle Candidate Profile Updates on the backend
   useEffect(() => {

@@ -3824,5 +3824,30 @@
       "timestamp": "17 hours ago"
     }
   ],
-  "payments": []
+  "payments": [],
+  "visitors": {
+    "total": 5,
+    "hits": [
+      {
+        "timestamp": 1782902337973,
+        "ip": "::1"
+      },
+      {
+        "timestamp": 1782902337989,
+        "ip": "::1"
+      },
+      {
+        "timestamp": 1782902358700,
+        "ip": "::1"
+      },
+      {
+        "timestamp": 1782902462313,
+        "ip": "::1"
+      },
+      {
+        "timestamp": 1782902462319,
+        "ip": "::1"
+      }
+    ]
+  }
 }

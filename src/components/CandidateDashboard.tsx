@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Search, MapPin, IndianRupee, Briefcase, Filter, UserCheck, MessageCircle, FileText, Plus, X, Sparkles, ArrowLeft, Settings } from 'lucide-react';
+import { Search, MapPin, IndianRupee, Briefcase, Filter, UserCheck, MessageCircle, FileText, Plus, X, Sparkles, ArrowLeft, Settings, Bell } from 'lucide-react';
 import { useAppState } from '../context/AppContext';
 import type { Job, Application } from '../context/AppContext';
 import { ChatWindow } from './ChatWindow';
+import { NotificationsPage } from './NotificationsPage';
 import { OnboardingModal } from './OnboardingModal';
 import { AppTour } from './AppTour';
 import { SUPPORTED_LOCATIONS, getLocationDetails } from '../utils/locationHelper';
@@ -442,6 +443,7 @@ export const CandidateDashboard: React.FC = () => {
   });
 
   const getJobTimestamp = (job: any) => {
+    // Try extracting from job ID first (e.g., job-1719849600000-3)
     if (job.id.startsWith('job-')) {
       const parts = job.id.split('-');
       const timestampStr = parts[1];
@@ -452,7 +454,19 @@ export const CandidateDashboard: React.FC = () => {
         }
       }
     }
+    // Fallback to postedDate
+    if (job.postedDate) {
+      const ts = new Date(job.postedDate).getTime();
+      if (!isNaN(ts)) return ts;
+    }
     return 0;
+  };
+
+  const isJobNew = (job: any) => {
+    const ts = getJobTimestamp(job);
+    if (ts === 0) return false;
+    const hoursSince = (Date.now() - ts) / (1000 * 60 * 60);
+    return hoursSince < 24;
   };
 
   const sortedJobs = [...filteredJobs].sort((a, b) => {
@@ -571,7 +585,7 @@ export const CandidateDashboard: React.FC = () => {
     }
   };
 
-  const isLightMode = activeTab === 'explore' || activeTab === 'govt';
+  const isLightMode = activeTab === 'explore' || activeTab === 'govt' || activeTab === 'workspace' || activeTab === 'chats';
 
   return (
     <>
@@ -603,6 +617,14 @@ export const CandidateDashboard: React.FC = () => {
 
           <div className="tabs-header" style={{ background: isLightMode ? 'rgba(26, 62, 98, 0.08)' : 'rgba(0, 0, 0, 0.2)', border: isLightMode ? '1px solid rgba(26, 62, 98, 0.1)' : '1px solid var(--border-color)' }}>
             <button 
+              className={`tab-btn ${activeTab === 'workspace' ? 'active' : ''}`}
+              onClick={() => setActiveTab('workspace')}
+              style={{ color: activeTab === 'workspace' ? '#fff' : (isLightMode ? 'var(--corporate-blue)' : 'var(--text-secondary)'), background: activeTab === 'workspace' ? 'var(--corporate-blue)' : 'transparent' }}
+            >
+              <Sparkles size={16} />
+              My Workspace
+            </button>
+            <button 
               className={`tab-btn ${activeTab === 'explore' ? 'active' : ''}`}
               onClick={() => setActiveTab('explore')}
               style={{ color: activeTab === 'explore' ? '#fff' : (isLightMode ? 'var(--corporate-blue)' : 'var(--text-secondary)'), background: activeTab === 'explore' ? 'var(--corporate-blue)' : 'transparent' }}
@@ -618,11 +640,19 @@ export const CandidateDashboard: React.FC = () => {
               🏛️ Govt Jobs
             </button>
             <button 
+              className={`tab-btn ${activeTab === 'chats' ? 'active' : ''}`}
+              onClick={() => setActiveTab('chats')}
+              style={{ color: activeTab === 'chats' ? '#fff' : (isLightMode ? 'var(--corporate-blue)' : 'var(--text-secondary)'), background: activeTab === 'chats' ? 'var(--corporate-blue)' : 'transparent' }}
+            >
+              <MessageCircle size={16} />
+              Chats
+            </button>
+            <button 
               className={`tab-btn ${activeTab === 'applications' ? 'active' : ''}`}
               onClick={() => setActiveTab('applications')}
               style={{ color: activeTab === 'applications' ? '#fff' : (isLightMode ? 'var(--corporate-blue)' : 'var(--text-secondary)'), background: activeTab === 'applications' ? 'var(--corporate-blue)' : 'transparent' }}
             >
-              <MessageCircle size={16} />
+              <FileText size={16} />
               Applications ({applications.length})
             </button>
             <button 
@@ -630,8 +660,8 @@ export const CandidateDashboard: React.FC = () => {
               onClick={() => setActiveTab('profile')}
               style={{ color: activeTab === 'profile' ? '#fff' : (isLightMode ? 'var(--corporate-blue)' : 'var(--text-secondary)'), background: activeTab === 'profile' ? 'var(--corporate-blue)' : 'transparent' }}
             >
-              <FileText size={16} />
-              My Profile
+              <UserCheck size={16} />
+              Profile
             </button>
             <button 
               className={`tab-btn ${activeTab === 'settings' ? 'active' : ''}`}
@@ -640,6 +670,14 @@ export const CandidateDashboard: React.FC = () => {
             >
               <Settings size={16} />
               Settings
+            </button>
+            <button 
+              className={`tab-btn ${activeTab === 'notifications' ? 'active' : ''}`}
+              onClick={() => setActiveTab('notifications')}
+              style={{ color: activeTab === 'notifications' ? '#fff' : (isLightMode ? 'var(--corporate-blue)' : 'var(--text-secondary)'), background: activeTab === 'notifications' ? 'var(--corporate-blue)' : 'transparent' }}
+            >
+              <Bell size={16} />
+              Notifications
             </button>
           </div>
         </div>
@@ -821,8 +859,23 @@ export const CandidateDashboard: React.FC = () => {
                       }}
                     >
                       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
-                        <div>
-                          <h4 style={{ color: 'var(--corporate-blue)', fontSize: '16px', fontWeight: 800, marginBottom: '2px' }}>{job.title}</h4>
+                        <div style={{ flex: 1, minWidth: 0 }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                            <h4 style={{ color: 'var(--corporate-blue)', fontSize: '16px', fontWeight: 800, marginBottom: '2px' }}>{job.title}</h4>
+                            {isJobNew(job) && (
+                              <span style={{
+                                fontSize: '9px',
+                                fontWeight: 800,
+                                color: '#fff',
+                                background: 'linear-gradient(135deg, #10b981, #059669)',
+                                padding: '2px 8px',
+                                borderRadius: '6px',
+                                letterSpacing: '0.5px',
+                                textTransform: 'uppercase',
+                                flexShrink: 0
+                              }}>New</span>
+                            )}
+                          </div>
                           <p style={{ color: '#475569', fontSize: '13px', fontWeight: 600 }}>{job.companyName}</p>
                         </div>
                         {/* Custom Gradient Avatar */}
@@ -2547,6 +2600,288 @@ export const CandidateDashboard: React.FC = () => {
         </div>
       )}
 
+      {/* NOTIFICATIONS VIEW */}
+      {activeTab === 'notifications' && (
+        <NotificationsPage />
+      )}
+
+      {/* WORKSPACE VIEW - Dashboard with Stats */}
+      {activeTab === 'workspace' && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          {/* Stats Overview Cards */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '12px' }}>
+            <div className="seeker-light-card" style={{ padding: '16px', borderRadius: '12px' }}>
+              <div style={{ fontSize: '11px', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '8px' }}>Applications Sent</div>
+              <div style={{ fontSize: '28px', fontWeight: 800, color: 'var(--corporate-blue)' }}>{applications.length}</div>
+              <div style={{ fontSize: '11px', color: '#10b981', fontWeight: 600, marginTop: '4px' }}>Active pipeline</div>
+            </div>
+            <div className="seeker-light-card" style={{ padding: '16px', borderRadius: '12px' }}>
+              <div style={{ fontSize: '11px', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '8px' }}>Under Review</div>
+              <div style={{ fontSize: '28px', fontWeight: 800, color: 'var(--tech-orange)' }}>{applications.filter(a => a.status === 'Reviewing').length}</div>
+              <div style={{ fontSize: '11px', color: '#64748b', fontWeight: 600, marginTop: '4px' }}>Pending response</div>
+            </div>
+            <div className="seeker-light-card" style={{ padding: '16px', borderRadius: '12px' }}>
+              <div style={{ fontSize: '11px', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '8px' }}>Shortlisted</div>
+              <div style={{ fontSize: '28px', fontWeight: 800, color: '#10b981' }}>{applications.filter(a => a.status === 'Shortlisted' || a.status === 'Interview').length}</div>
+              <div style={{ fontSize: '11px', color: '#10b981', fontWeight: 600, marginTop: '4px' }}>Interviews lined up</div>
+            </div>
+            <div className="seeker-light-card" style={{ padding: '16px', borderRadius: '12px' }}>
+              <div style={{ fontSize: '11px', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '8px' }}>Job Matches</div>
+              <div style={{ fontSize: '28px', fontWeight: 800, color: 'var(--corporate-blue)' }}>{jobs.length}</div>
+              <div style={{ fontSize: '11px', color: '#64748b', fontWeight: 600, marginTop: '4px' }}>Available positions</div>
+            </div>
+          </div>
+
+          {/* Profile Completion Card */}
+          <div className="seeker-light-card" style={{ padding: '20px', borderRadius: '14px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+              <h3 style={{ fontSize: '16px', fontWeight: 700, color: 'var(--corporate-blue)', margin: 0 }}>Profile Strength</h3>
+              <span style={{ fontSize: '12px', fontWeight: 600, color: candidateProfile.onboardingCompleted ? '#10b981' : 'var(--tech-orange)' }}>
+                {candidateProfile.onboardingCompleted ? 'Complete' : 'In Progress'}
+              </span>
+            </div>
+            <div style={{ height: '6px', background: 'rgba(26,62,98,0.1)', borderRadius: '3px', overflow: 'hidden' }}>
+              <div style={{
+                height: '100%',
+                width: candidateProfile.onboardingCompleted ? '100%' : '60%',
+                background: candidateProfile.onboardingCompleted ? 'linear-gradient(90deg, #10b981, #059669)' : 'linear-gradient(90deg, var(--tech-orange), #f97316)',
+                borderRadius: '3px',
+                transition: 'width 0.5s ease'
+              }} />
+            </div>
+            <div style={{ display: 'flex', gap: '8px', marginTop: '12px', flexWrap: 'wrap' }}>
+              <button
+                onClick={() => setActiveTab('profile')}
+                style={{
+                  background: 'var(--corporate-blue)',
+                  color: '#fff',
+                  border: 'none',
+                  padding: '8px 16px',
+                  borderRadius: '8px',
+                  fontSize: '12px',
+                  fontWeight: 700,
+                  cursor: 'pointer'
+                }}
+              >
+                {candidateProfile.onboardingCompleted ? 'Edit Profile' : 'Complete Setup'}
+              </button>
+              <button
+                onClick={() => setActiveTab('explore')}
+                style={{
+                  background: 'rgba(242,153,74,0.1)',
+                  color: 'var(--tech-orange)',
+                  border: '1px solid rgba(242,153,74,0.3)',
+                  padding: '8px 16px',
+                  borderRadius: '8px',
+                  fontSize: '12px',
+                  fontWeight: 700,
+                  cursor: 'pointer'
+                }}
+              >
+                Browse Jobs
+              </button>
+            </div>
+          </div>
+
+          {/* Recent Activity */}
+          <div className="seeker-light-card" style={{ padding: '20px', borderRadius: '14px' }}>
+            <h3 style={{ fontSize: '16px', fontWeight: 700, color: 'var(--corporate-blue)', margin: '0 0 16px 0' }}>Recent Activity</h3>
+            {applications.length === 0 ? (
+              <div style={{ textAlign: 'center', padding: '24px', color: '#64748b' }}>
+                <p style={{ fontSize: '13px', margin: 0 }}>No applications yet. Start exploring jobs!</p>
+              </div>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                {applications.slice(0, 5).map(app => {
+                  const job = jobs.find(j => j.id === app.jobId);
+                  return (
+                    <div key={app.id} style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '10px', background: 'rgba(26,62,98,0.03)', borderRadius: '8px', border: '1px solid rgba(26,62,98,0.06)' }}>
+                      <div style={{ width: '36px', height: '36px', borderRadius: '8px', background: 'linear-gradient(135deg, #1A3E62, #F2994A)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px', flexShrink: 0 }}>
+                        {job?.logoSeed || '💼'}
+                      </div>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ fontSize: '13px', fontWeight: 700, color: 'var(--corporate-blue)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{job?.title || 'Unknown Job'}</div>
+                        <div style={{ fontSize: '11px', color: '#64748b' }}>{job?.companyName || 'Unknown Company'}</div>
+                      </div>
+                      {getStatusBadge(app.status)}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
+          {/* Quick Actions */}
+          <div className="seeker-light-card" style={{ padding: '20px', borderRadius: '14px' }}>
+            <h3 style={{ fontSize: '16px', fontWeight: 700, color: 'var(--corporate-blue)', margin: '0 0 12px 0' }}>Quick Actions</h3>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+              <button
+                onClick={() => setActiveTab('explore')}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  padding: '12px',
+                  background: 'rgba(26,62,98,0.05)',
+                  border: '1px solid rgba(26,62,98,0.1)',
+                  borderRadius: '10px',
+                  color: 'var(--corporate-blue)',
+                  fontSize: '12px',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  transition: 'all 0.2s'
+                }}
+              >
+                <Briefcase size={16} />
+                Find Jobs
+              </button>
+              <button
+                onClick={() => setActiveTab('chats')}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  padding: '12px',
+                  background: 'rgba(242,153,74,0.05)',
+                  border: '1px solid rgba(242,153,74,0.15)',
+                  borderRadius: '10px',
+                  color: 'var(--tech-orange)',
+                  fontSize: '12px',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  transition: 'all 0.2s'
+                }}
+              >
+                <MessageCircle size={16} />
+                View Chats
+              </button>
+              <button
+                onClick={() => setActiveTab('govt')}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  padding: '12px',
+                  background: 'rgba(16,185,129,0.05)',
+                  border: '1px solid rgba(16,185,129,0.15)',
+                  borderRadius: '10px',
+                  color: '#10b981',
+                  fontSize: '12px',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  transition: 'all 0.2s'
+                }}
+              >
+                <span>🏛️</span>
+                Govt Jobs
+              </button>
+              <button
+                onClick={() => setActiveTab('settings')}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  padding: '12px',
+                  background: 'rgba(100,116,139,0.05)',
+                  border: '1px solid rgba(100,116,139,0.15)',
+                  borderRadius: '10px',
+                  color: '#64748b',
+                  fontSize: '12px',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  transition: 'all 0.2s'
+                }}
+              >
+                <Settings size={16} />
+                Settings
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* CHATS VIEW - Active Chat Threads with Employers */}
+      {activeTab === 'chats' && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <h3 style={{ fontSize: '18px', fontWeight: 700, color: 'var(--corporate-blue)', margin: 0 }}>Active Conversations</h3>
+            <span style={{ fontSize: '12px', color: '#64748b', fontWeight: 600 }}>
+              {applications.filter(a => a.chatHistory && a.chatHistory.length > 0).length} active
+            </span>
+          </div>
+
+          {applications.filter(a => a.chatHistory && a.chatHistory.length > 0).length === 0 ? (
+            <div className="seeker-light-card" style={{ padding: '40px', textAlign: 'center', borderRadius: '14px' }}>
+              <MessageCircle size={40} color="#cbd5e1" style={{ margin: '0 auto 12px' }} />
+              <p style={{ color: '#64748b', fontSize: '14px', fontWeight: 600, margin: '0 0 4px 0' }}>No active chats yet</p>
+              <p style={{ color: '#94a3b8', fontSize: '12px', margin: 0 }}>Apply to jobs to start conversations with employers</p>
+            </div>
+          ) : (
+            applications
+              .filter(a => a.chatHistory && a.chatHistory.length > 0)
+              .sort((a, b) => {
+                const aLastMsg = a.chatHistory[a.chatHistory.length - 1];
+                const bLastMsg = b.chatHistory[b.chatHistory.length - 1];
+                return new Date(bLastMsg.timestamp).getTime() - new Date(aLastMsg.timestamp).getTime();
+              })
+              .map(app => {
+                const job = jobs.find(j => j.id === app.jobId);
+                const lastMessage = app.chatHistory[app.chatHistory.length - 1];
+                const isUnread = lastMessage.sender === 'recruiter';
+                return (
+                  <div
+                    key={app.id}
+                    onClick={() => {
+                      setSelectedApp(app);
+                      setActiveTab('applications');
+                    }}
+                    className="seeker-light-card"
+                    style={{
+                      padding: '16px',
+                      borderRadius: '12px',
+                      cursor: 'pointer',
+                      border: isUnread ? '1px solid rgba(242,153,74,0.3)' : '1px solid rgba(26,62,98,0.08)',
+                      background: isUnread ? 'rgba(242,153,74,0.03)' : '#fff',
+                      transition: 'all 0.2s'
+                    }}
+                  >
+                    <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                      <div style={{
+                        width: '44px',
+                        height: '44px',
+                        borderRadius: '12px',
+                        background: `linear-gradient(135deg, #1A3E62, #F2994A)`,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: '16px',
+                        flexShrink: 0
+                      }}>
+                        {job?.logoSeed || '💼'}
+                      </div>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
+                          <span style={{ fontSize: '14px', fontWeight: 700, color: 'var(--corporate-blue)' }}>{app.recruiterName || job?.companyName || 'Employer'}</span>
+                          {isUnread && <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--tech-orange)', flexShrink: 0 }} />}
+                        </div>
+                        <div style={{ fontSize: '12px', color: '#64748b', marginBottom: '4px' }}>{job?.title || 'Job Position'}</div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <span style={{ fontSize: '11px', color: '#94a3b8', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '180px' }}>
+                            {lastMessage.sender === 'candidate' ? 'You: ' : ''}{lastMessage.text}
+                          </span>
+                          <span style={{ fontSize: '10px', color: '#94a3b8', flexShrink: 0, marginLeft: '8px' }}>
+                            {new Date(lastMessage.timestamp).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })
+          )}
+        </div>
+      )}
+
       {/* Fair Work Pact Modals have been moved to the bottom of the component (outside the container) to bypass Android WebView transform rendering bugs */}
       {/* Mobile Bottom Navigation Bar – Icon Only */}
       {!selectedJob && (
@@ -2570,25 +2905,16 @@ export const CandidateDashboard: React.FC = () => {
         {[
           { id: 'explore', icon: <Briefcase size={20} />, label: 'Explore' },
           { id: 'govt', icon: <span style={{ fontSize: '18px' }}>🏛️</span>, label: 'Govt' },
-          { id: 'search', icon: <Search size={20} />, label: 'Search', action: () => {
-              setActiveTab('explore');
-              setTimeout(() => {
-                const el = document.getElementById('dashboard-search-input');
-                if (el) {
-                  el.focus();
-                  el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }
-              }, 150);
-            }
-          },
-          { id: 'applications', icon: <MessageCircle size={20} />, label: 'Apps' },
+          { id: 'workspace', icon: <Sparkles size={20} />, label: 'Workspace' },
+          { id: 'chats', icon: <MessageCircle size={20} />, label: 'Chats' },
+          { id: 'notifications', icon: <Bell size={20} />, label: 'Alerts' },
           { id: 'profile', icon: <UserCheck size={20} />, label: 'Profile' }
         ].map(item => {
           const isActive = activeTab === item.id;
           return (
             <button
               key={item.id}
-              onClick={item.action ? item.action : () => setActiveTab(item.id as any)}
+              onClick={() => setActiveTab(item.id as any)}
               style={{
                 background: 'transparent',
                 border: 'none',

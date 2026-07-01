@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Briefcase, Users, MessageSquare, Plus, Check, X, Calendar, Award, Trash2 } from 'lucide-react';
+import { Briefcase, Users, MessageSquare, Plus, Check, X, Calendar, Award, Trash2, Bell } from 'lucide-react';
 import { useAppState } from '../context/AppContext';
 import type { Application } from '../context/AppContext';
 import { ChatWindow } from './ChatWindow';
+import { NotificationsPage } from './NotificationsPage';
 import { getLocationDetails } from '../utils/locationHelper';
 
 export const RecruiterDashboard: React.FC = () => {
@@ -282,6 +283,13 @@ export const RecruiterDashboard: React.FC = () => {
           >
             <Users size={16} />
             Applicants & Jobs ({activeApplications.length})
+          </button>
+          <button 
+            className={`tab-btn ${activeTab === 'notifications' ? 'active' : ''}`}
+            onClick={() => setActiveTab('notifications')}
+          >
+            <Bell size={16} />
+            Notifications
           </button>
         </div>
       </div>
@@ -1520,6 +1528,293 @@ export const RecruiterDashboard: React.FC = () => {
           </div>
         </div>
       )}
+
+      {/* NOTIFICATIONS VIEW */}
+      {activeTab === 'notifications' && (
+        <NotificationsPage />
+      )}
+
+      {/* WORKSPACE VIEW - Recruiter Dashboard with Stats */}
+      {activeTab === 'workspace' && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          {/* Stats Overview Cards */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '12px' }}>
+            <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', padding: '16px', borderRadius: '12px' }}>
+              <div style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '8px' }}>Active Jobs</div>
+              <div style={{ fontSize: '28px', fontWeight: 800, color: '#fff' }}>{jobs.length}</div>
+              <div style={{ fontSize: '11px', color: '#10b981', fontWeight: 600, marginTop: '4px' }}>Live listings</div>
+            </div>
+            <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', padding: '16px', borderRadius: '12px' }}>
+              <div style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '8px' }}>Applications</div>
+              <div style={{ fontSize: '28px', fontWeight: 800, color: 'var(--tech-orange)' }}>{applications.length}</div>
+              <div style={{ fontSize: '11px', color: '#64748b', fontWeight: 600, marginTop: '4px' }}>Total received</div>
+            </div>
+            <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', padding: '16px', borderRadius: '12px' }}>
+              <div style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '8px' }}>Shortlisted</div>
+              <div style={{ fontSize: '28px', fontWeight: 800, color: '#10b981' }}>{applications.filter(a => a.status === 'Shortlisted' || a.status === 'Interview').length}</div>
+              <div style={{ fontSize: '11px', color: '#10b981', fontWeight: 600, marginTop: '4px' }}>Interviews scheduled</div>
+            </div>
+            <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', padding: '16px', borderRadius: '12px' }}>
+              <div style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '8px' }}>Pending Review</div>
+              <div style={{ fontSize: '28px', fontWeight: 800, color: '#f59e0b' }}>{applications.filter(a => a.status === 'Reviewing').length}</div>
+              <div style={{ fontSize: '11px', color: '#f59e0b', fontWeight: 600, marginTop: '4px' }}>Awaiting action</div>
+            </div>
+          </div>
+
+          {/* Profile Card */}
+          <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', padding: '20px', borderRadius: '14px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+              <h3 style={{ fontSize: '16px', fontWeight: 700, color: '#fff', margin: 0 }}>Company Profile</h3>
+              <button
+                onClick={() => setActiveTab('settings')}
+                style={{
+                  background: 'rgba(242,153,74,0.1)',
+                  color: 'var(--tech-orange)',
+                  border: '1px solid rgba(242,153,74,0.3)',
+                  padding: '6px 12px',
+                  borderRadius: '8px',
+                  fontSize: '11px',
+                  fontWeight: 700,
+                  cursor: 'pointer'
+                }}
+              >
+                Edit Profile
+              </button>
+            </div>
+            <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+              <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: 'linear-gradient(135deg, #1A3E62, #F2994A)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px' }}>
+                💼
+              </div>
+              <div>
+                <div style={{ fontSize: '16px', fontWeight: 700, color: '#fff' }}>{recruiterProfile.companyName || 'Your Company'}</div>
+                <div style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>{recruiterProfile.recruiterName || user?.name || 'Recruiter'}</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Recent Applications */}
+          <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', padding: '20px', borderRadius: '14px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+              <h3 style={{ fontSize: '16px', fontWeight: 700, color: '#fff', margin: 0 }}>Recent Applications</h3>
+              <button
+                onClick={() => setActiveTab('manage')}
+                style={{
+                  background: 'transparent',
+                  color: 'var(--text-secondary)',
+                  border: 'none',
+                  fontSize: '12px',
+                  fontWeight: 600,
+                  cursor: 'pointer'
+                }}
+              >
+                View All →
+              </button>
+            </div>
+            {applications.length === 0 ? (
+              <div style={{ textAlign: 'center', padding: '24px', color: 'var(--text-muted)' }}>
+                <p style={{ fontSize: '13px', margin: 0 }}>No applications received yet</p>
+              </div>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                {applications.slice(0, 5).map(app => {
+                  const job = jobs.find(j => j.id === app.jobId);
+                  return (
+                    <div key={app.id} style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '10px', background: 'rgba(255,255,255,0.02)', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                      <div style={{ width: '36px', height: '36px', borderRadius: '8px', background: 'linear-gradient(135deg, #1A3E62, #F2994A)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px', flexShrink: 0 }}>
+                        👤
+                      </div>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ fontSize: '13px', fontWeight: 700, color: '#fff', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{app.candidateProfile?.name || 'Candidate'}</div>
+                        <div style={{ fontSize: '11px', color: 'var(--text-secondary)' }}>{job?.title || 'Unknown Position'}</div>
+                      </div>
+                      <span style={{
+                        fontSize: '10px',
+                        fontWeight: 600,
+                        padding: '3px 8px',
+                        borderRadius: '12px',
+                        background: app.status === 'Shortlisted' ? 'rgba(16,185,129,0.15)' : app.status === 'Reviewing' ? 'rgba(242,153,74,0.15)' : 'rgba(255,255,255,0.05)',
+                        color: app.status === 'Shortlisted' ? '#10b981' : app.status === 'Reviewing' ? 'var(--tech-orange)' : 'var(--text-secondary)'
+                      }}>
+                        {app.status}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
+          {/* Quick Actions */}
+          <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', padding: '20px', borderRadius: '14px' }}>
+            <h3 style={{ fontSize: '16px', fontWeight: 700, color: '#fff', margin: '0 0 12px 0' }}>Quick Actions</h3>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+              <button
+                onClick={() => setActiveTab('post-job')}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  padding: '12px',
+                  background: 'rgba(242,153,74,0.05)',
+                  border: '1px solid rgba(242,153,74,0.15)',
+                  borderRadius: '10px',
+                  color: 'var(--tech-orange)',
+                  fontSize: '12px',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  transition: 'all 0.2s'
+                }}
+              >
+                <Plus size={16} />
+                Post New Job
+              </button>
+              <button
+                onClick={() => setActiveTab('chats')}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  padding: '12px',
+                  background: 'rgba(16,185,129,0.05)',
+                  border: '1px solid rgba(16,185,129,0.15)',
+                  borderRadius: '10px',
+                  color: '#10b981',
+                  fontSize: '12px',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  transition: 'all 0.2s'
+                }}
+              >
+                <MessageSquare size={16} />
+                View Chats
+              </button>
+              <button
+                onClick={() => setActiveTab('manage')}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  padding: '12px',
+                  background: 'rgba(255,255,255,0.03)',
+                  border: '1px solid rgba(255,255,255,0.08)',
+                  borderRadius: '10px',
+                  color: 'var(--text-secondary)',
+                  fontSize: '12px',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  transition: 'all 0.2s'
+                }}
+              >
+                <Briefcase size={16} />
+                Manage Jobs
+              </button>
+              <button
+                onClick={() => setActiveTab('overview')}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  padding: '12px',
+                  background: 'rgba(255,255,255,0.03)',
+                  border: '1px solid rgba(255,255,255,0.08)',
+                  borderRadius: '10px',
+                  color: 'var(--text-secondary)',
+                  fontSize: '12px',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  transition: 'all 0.2s'
+                }}
+              >
+                <span>📊</span>
+                Full Dashboard
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* CHATS VIEW - Active Chat Threads with Candidates */}
+      {activeTab === 'chats' && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <h3 style={{ fontSize: '18px', fontWeight: 700, color: '#fff', margin: 0 }}>Active Conversations</h3>
+            <span style={{ fontSize: '12px', color: 'var(--text-secondary)', fontWeight: 600 }}>
+              {applications.filter(a => a.chatHistory && a.chatHistory.length > 0).length} active
+            </span>
+          </div>
+
+          {applications.filter(a => a.chatHistory && a.chatHistory.length > 0).length === 0 ? (
+            <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', padding: '40px', textAlign: 'center', borderRadius: '14px' }}>
+              <MessageSquare size={40} color="rgba(255,255,255,0.2)" style={{ margin: '0 auto 12px' }} />
+              <p style={{ color: 'var(--text-secondary)', fontSize: '14px', fontWeight: 600, margin: '0 0 4px 0' }}>No active chats yet</p>
+              <p style={{ color: 'var(--text-muted)', fontSize: '12px', margin: 0 }}>Applications with chat messages will appear here</p>
+            </div>
+          ) : (
+            applications
+              .filter(a => a.chatHistory && a.chatHistory.length > 0)
+              .sort((a, b) => {
+                const aLastMsg = a.chatHistory[a.chatHistory.length - 1];
+                const bLastMsg = b.chatHistory[b.chatHistory.length - 1];
+                return new Date(bLastMsg.timestamp).getTime() - new Date(aLastMsg.timestamp).getTime();
+              })
+              .map(app => {
+                const job = jobs.find(j => j.id === app.jobId);
+                const lastMessage = app.chatHistory[app.chatHistory.length - 1];
+                const isUnread = lastMessage.sender === 'candidate';
+                return (
+                  <div
+                    key={app.id}
+                    onClick={() => {
+                      setSelectedJobId(app.jobId);
+                      setSelectedAppId(app.id);
+                      setActiveTab('manage');
+                    }}
+                    style={{
+                      background: isUnread ? 'rgba(242,153,74,0.03)' : 'rgba(255,255,255,0.03)',
+                      border: isUnread ? '1px solid rgba(242,153,74,0.3)' : '1px solid rgba(255,255,255,0.08)',
+                      padding: '16px',
+                      borderRadius: '12px',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s'
+                    }}
+                  >
+                    <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                      <div style={{
+                        width: '44px',
+                        height: '44px',
+                        borderRadius: '12px',
+                        background: 'linear-gradient(135deg, #1A3E62, #F2994A)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: '16px',
+                        flexShrink: 0
+                      }}>
+                        👤
+                      </div>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
+                          <span style={{ fontSize: '14px', fontWeight: 700, color: '#fff' }}>{app.candidateProfile?.name || 'Candidate'}</span>
+                          {isUnread && <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--tech-orange)', flexShrink: 0 }} />}
+                        </div>
+                        <div style={{ fontSize: '12px', color: 'var(--text-secondary)', marginBottom: '4px' }}>{job?.title || 'Job Position'}</div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <span style={{ fontSize: '11px', color: 'var(--text-muted)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '180px' }}>
+                            {lastMessage.sender === 'recruiter' ? 'You: ' : ''}{lastMessage.text}
+                          </span>
+                          <span style={{ fontSize: '10px', color: 'var(--text-muted)', flexShrink: 0, marginLeft: '8px' }}>
+                            {new Date(lastMessage.timestamp).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })
+          )}
+        </div>
+      )}
+
       {/* Mobile Bottom Navigation Bar */}
       <div className="mobile-bottom-nav" style={{
         position: 'fixed',
@@ -1537,9 +1832,12 @@ export const RecruiterDashboard: React.FC = () => {
         paddingBottom: 'safe-area-inset-bottom'
       }}>
         {[
-          { id: 'overview', label: 'Dashboard', icon: '📊' },
+          { id: 'workspace', label: 'Workspace', icon: '📊' },
+          { id: 'overview', label: 'Dashboard', icon: '🏠' },
           { id: 'post-job', label: 'Post Job', icon: '➕' },
-          { id: 'manage', label: 'Manage Jobs', icon: '📁' }
+          { id: 'chats', label: 'Chats', icon: '💬' },
+          { id: 'manage', label: 'Manage', icon: '📁' },
+          { id: 'notifications', label: 'Alerts', icon: '🔔' }
         ].map(item => {
           const isActive = activeTab === item.id;
           return (
