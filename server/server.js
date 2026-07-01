@@ -10,6 +10,7 @@ import Razorpay from 'razorpay';
 import * as cheerio from 'cheerio';
 import https from 'https';
 import url from 'url';
+import { OAuth2Client } from 'google-auth-library';
 import { initDb, readData, writeData, syncFromGCS } from './db.js';
 
 dotenv.config({ path: path.join(path.dirname(fileURLToPath(import.meta.url)), '..', '.env') });
@@ -573,7 +574,176 @@ app.post('/api/coupons/validate', (req, res) => {
   });
 });
 
-// --- AUTHENTICATION ROUTES ---
+// Google Authentication Sign Up / Sign In
+app.post('/api/auth/google', async (req, res) => {
+  const { code, role, couponCode, redirectUri } = req.body;
+  if (!code) {
+    return res.status(400).json({ error: 'OAuth authorization code is required' });
+  }
+
+  try {
+    const client = new OAuth2Client(
+      process.env.GOOGLE_CLIENT_ID || 'placeholder_client_id',
+      process.env.GOOGLE_CLIENT_SECRET || 'placeholder_client_secret',
+      redirectUri || 'http://localhost:5173/auth/google/callback'
+    );
+
+    // Exchange authorization code for tokens
+    const { tokens } = await client.getToken(code);
+    client.setCredentials(tokens);
+
+    // Get user profile information from Google ID token
+    const idToken = tokens.id_token;
+    if (!idToken) {
+      return res.status(400).json({ error: 'Failed to retrieve ID Token from Google.' });
+    }
+
+    const ticket = await client.verifyIdToken({
+      idToken,
+      audience: process.env.GOOGLE_CLIENT_ID
+    });
+    const payload = ticket.getPayload();
+    if (!payload || !payload.email) {
+      return res.status(400).json({ error: 'Invalid ID Token payload.' });
+    }
+
+    const googleEmail = payload.email.toLowerCase();
+    const googleName = payload.name || payload.given_name || 'Google User';
+    const googlePicture = payload.picture || '';
+
+    const db = readData();
+    let user = db.users.find(u => u.email.toLowerCase() === googleEmail);
+
+    if (user) {
+      // User already exists, log them in!
+      const token = jwt.sign(
+        { id: user.id, email: user.email, role: user.role },
+        JWT_SECRET,
+        { expiresIn: '7d' }
+      );
+      return res.json({
+        token,
+        user: {
+          id: user.id,
+          email: user.email,
+          role: user.role,
+          name: user.name,
+          subscriptionExpiry: user.subscriptionExpiry
+        }
+      });
+    }
+
+    // User does not exist, sign them up!
+    const targetRole = role === 'recruiter' ? 'recruiter' : 'candidate';
+
+    // Recruiters are FREE
+    if (targetRole === 'recruiter') {
+      const userId = `user-${Date.now()}`;
+      const newUser = {
+        id: userId,
+        email: googleEmail,
+        passwordHash: '',
+        role: 'recruiter',
+        name: googleName,
+        phone: '',
+        bio: '',
+        companyName: `${googleName}'s Organization`,
+        companyBio: 'We are hiring progressive talent.',
+        logoSeed: googlePicture
+      };
+
+      db.users.push(newUser);
+      writeData(db);
+
+      const token = jwt.sign(
+        { id: userId, email: googleEmail, role: 'recruiter' },
+        JWT_SECRET,
+        { expiresIn: '7d' }
+      );
+
+      return res.status(201).json({
+        token,
+        user: {
+          id: userId,
+          email: googleEmail,
+          role: 'recruiter',
+          name: googleName
+        }
+      });
+    }
+
+    // Candidates pay ₹99 (unless they have coupon)
+    let couponApplied = false;
+    let actualCouponCode = '';
+    if (couponCode) {
+      const codeUpper = couponCode.toUpperCase();
+      const slotIndex = db.promoSlots?.findIndex(s => s.code.toUpperCase() === codeUpper && !s.claimedBy);
+      if (slotIndex !== undefined && slotIndex !== -1) {
+        db.promoSlots[slotIndex].claimedBy = googleEmail;
+        db.promoSlots[slotIndex].claimedAt = new Date().toISOString();
+        couponApplied = true;
+        actualCouponCode = codeUpper;
+      }
+    }
+
+    if (!couponApplied) {
+      // Prompt Razorpay payment on client using Google info
+      return res.status(200).json({
+        requiresPayment: true,
+        email: googleEmail,
+        name: googleName,
+        googlePicture,
+        amount: 99,
+        message: 'A one-time registration fee of ₹99 is required for job seekers.'
+      });
+    }
+
+    // Create Candidate with coupon code
+    const userId = `user-${Date.now()}`;
+    const subscriptionExpiry = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString();
+    const newUser = {
+      id: userId,
+      email: googleEmail,
+      passwordHash: '',
+      role: 'candidate',
+      name: googleName,
+      phone: '',
+      bio: '',
+      skills: [],
+      experience: 'Entry-level',
+      resumeName: 'No resume uploaded',
+      onboardingCompleted: false,
+      subscriptionExpiry,
+      usedCouponCode: actualCouponCode,
+      preferences: { type: [], mode: [], minSalary: 0, experience: 'Entry-level' },
+      logoSeed: googlePicture
+    };
+
+    db.users.push(newUser);
+    writeData(db);
+
+    const token = jwt.sign(
+      { id: userId, email: googleEmail, role: 'candidate' },
+      JWT_SECRET,
+      { expiresIn: '7d' }
+    );
+
+    res.status(201).json({
+      token,
+      user: {
+        id: userId,
+        email: googleEmail,
+        role: 'candidate',
+        name: googleName,
+        subscriptionExpiry
+      }
+    });
+
+  } catch (err) {
+    console.error('Google OAuth failed:', err);
+    res.status(500).json({ error: 'Google Authentication failed. Please try again.' });
+  }
+});
 
 // Sign Up
 app.post('/api/auth/signup', (req, res) => {

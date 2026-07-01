@@ -91,6 +91,7 @@ interface AppContextType {
   recruiterProfile: RecruiterProfile;
   setRecruiterProfile: React.Dispatch<React.SetStateAction<RecruiterProfile>>;
   login: (email: string, pass: string) => Promise<void>;
+  loginWithGoogle: (code: string, role: string, couponCode?: string) => Promise<void>;
   signup: (details: {
     email: string;
     username?: string;
@@ -456,6 +457,32 @@ const [promoSlots, setPromoSlots] = useState<number>(100);
     setPerspective(data.user.role);
   };
 
+  const loginWithGoogle = async (code: string, role: string, couponCode?: string) => {
+    const redirectUri = `${window.location.origin}/auth/google/callback`;
+    const res = await fetch('/api/auth/google', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code, role, couponCode, redirectUri })
+    });
+
+    const data = await res.json();
+    if (!res.ok) {
+      const err = new Error(data.error || 'Google Sign-In failed') as any;
+      if (res.status === 200 && data.requiresPayment) {
+        err.requiresPayment = true;
+        err.paymentInfo = data; // Includes email, name, picture, etc.
+      }
+      throw err;
+    }
+
+    setToken(data.token);
+    setUser(data.user);
+    localStorage.setItem('hyriq_token', data.token);
+    localStorage.setItem('hyriq_user', JSON.stringify(data.user));
+
+    setPerspective(data.user.role);
+  };
+
   const signup = async (details: {
     email: string;
     username?: string;
@@ -619,6 +646,7 @@ const [promoSlots, setPromoSlots] = useState<number>(100);
         recruiterProfile,
         setRecruiterProfile,
         login,
+        loginWithGoogle,
         signup,
         logout,
         applyForJob,

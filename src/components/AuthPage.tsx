@@ -20,9 +20,15 @@ interface AuthPageProps {
     paymentId?: string;
     couponCode?: string;
   }) => Promise<void>;
+  googleAutofill?: {
+    email: string;
+    name: string;
+    googlePicture?: string;
+  } | null;
+  onClearGoogleAutofill?: () => void;
 }
 
-export const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onSignup }) => {
+export const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onSignup, googleAutofill, onClearGoogleAutofill }) => {
   const [isLogin, setIsLogin] = useState(true);
   const [role, setRole] = useState<'candidate' | 'recruiter'>('candidate');
   
@@ -47,6 +53,16 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onSignup }) => {
   const [couponApplied, setCouponApplied] = useState(false);
   const [couponSuccessMsg, setCouponSuccessMsg] = useState('');
   const [couponChecking, setCouponChecking] = useState(false);
+
+  React.useEffect(() => {
+    if (googleAutofill) {
+      setEmail(googleAutofill.email);
+      setName(googleAutofill.name);
+      setIsLogin(false);
+      setRole('candidate');
+      setShowPayment(true);
+    }
+  }, [googleAutofill]);
 
   const handleApplyCoupon = async () => {
     if (!couponCode.trim()) return;
@@ -127,6 +143,22 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onSignup }) => {
     }
   };
 
+  const handleGoogleSignIn = () => {
+    localStorage.setItem('hyriq_oauth_role', role);
+    if (couponCode) {
+      localStorage.setItem('hyriq_oauth_coupon', couponCode);
+    } else {
+      localStorage.removeItem('hyriq_oauth_coupon');
+    }
+    
+    const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || '1041935825227-tq62r7432j3h4l56u7m2b7q1c9d2f3s4.apps.googleusercontent.com';
+    const redirectUri = `${window.location.origin}/auth/google/callback`;
+    const scope = encodeURIComponent('openid profile email');
+    const state = encodeURIComponent(role);
+    
+    window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=${scope}&state=${state}`;
+  };
+
   const handleRazorpayPayment = async () => {
     setPaymentProcessing(true);
     setErrorMsg('');
@@ -189,6 +221,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onSignup }) => {
 
             setShowPayment(false);
             setPaymentProcessing(false);
+            onClearGoogleAutofill?.();
           } catch (err: any) {
             setErrorMsg(err.message || 'Signup failed after payment. Please contact support with your payment ID.');
             setPaymentProcessing(false);
@@ -437,6 +470,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onSignup }) => {
               setErrorMsg('');
               setPaymentProcessing(false);
               setPaymentSuccess(false);
+              onClearGoogleAutofill?.();
             }}
             className="btn btn-ghost"
             style={{ width: '100%', marginTop: '12px' }}
@@ -724,6 +758,47 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onSignup }) => {
             )}
           </button>
         </form>
+
+        {/* Separator */}
+        <div style={{ display: 'flex', alignItems: 'center', margin: '20px 0', gap: '10px' }}>
+          <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.08)' }}></div>
+          <span style={{ fontSize: '11px', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '1px' }}>or</span>
+          <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.08)' }}></div>
+        </div>
+
+        {/* Google Authentication Button */}
+        <button
+          type="button"
+          onClick={handleGoogleSignIn}
+          className="btn"
+          style={{
+            width: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '10px',
+            background: 'rgba(255,255,255,0.02)',
+            border: '1px solid rgba(255,255,255,0.08)',
+            color: '#fff',
+            padding: '12px',
+            borderRadius: '12px',
+            fontSize: '13px',
+            fontWeight: 600,
+            cursor: 'pointer',
+            transition: 'all 0.2s',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+          }}
+          onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.06)'}
+          onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.02)'}
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" style={{ marginRight: '4px' }}>
+            <path fill="#EA4335" d="M12 5.04c1.66 0 3.2.57 4.38 1.69l3.27-3.27C17.67 1.54 14.98 1 12 1 7.35 1 3.37 3.68 1.34 7.6l3.85 3C6.12 7.74 8.84 5.04 12 5.04z"/>
+            <path fill="#4285F4" d="M23.49 12.27c0-.81-.07-1.59-.2-2.34H12v4.44h6.44c-.28 1.48-1.12 2.74-2.38 3.59l3.71 2.87c2.17-2 3.42-4.94 3.42-8.56z"/>
+            <path fill="#FBBC05" d="M5.19 14.4c-.24-.72-.38-1.49-.38-2.29s.14-1.57.38-2.29L1.34 7.6C.49 9.32 0 11.23 0 13.23s.49 3.91 1.34 5.63l3.85-3z"/>
+            <path fill="#34A853" d="M12 23c3.24 0 5.97-1.07 7.96-2.91l-3.71-2.87c-1.03.69-2.35 1.1-4.25 1.1-3.16 0-5.88-2.7-6.81-6.05L1.34 15.27C3.37 19.19 7.35 23 12 23z"/>
+          </svg>
+          {isLogin ? 'Sign In with Google' : 'Sign Up with Google'}
+        </button>
 
         {/* Auth Toggle */}
         <div style={{

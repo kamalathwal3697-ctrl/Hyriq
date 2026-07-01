@@ -15,6 +15,7 @@ const AppContent: React.FC = () => {
     token, 
     user, 
     login, 
+    loginWithGoogle,
     signup, 
     logout,
     candidateProfile,
@@ -81,6 +82,107 @@ const AppContent: React.FC = () => {
     };
   }, [pullStart, pullChange, isRefreshing]);
 
+  const [oauthLoading, setOauthLoading] = useState(false);
+  const [oauthError, setOauthError] = useState('');
+  const [googleAutofillDetails, setGoogleAutofillDetails] = useState<any>(null);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get('code');
+    const path = window.location.pathname;
+
+    if ((path.endsWith('/auth/google/callback') || window.location.search.includes('code=')) && code) {
+      const handleGoogleCallback = async () => {
+        setOauthLoading(true);
+        setOauthError('');
+        try {
+          const savedRole = localStorage.getItem('hyriq_oauth_role') || 'candidate';
+          const savedCoupon = localStorage.getItem('hyriq_oauth_coupon') || undefined;
+
+          // Clear stored oauth details
+          localStorage.removeItem('hyriq_oauth_role');
+          localStorage.removeItem('hyriq_oauth_coupon');
+
+          await loginWithGoogle(code, savedRole, savedCoupon);
+          
+          // Clear query params and route to root dashboard
+          window.history.replaceState({}, document.title, '/');
+        } catch (err: any) {
+          if (err.requiresPayment) {
+            // Save google details and route back to signup with prepopulated payment fields
+            setGoogleAutofillDetails(err.paymentInfo);
+            window.history.replaceState({}, document.title, '/');
+          } else {
+            console.error('Google Auth redirect handling failed:', err);
+            setOauthError(err.message || 'Google Authentication failed. Please try again.');
+            window.history.replaceState({}, document.title, '/');
+          }
+        } finally {
+          setOauthLoading(false);
+        }
+      };
+
+      handleGoogleCallback();
+    }
+  }, [loginWithGoogle]);
+
+  if (oauthLoading) {
+    return (
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        minHeight: '100vh',
+        background: 'var(--bg-dark)',
+        color: '#fff',
+        gap: '20px'
+      }}>
+        <div style={{
+          width: '40px',
+          height: '40px',
+          borderRadius: '50%',
+          border: '3px solid rgba(255,255,255,0.08)',
+          borderTopColor: 'var(--primary)',
+          animation: 'pull-refresh-spin 1s linear infinite'
+        }}></div>
+        <h3 style={{ fontSize: '18px', fontWeight: 700, fontFamily: 'Outfit' }}>Verifying Google Account...</h3>
+        <p style={{ color: 'var(--text-secondary)', fontSize: '13px' }}>Connecting to secure Google OAuth server</p>
+      </div>
+    );
+  }
+
+  if (oauthError) {
+    return (
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        minHeight: '100vh',
+        background: 'var(--bg-dark)',
+        color: '#fff',
+        gap: '20px',
+        padding: '24px',
+        textAlign: 'center'
+      }}>
+        <div style={{ fontSize: '48px' }}>⚠️</div>
+        <h3 style={{ fontSize: '20px', fontWeight: 800, fontFamily: 'Outfit' }}>Authentication Failed</h3>
+        <p style={{ color: '#fda4af', fontSize: '14px', maxWidth: '400px', margin: '0 auto' }}>{oauthError}</p>
+        <button 
+          onClick={() => {
+            setOauthError('');
+            window.location.href = '/';
+          }}
+          className="btn btn-primary"
+          style={{ padding: '10px 24px', borderRadius: '10px', marginTop: '10px' }}
+        >
+          Try Again
+        </button>
+      </div>
+    );
+  }
+
   const showBackButton = (() => {
     if (!token) return false;
     if (perspective === 'visitor') return false;
@@ -114,7 +216,14 @@ const AppContent: React.FC = () => {
 
     // Require authentication for candidate/recruiter workspaces
     if (!token) {
-      return <AuthPage onLogin={login} onSignup={signup} />;
+      return (
+        <AuthPage 
+          onLogin={login} 
+          onSignup={signup} 
+          googleAutofill={googleAutofillDetails}
+          onClearGoogleAutofill={() => setGoogleAutofillDetails(null)}
+        />
+      );
     }
 
     // Authenticated views
