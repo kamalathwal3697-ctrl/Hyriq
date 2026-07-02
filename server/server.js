@@ -12,6 +12,7 @@ import https from 'https';
 import url from 'url';
 import { OAuth2Client } from 'google-auth-library';
 import { initDb, readData, writeData, syncFromGCS } from './db.js';
+import OpenAI from 'openai';
 
 dotenv.config({ path: path.join(path.dirname(fileURLToPath(import.meta.url)), '..', '.env') });
 
@@ -1091,12 +1092,165 @@ app.post('/api/jobs/auto-import', async (req, res) => {
   }
 });
 
+// Auto-import jobs via Google Custom Search for local job listings
+app.post('/api/jobs/google-import', async (req, res) => {
+  const { location } = req.body;
+  if (!location) {
+    return res.status(400).json({ error: 'Location is required' });
+  }
+
+  const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
+  const GOOGLE_CX = process.env.GOOGLE_CX;
+
+  if (!GOOGLE_API_KEY || !GOOGLE_CX) {
+    return res.status(503).json({ error: 'Google Search API not configured', configured: false });
+  }
+
+  try {
+    const db = readData();
+    if (!db.jobs) db.jobs = [];
+
+    // Count existing jobs for this location
+    const existingCount = db.jobs.filter(j =>
+      j.location.toLowerCase().includes(location.toLowerCase())
+    ).length;
+
+    // If enough local jobs exist, skip import
+    if (existingCount >= 10) {
+      return res.json({
+        message: 'Enough local jobs exist',
+        count: existingCount,
+        configured: true,
+        jobs: db.jobs.filter(j => j.location.toLowerCase().includes(location.toLowerCase()))
+      });
+    }
+
+    const queries = [
+      `${location} hiring now jobs`,
+      `${location} entry level jobs 2025`,
+      `${location} tech jobs remote`,
+      `${location} fresher jobs walk-in`
+    ];
+
+    const allResults = [];
+
+    for (const query of queries) {
+      try {
+        const searchUrl = `https://www.googleapis.com/customsearch/v1?key=${GOOGLE_API_KEY}&cx=${GOOGLE_CX}&q=${encodeURIComponent(query)}&num=5&dateRestrict=w1`;
+        const apiRes = await fetch(searchUrl);
+        if (!apiRes.ok) continue;
+        const data = await apiRes.json();
+        if (data.items) {
+          allResults.push(...data.items);
+        }
+      } catch (e) {
+        // Continue with other queries if one fails
+      }
+    }
+
+    if (allResults.length === 0) {
+      return res.json({ message: 'No new Google results found', count: 0, configured: true, jobs: [] });
+    }
+
+    // Deduplicate by URL
+    const seen = new Set();
+    const uniqueResults = allResults.filter(item => {
+      if (seen.has(item.link)) return false;
+      seen.add(item.link);
+      return true;
+    });
+
+    const jobsToImport = uniqueResults.slice(0, 8);
+    const newJobs = [];
+
+    const logoEmojis = ['🔍', '📊', '🏢', '🌐', '📈', '🎯', '💼', '🏗️'];
+    const salaryRanges = [
+      '₹3,00,000 - ₹5,00,000 / year',
+      '₹4,50,000 - ₹7,50,000 / year',
+      '₹6,00,000 - ₹10,00,000 / year',
+      '₹8,00,000 - ₹14,00,000 / year',
+      '₹10,00,000 - ₹18,00,000 / year'
+    ];
+    const expLevels = ['Entry-level', 'Entry-level', 'Mid-level', 'Mid-level', 'Senior-level'];
+
+    jobsToImport.forEach((item, index) => {
+      let cleanTitle = item.title || 'Job Opening';
+      // Remove site name suffixes like "- LinkedIn" or "- Indeed"
+      cleanTitle = cleanTitle.replace(/\s*[-–|]\s*(LinkedIn|Indeed|Naukri|Monster|Glassdoor|TimesJobs|Shine).*$/i, '').trim();
+      if (cleanTitle.length > 80) cleanTitle = cleanTitle.substring(0, 80);
+
+      let cleanDesc = item.snippet || item.description || '';
+      cleanDesc = cleanDesc.replace(/<[^>]*>/g, '').trim();
+      if (cleanDesc.length > 300) cleanDesc = cleanDesc.substring(0, 300) + '...';
+
+      // Extract company name from title or URL
+      let companyName = 'Local Company';
+      const titleParts = cleanTitle.split(/ at | @ | - /i);
+      if (titleParts.length > 1) {
+        cleanTitle = titleParts[0].trim();
+        companyName = titleParts[1].trim();
+      } else {
+        // Try to extract from URL
+        try {
+          const urlObj = new URL(item.link);
+          companyName = urlObj.hostname.replace('www.', '').split('.')[0];
+          companyName = companyName.charAt(0).toUpperCase() + companyName.slice(1);
+        } catch {}
+      }
+
+      const newJob = {
+        id: `job-google-${Date.now()}-${index}`,
+        title: cleanTitle,
+        companyName,
+        logoSeed: logoEmojis[index % logoEmojis.length],
+        location: `${location}, India`,
+        type: 'Full-time',
+        mode: index % 3 === 0 ? 'Remote' : (index % 3 === 1 ? 'Hybrid' : 'On-site'),
+        salary: salaryRanges[index % salaryRanges.length],
+        experience: expLevels[index % expLevels.length],
+        skills: ['Local Hiring', 'Apply Now'],
+        description: cleanDesc || `Job opening in ${location}. Click to view full details on the employer's website.`,
+        requirements: [
+          'Willingness to work in ' + location,
+          'Relevant educational background',
+          'Strong communication skills',
+          'Ability to adapt to a fast-paced environment'
+        ],
+        benefits: [
+          'Competitive salary package',
+          'Opportunity for career growth',
+          'Supportive team environment'
+        ],
+        postedDate: new Date().toISOString(),
+        recruiterId: 'recruiter-google-import',
+        fairWorkPact: false,
+        chatLiveHours: '10:00 AM - 6:00 PM',
+        sourceUrl: item.link
+      };
+
+      newJobs.push(newJob);
+      db.jobs.push(newJob);
+    });
+
+    writeData(db);
+    res.json({ message: 'Success', count: newJobs.length, configured: true, jobs: newJobs });
+  } catch (err) {
+    console.error('Error importing from Google:', err);
+    res.status(500).json({ error: 'Failed to import from Google Search' });
+  }
+});
+
 // --- JOBS ROUTES ---
 
-// List all jobs
+// List all jobs (sorted by most recent first)
 app.get('/api/jobs', (req, res) => {
   const db = readData();
-  res.json(db.jobs);
+  const jobs = [...(db.jobs || [])].sort((a, b) => {
+    const tsA = a.postedDate ? new Date(a.postedDate).getTime() : 0;
+    const tsB = b.postedDate ? new Date(b.postedDate).getTime() : 0;
+    return tsB - tsA;
+  });
+  res.json(jobs);
 });
 
 // Post a new job
@@ -1130,7 +1284,7 @@ app.post('/api/jobs', authenticateToken, (req, res) => {
     description,
     requirements: requirements || [],
     benefits: benefits || [],
-    postedDate: 'Just now',
+    postedDate: new Date().toISOString(),
     recruiterId: req.user.id,
     fairWorkPact: true,
     chatLiveHours: chatLiveHours || 'Not Scheduled'
@@ -1351,6 +1505,29 @@ app.post('/api/applications/:appId/messages', authenticateToken, (req, res) => {
   writeData(db);
 
   res.status(201).json(newMsg);
+});
+
+// OpenAI Alt Text Generation
+app.post('/api/alt-text', async (req, res) => {
+  try {
+    const { description } = req.body;
+    if (!description) {
+      return res.status(400).json({ error: 'Description is required' });
+    }
+
+    const client = new OpenAI();
+    const response = await client.responses.create({
+      model: 'gpt-5-mini',
+      input: [
+        { role: 'user', content: `Write concise alt text for: ${description}` },
+      ],
+    });
+
+    res.json({ altText: response.output_text });
+  } catch (err) {
+    console.error('Alt text generation error:', err);
+    res.status(500).json({ error: 'Failed to generate alt text' });
+  }
 });
 
 // Catch-all route to serve static index.html for Single Page App

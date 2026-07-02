@@ -1,0 +1,16 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://hyriq.onrender.com/api/:path*"
+    },
+    {
+      "source": "/hyriq.apk",
+      "destination": "https://hyriq.onrender.com/hyriq.apk"
+    },
+    {
+      "source": "/:(path*)",
+      "destination": "/index.html"
+    }
+  ]
+}
